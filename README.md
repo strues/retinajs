@@ -1,6 +1,7 @@
-# retina.js | JavaScript and LESS helpers for rendering high-resolution image variants
+# retina.js 
+### JavaScript and LESS helpers for rendering high-resolution image variants
 
-retina.js is an open-source script that makes it easy to serve high resolution images to devices with retina displays
+retina.js makes it easy to serve high-resolution images to devices with retina displays
 
 
 ## How it works
