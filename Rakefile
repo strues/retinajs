@@ -1,7 +1,6 @@
 require 'coyote'
 
-task :build do 
-  input  = "src/retina.coffee"
-  output = "build/retina.js"
-  Coyote.run input, output
+task :build do
+  Coyote.run "src/retina.coffee", "build/retina.js", :compress => true
+  Coyote.run "src/retina.coffee", "test/public/retina.js", :compress => true
 end
