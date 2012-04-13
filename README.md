@@ -56,7 +56,7 @@ Will compile to:
 
 		@media all and (-webkit-min-device-pixel-ratio: 1.5) {
 		  #logo {
-		    background-image: url('/images/my_image.png');
+		    background-image: url('/images/my_image@2x.png');
 		    background-size: 200px 100px;
 		  }
 		}
