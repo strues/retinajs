@@ -17,7 +17,6 @@ class RetinaImagePath
       return false
     
     else if @at_2x_path in RetinaImagePath.confirmed_paths
-      console.log "Found #{@at_2x_path} in confirmed_paths"
       return true
 
     else
