@@ -71,3 +71,11 @@ describe 'RetinaImagePath instance', ->
     RetinaImagePath.domain = "www.apple.com"
     path = new RetinaImagePath("http://apple.com/images/some_image.png")
     path.is_external().should.equal false
+    
+        
+  it 'should exit early and return false if image path is external', ->
+    RetinaImagePath.domain = "www.apple.com"
+    path = new RetinaImagePath("http://google.com/images/some_image.png")
+    path.has_2x_variant().should.equal false
+    
+    

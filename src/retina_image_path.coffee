@@ -12,6 +12,7 @@ class RetinaImagePath
     !!( @path.match(/^https?\:/i) and !@path.match(RetinaImagePath.domain) )    
 
   has_2x_variant: ->
+    return false if @is_external()
     http = new XMLHttpRequest
     http.open('HEAD', @at_2x_path, false)
     http.send()
