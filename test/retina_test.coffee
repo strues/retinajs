@@ -1,10 +1,13 @@
 chai = require 'chai'
 chai.should()
 
+# Create a document object because we don't have one
+# in our Node test environment
 global.document = {domain: null}
 
 {RetinaImage} = require '../src/retina_image'
 {RetinaImagePath} = require '../src/retina_image_path'
+
 
 describe 'RetinaImagePath instance', ->
   path = null 
