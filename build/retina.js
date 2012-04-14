@@ -1,2 +1,41 @@
-(function(){1<window.devicePixelRatio&&(window.onload=function(){var b,g,c,h,d,f;d=document.getElementsByTagName("img");f=[];c=0;for(h=d.length;c<h;c++)b=d[c],f.push((g=function(){var e,a,c,d;if(b.complete){if(d=b.offsetWidth,c=b.offsetHeight,a=b.getAttribute("src").split("."),e=a.slice(0,a.length-1).join("."),a=a[a.length-1],e=""+e+"@2x."+a,a=new XMLHttpRequest,a.open("HEAD",e,!1),a.send(),200===a.status)return b.setAttribute("width",d),b.setAttribute("height",c),b.setAttribute("src",e)}else return setTimeout(g,
-5)})());return f})}).call(this);
+(function() {
+
+  if (window.devicePixelRatio > 1) {
+    window.onload = function() {
+      var image, is_external, load, _i, _len, _ref, _results;
+      is_external = function(href) {
+        return !!(href.match(/^https?\:/i) && !href.match(document.domain));
+      };
+      _ref = document.getElementsByTagName("img");
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        image = _ref[_i];
+        _results.push((load = function() {
+          var at_2x_path, extension, height, http, path, path_segments, path_without_extension, width;
+          if (!image.complete) {
+            return setTimeout(load, 5);
+          } else {
+            path = image.getAttribute("src");
+            if (is_external(path)) return;
+            width = image.offsetWidth;
+            height = image.offsetHeight;
+            path_segments = path.split('.');
+            path_without_extension = path_segments.slice(0, path_segments.length - 1).join(".");
+            extension = path_segments[path_segments.length - 1];
+            at_2x_path = "" + path_without_extension + "@2x." + extension;
+            http = new XMLHttpRequest();
+            http.open('HEAD', at_2x_path, false);
+            http.send();
+            if (http.status === 200) {
+              image.setAttribute('width', width);
+              image.setAttribute('height', height);
+              return image.setAttribute("src", at_2x_path);
+            }
+          }
+        })());
+      }
+      return _results;
+    };
+  }
+
+}).call(this);
