@@ -18,6 +18,12 @@ describe 'RetinaImagePath instance', ->
     path = new RetinaImagePath("http://google.com/images/some_image.png")
     path.is_external().should.equal true
 
+
+  it 'should be external if image path references a remote domain with https', ->
+    RetinaImagePath.domain = "www.apple.com"
+    path = new RetinaImagePath("https://google.com/images/some_image.png")
+    path.is_external().should.equal true
+
     
   it 'should be external if image path is a remote domain with www and domain is localhost', ->
     RetinaImagePath.domain = "localhost"
