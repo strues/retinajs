@@ -2,11 +2,16 @@ require 'fileutils'
 require 'zip/zip'
 require 'zip/zipfilesystem'
 require 'coyote'
+require 'coyote/rake'
 
 task :build do
-  FileUtils.mkdir_p 'build'
   Coyote.run "src/retina.coffee", "build/retina.js", :compress => true
-  Coyote.run "src/retina.coffee", "test/functional/public/retina.js", :compress => true
+  Coyote.run "src/retina.coffee", "test/functional/public/retina.js"
+end
+
+coyote :watch do |config|
+  config.input = "src/retina.coffee"
+  config.output = "test/functional/public/retina.js"
 end
 
 task :package => [:build] do
