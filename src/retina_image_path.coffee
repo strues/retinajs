@@ -1,4 +1,7 @@
 class RetinaImagePath
+  
+  @domain = if document?.domain? then document.domain
+  
   constructor: (@path) ->
     path_segments           = @path.split('.')
     path_without_extension  = path_segments.slice(0, (path_segments.length - 1)).join(".")
@@ -6,7 +9,7 @@ class RetinaImagePath
     @at_2x_path             = "#{path_without_extension}@2x.#{extension}"
 
   is_external: ->
-    !!( @path.match(/^https?\:/i) and !@path.match(document.domain) )    
+    !!( @path.match(/^https?\:/i) and !@path.match(RetinaImagePath.domain) )    
 
   has_2x_variant: ->
     http = new XMLHttpRequest
