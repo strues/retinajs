@@ -1,6 +1,5 @@
 class RetinaImagePath
   
-  @domain = if document?.domain? then document.domain
   @confirmed_paths = []
   
   constructor: (@path) ->
@@ -10,7 +9,7 @@ class RetinaImagePath
     @at_2x_path             = "#{path_without_extension}@2x.#{extension}"
 
   is_external: ->
-    !!( @path.match(/^https?\:/i) and !@path.match(RetinaImagePath.domain) )    
+    !!( @path.match(/^https?\:/i) and !@path.match(document.domain) )    
 
   has_2x_variant: ->
     if @is_external()
