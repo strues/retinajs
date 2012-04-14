@@ -1,3 +1,5 @@
+build
+pkg
 tmp
 .DS_Store
 test/functional/public/retina.js
