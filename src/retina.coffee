@@ -19,6 +19,16 @@
 if window.devicePixelRatio > 1 
   window.onload = ->
 
+    # Arrays of files we've checked on the server
+    checked_files = []
+    confirmed_files = []
+
+    # Function to swap files
+    swap_file = (image, width, height, path) ->
+      image.setAttribute('width', width)
+      image.setAttribute('height', height)
+      image.setAttribute('src', path)
+
     # Grab all of the <img> elements on the page and loop over them
     for image in document.getElementsByTagName("img")
 
@@ -49,17 +59,26 @@ if window.devicePixelRatio > 1
           extension               = path_segments[path_segments.length - 1]
           at_2x_path              = "#{path_without_extension}@2x.#{extension}"
 
-          # Prepare an AJAX request for the HEAD only.
-          # We don't need a full request because we're only
-          # checking to see if the @2x version exists on the server
-          http = new XMLHttpRequest()
-          http.open('HEAD', at_2x_path, false)
-          http.send()
+          # If we haven't already checked this file
+          if at_2x_path not in checked_files
 
-          # If we get an A-OK from the server, 
-          # apply the in-place dimensions and swap the source to the high-res variant
-          if http.status is 200
-            image.setAttribute('width', width)
-            image.setAttribute('height', height)
-            image.setAttribute("src", at_2x_path)
+            # Prepare an AJAX request for the HEAD only.
+            # We don't need a full request because we're only
+            # checking to see if the @2x version exists on the server
+            http = new XMLHttpRequest()
+            http.open('HEAD', at_2x_path, false)
+            http.send()
 
+            # If we get an A-OK from the server,
+            # apply the in-place dimensions, swap the source to the high-res variant
+            # and push file onto array of confirmed files
+            if http.status is 200
+              swap_file(image, width, height, at_2x_path)
+              confirmed_files.push(at_2x_path)
+
+            # Push file onto array of checked images
+            checked_files.push(at_2x_path)
+
+          # If we've already confirmed the 2x image exist, swap images
+          else if at_2x_path in confirmed_files
+            swap_file(image, width, height, at_2x_path)
