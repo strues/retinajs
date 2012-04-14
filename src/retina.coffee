@@ -19,6 +19,10 @@
 if window.devicePixelRatio > 1 
   window.onload = ->
 
+    # Function to test if image is external
+    is_external = (href) ->
+      !!( href.match(/^https?\:/i) and !href.match(document.domain) )
+
     # Grab all of the <img> elements on the page and loop over them
     for image in document.getElementsByTagName("img")
 
@@ -36,6 +40,13 @@ if window.devicePixelRatio > 1
           setTimeout load, 5
           
         else
+
+          # Get image src
+          path = image.getAttribute("src")
+
+          # Return early if image has external path
+          if is_external(path)
+            return
           
           # Grab the image's in-place dimensions.
           width  = image.offsetWidth
@@ -44,7 +55,7 @@ if window.devicePixelRatio > 1
           # Split the file extension off the image path,
           # and put it back together with @2x before the extension.
           # "/path/to/image.png" => "/path/to/image@2x.png"
-          path_segments           = image.getAttribute("src").split('.')
+          path_segments           = path.split('.')
           path_without_extension  = path_segments.slice(0, (path_segments.length - 1)).join(".")
           extension               = path_segments[path_segments.length - 1]
           at_2x_path              = "#{path_without_extension}@2x.#{extension}"
