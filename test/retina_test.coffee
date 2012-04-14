@@ -79,3 +79,8 @@ describe 'RetinaImagePath instance', ->
     path.has_2x_variant().should.equal false
     
     
+  it 'should has_@2x_variant if the @2x image path has already been checked and confirmed', ->
+    RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
+    path = new RetinaImagePath("/images/some_image.png")
+    path.has_2x_variant().should.equal true
+    

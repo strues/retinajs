@@ -1,6 +1,7 @@
 class RetinaImagePath
   
   @domain = if document?.domain? then document.domain
+  @confirmed_paths = []
   
   constructor: (@path) ->
     path_segments           = @path.split('.')
@@ -12,11 +13,21 @@ class RetinaImagePath
     !!( @path.match(/^https?\:/i) and !@path.match(RetinaImagePath.domain) )    
 
   has_2x_variant: ->
-    return false if @is_external()
-    http = new XMLHttpRequest
-    http.open('HEAD', @at_2x_path, false)
-    http.send()
-    http.status is 200
+    if @is_external()
+      return false
+    
+    else if @at_2x_path in RetinaImagePath.confirmed_paths
+      console.log "Found #{@at_2x_path} in confirmed_paths"
+      return true
+
+    else
+      http = new XMLHttpRequest
+      http.open('HEAD', @at_2x_path, false)
+      http.send()
+      if http.status is 200
+        RetinaImagePath.confirmed_paths.push @at_2x_path
+        return true
+    
 
 root = exports ? window
 root.RetinaImagePath = RetinaImagePath
