@@ -4,8 +4,9 @@ require 'zip/zipfilesystem'
 require 'coyote'
 
 task :build do
+  FileUtils.mkdir_p 'build'
   Coyote.run "src/retina.coffee", "build/retina.js", :compress => true
-  Coyote.run "src/retina.coffee", "test/public/retina.js", :compress => true
+  Coyote.run "src/retina.coffee", "test/functional/public/retina.js", :compress => true
 end
 
 task :package => [:build] do
