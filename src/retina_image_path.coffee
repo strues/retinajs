@@ -17,8 +17,7 @@ class RetinaImagePath
 
   # Function to test if image is external
   is_external: ->
-    !!( @path.match(/^https?\:/i) and !@path.match(document.domain) )    
-
+    !!( @path.match(/^https?\:/i) and !@path.match('//' + document.domain) )
 
   has_2x_variant: ->
     # If the image path is on an external server,
