@@ -41,6 +41,17 @@ describe 'RetinaImagePath instance', ->
     path = new RetinaImagePath("http://google.com/images/some_image.png")
     path.is_external().should.equal true
     
+  it 'should be external if image path has www and domain does not', ->
+    document.domain = "apple.com"
+    path = new RetinaImagePath("http://www.apple.com/images/some_image.png")
+    path.is_external().should.equal true
+
+
+  it 'should be external if image path does not have www and domain does', ->
+    document.domain = "www.apple.com"
+    path = new RetinaImagePath("http://apple.com/images/some_image.png")
+    path.is_external().should.equal true
+
 
   it 'should not be external if image path is relative with www', ->
     document.domain = "www.apple.com"
@@ -64,19 +75,7 @@ describe 'RetinaImagePath instance', ->
     document.domain = "www.apple.com"
     path = new RetinaImagePath("http://www.apple.com/images/some_image.png")
     path.is_external().should.equal false    
-    
-    
-  it 'should not be external if image path has www and domain does not', ->
-    document.domain = "apple.com"
-    path = new RetinaImagePath("http://www.apple.com/images/some_image.png")
-    path.is_external().should.equal false    
-    
 
-  it 'should not be external if image path does not have www and domain does', ->
-    document.domain = "www.apple.com"
-    path = new RetinaImagePath("http://apple.com/images/some_image.png")
-    path.is_external().should.equal false
-    
         
   it 'should exit early and return false if image path is external', ->
     document.domain = "www.apple.com"
