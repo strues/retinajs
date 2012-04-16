@@ -3,3 +3,4 @@ pkg
 tmp
 .DS_Store
 test/functional/public/retina.*
+node_modules

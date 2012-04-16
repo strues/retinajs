@@ -82,7 +82,7 @@ to keep an eye on the source files and automatically compile them to `test/funct
 
 ##How to test
 
-We use [Mocha](http://visionmedia.github.com/mocha/) for unit testing. Install Mocha by running `npm install -g mocha`.
+We use [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) for unit testing. Install thse by running `npm install -g mocha` and `npm install chai`.
 
 To run the test suite:
 
