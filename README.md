@@ -60,3 +60,39 @@ Will compile to:
 		    background-size: 200px 100px;
 		  }
 		}
+		
+		
+
+#Building & Testing retina.js
+
+##How to build
+
+We use [Coyote](http://imulus.github.com/coyote/) to stitch everything together. Install Coyote by running `gem install coyote`.
+
+    $ rake build
+
+This will compile the CoffeeScript and put the new build in `build/retina.js`
+
+During development, you can use:
+
+    $ rake watch
+
+to keep an eye on the source files and automatically compile them to `test/functional/public`. Handy for testing in the browser.
+
+
+##How to test
+
+We use [Mocha](http://visionmedia.github.com/mocha/) for unit testing. Install Mocha by running `npm install -g mocha`.
+
+To run the test suite:
+
+    $ mocha --compilers coffee:coffee-script -R spec
+
+We also have a [Sinatra](http://sinatrarb.com) app for testing in the browser locally. This is handy for testing on your retina devices.
+
+To start the server, run:
+
+    $ cd test/functional && ruby app.rb
+
+Then navigate your browser to [http://localhost:4567](http://localhost:4567)
+
