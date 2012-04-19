@@ -22,7 +22,6 @@ task :package => [:build] do
 
   FileUtils.rm zip, :force => true
   FileUtils.mkdir_p tmp
-  FileUtils.cp "src/retina.coffee", "#{tmp}/retina.coffee"
   FileUtils.cp "src/retina.less",   "#{tmp}/retina.less"
   FileUtils.cp "build/retina.js",   "#{tmp}/retina.js"
 
