@@ -106,13 +106,3 @@ describe 'RetinaImagePath', ->
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
       path = new RetinaImagePath("/images/some_image.png")
       path.has_2x_variant().should.equal true
-    
-    
-    
-describe 'RetinaImage', ->    
-  retina_image = null 
-
-  it 'should throw TypeError when image param is not instanceof Image', ->
-    (() -> new RetinaImage ).should.throw()
-    
-  
