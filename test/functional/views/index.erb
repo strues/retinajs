@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      .responsive {
+        width: 80%;
+        margin: auto;
+      }
+      
+      .responsive img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+      }
+    </style>
+    
+    <script type="text/javascript">
+      window.devicePixelRatio = 2;  // Spoof the browser into thinking it is Retina
+    </script>
+  </head>
+  <body>
+    <img src="google.png" />
+    <img src="google.png" /> <!-- It will find the @2x version of this in the confirmed_paths cache because it is a duplicate -->
+    <img src="google@1x.png" /> <!-- This will not be replaced with a retina version-->
+    <img src="https://www.google.com/logos/2012/doisneau12-hp.jpg" />    
+    
+    <div class="responsive">
+      <img src="ipad_hero.jpeg" />
+      <img src="ipad_hero@1x.jpeg" /> <!-- This will not be replaced with a retina version-->      
+    </div>
+    
+    
+    <script type="text/javascript" charset="utf-8" src="retina.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
