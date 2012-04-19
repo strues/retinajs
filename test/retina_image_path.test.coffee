@@ -79,7 +79,7 @@ describe 'RetinaImagePath', ->
 
     
 
-  describe '#has_@2x_variant()', ->    
+  describe '#has_2x_variant()', ->    
     it 'should return false when #is_external() is true', ->
       document.domain = "www.apple.com"
       path = new RetinaImagePath("http://google.com/images/some_image.png")
