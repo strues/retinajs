@@ -1,6 +1,7 @@
 # Create a document object because we don't have one
 # in our Node test environment
 global.document         = {domain: null}
+global.Image            = require('./fixtures/image').Image
 global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest
 global.RetinaImage      = require('../src/retina_image').RetinaImage
 global.RetinaImagePath  = require('../src/retina_image_path').RetinaImagePath
@@ -73,9 +74,6 @@ describe 'RetinaImagePath', ->
       document.domain = "www.apple.com"
       path = new RetinaImagePath("http://www.apple.com/images/some_image.png")
       path.is_external().should.equal false    
-
-        
-
     
 
   describe '#has_2x_variant()', ->    
@@ -109,3 +107,12 @@ describe 'RetinaImagePath', ->
       path = new RetinaImagePath("/images/some_image.png")
       path.has_2x_variant().should.equal true
     
+    
+    
+describe 'RetinaImage', ->    
+  retina_image = null 
+
+  it 'should throw TypeError when image param is not instanceof Image', ->
+    (() -> new RetinaImage ).should.throw()
+    
+  

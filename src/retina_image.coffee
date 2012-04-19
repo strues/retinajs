@@ -3,8 +3,11 @@
 class RetinaImage
 
   constructor: (@el) ->
+    if not @el? or @el not instanceof Image
+      throw new TypeError("Expected image to be instanceof Image")
     @path = new RetinaImagePath(@el.getAttribute('src'))
     @swap() if @path.has_2x_variant()
+
 
 
   # Method for swapping in a new image path
