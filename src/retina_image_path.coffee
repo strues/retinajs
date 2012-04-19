@@ -43,6 +43,8 @@ class RetinaImagePath
       if http.status is 200
         RetinaImagePath.confirmed_paths.push @at_2x_path
         return true
+      else
+        return false
     
 
 root = exports ? window

@@ -1,7 +1,9 @@
 # Create a document object because we don't have one
 # in our Node test environment
 global.document = {domain: null}
+global.XMLHttpRequest = require('./fixtures/xml_http_request').XMLHttpRequest
 
+{RetinaImage} = require '../src/retina_image'
 {RetinaImagePath} = require '../src/retina_image_path'
 
 
@@ -74,13 +76,35 @@ describe 'RetinaImagePath', ->
       path.is_external().should.equal false    
 
         
-    it 'should exit early and return false when image path is external', ->
-      document.domain = "www.apple.com"
-      path = new RetinaImagePath("http://google.com/images/some_image.png")
-      path.has_2x_variant().should.equal false
+
     
 
   describe '#has_@2x_variant()', ->    
+    it 'should return false when #is_external() is true', ->
+      document.domain = "www.apple.com"
+      path = new RetinaImagePath("http://google.com/images/some_image.png")
+      path.has_2x_variant().should.equal false
+
+
+    it 'should return false when remote at2x image does not exist', ->
+      XMLHttpRequest.status = 404 # simulate a failing request
+      path = new RetinaImagePath("/images/some_image.png")
+      path.has_2x_variant().should.equal false
+      
+
+    it 'should return true when remote at2x image exists', ->
+      XMLHttpRequest.status = 200 # simulate a proper request
+      path = new RetinaImagePath("/images/some_image.png")
+      path.has_2x_variant().should.equal true
+
+
+    it 'should add path to cache when at2x image exists', ->
+      XMLHttpRequest.status = 200 # simulate a proper request
+      path = new RetinaImagePath("/images/some_image.png")
+      path.has_2x_variant()
+      RetinaImagePath.confirmed_paths.should.include path.at_2x_path
+
+
     it 'should return true when the at2x image path has already been checked and confirmed', ->
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
       path = new RetinaImagePath("/images/some_image.png")
