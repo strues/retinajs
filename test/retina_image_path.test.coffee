@@ -1,10 +1,9 @@
 # Create a document object because we don't have one
 # in our Node test environment
-global.document = {domain: null}
-global.XMLHttpRequest = require('./fixtures/xml_http_request').XMLHttpRequest
-
-{RetinaImage} = require '../src/retina_image'
-{RetinaImagePath} = require '../src/retina_image_path'
+global.document         = {domain: null}
+global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest
+global.RetinaImage      = require('../src/retina_image').RetinaImage
+global.RetinaImagePath  = require('../src/retina_image_path').RetinaImagePath
 
 
 describe 'RetinaImagePath', ->
