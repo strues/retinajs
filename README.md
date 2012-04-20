@@ -1,8 +1,8 @@
-# retina.js 
+# retina.js
+
 ### JavaScript and LESS helpers for rendering high-resolution image variants
 
 retina.js makes it easy to serve high-resolution images to devices with retina displays
-
 
 ## How it works
 
@@ -11,13 +11,12 @@ When your users load a page, retina.js checks each image on the page to see if t
 The script assumes you use Apple's prescribed high-resolution modifier (@2x) to denote high-resolution image variants on your server.
 
 For example, if you have an image on your page that looks like this:
-  
+
     <img src="/images/my_image.png" />
 
 The script will check your server to see if an alternative image exists at this path:
-  
-    "/images/my_image@2x.png"
 
+    "/images/my_image@2x.png"
 
 ##How to use
 
@@ -28,8 +27,7 @@ The JavaScript helper script automatically replaces images on your page with hig
 1. Place the retina.js file on your server
 2. Include the script on your page (put it at the bottom of your template, before your closing \</body> tag)
 
-    <script type="text/javascript" src="/scripts/retina.js"></script> 
-
+    <script type="text/javascript" src="/scripts/retina.js"></script>
 
 ###LESS
 
@@ -41,31 +39,27 @@ The LESS CSS mixin is a helper for applying high-resolution background images in
 
 *Steps:*
 
-1.  Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
-2.  In your stylesheet, call the .at2x() mixin anywhere instead of using background-image 
+1. Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
+2. In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
 
-    #logo {
+This:
+
+    .logo {
       .at2x('/images/my_image.png', 200px, 100px);
-    } 
+    }
 
-Will compile to: 
+Will compile to:
 
-    #logo {
+    .logo {
       background-image: url('/images/my_image.png');
     }
 
-    @media all and (-webkit-min-device-pixel-ratio : 1.5),
-           all and (-o-min-device-pixel-ratio: 3/2),
-           all and (min--moz-device-pixel-ratio: 1.5),
-           all and (min-device-pixel-ratio: 1.5) {
-             #logo {
-               background-image: url('/images/my_image@2x.png');
-               background-size: 200px 100px;
-             }
+    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
+      .logo {
+        background-image: url('/images/my_image@2x.png');
+        background-size: 200px 100px;
+      }
     }
-
-    
-    
 
 #Building & Testing retina.js
 
@@ -83,14 +77,13 @@ During development, you can use:
 
 to keep an eye on the source files and automatically compile them to `test/functional/public`. Handy for testing in the browser.
 
-
 ##How to test
 
-We use [Mocha](http://visionmedia.github.com/mocha/) for unit testing. Install Mocha by running `npm install -g mocha`.
+We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install -g mocha should`.
 
 To run the test suite:
 
-    $ mocha 
+    $ mocha
 
 We also have a [Sinatra](http://sinatrarb.com) app for testing in the browser locally. This is handy for testing on your retina devices.
 
@@ -99,4 +92,3 @@ To start the server, run:
     $ cd test/functional && ruby app.rb
 
 Then navigate your browser to [http://localhost:4567](http://localhost:4567)
-
