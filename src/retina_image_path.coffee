@@ -40,7 +40,7 @@ class RetinaImagePath
       
       # If we get an A-OK from the server,
       # push file path onto array of confirmed files
-      if http.status is 200
+      if http.status in [200..399]
         RetinaImagePath.confirmed_paths.push @at_2x_path
         return true
       else
