@@ -22,6 +22,7 @@ task :package => [:build] do
 
   FileUtils.rm zip, :force => true
   FileUtils.mkdir_p tmp
+  FileUtils.cp "README.md",         "#{tmp}/README.md"
   FileUtils.cp "src/retina.less",   "#{tmp}/retina.less"
   FileUtils.cp "build/retina.js",   "#{tmp}/retina.js"
 
