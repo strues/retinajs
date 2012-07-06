@@ -29,10 +29,35 @@ class RetinaImage
       # Once the the image has loaded we know we 
       # can grab the proper dimensions of the original image
       # and go ahead and swap in the new image path and apply the dimensions
-      else        
-        @el.setAttribute('width', @el.offsetWidth)
-        @el.setAttribute('height', @el.offsetHeight)
-        @el.setAttribute('src', path)
+      else
+        swap = true;
+
+        # If offsetWidth is 0, the image is probably hidden
+        if @el.offsetWidth != 0
+          width = @el.offsetWidth
+        else
+          # try to get width from the image attribute
+          if @el.getAttribute('width')
+            width = @el.getAttribute('width')
+          else
+            # we have no knowledge about the width, abort because it
+            # would brake the image size
+            swap = false;
+
+        # Same also for the height
+        if @el.offsetHeight != 0
+          height = @el.offsetHeight
+        else
+          if @el.getAttribute('height')
+            height = @el.getAttribute('height')
+          else
+            swap = false;
+
+
+        if (swap)
+          @el.setAttribute('width', width)
+          @el.setAttribute('height', height)
+          @el.setAttribute('src', path)
 
 
 root = exports ? window
