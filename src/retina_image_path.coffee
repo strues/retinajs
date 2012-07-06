@@ -19,33 +19,37 @@ class RetinaImagePath
   is_external: ->
     !!( @path.match(/^https?\:/i) and !@path.match('//' + document.domain) )
 
-  has_2x_variant: ->
+  check_2x_variant: (callback) ->
+    @callback = callback
+
     # If the image path is on an external server,
     # exit early to avoid cross-domain ajax errors
     if @is_external()
-      return false
+      @callback false
+      return
 
     # If we have already checked and confirmed that
     # the @2x variant exists, then just return true
     else if @at_2x_path in RetinaImagePath.confirmed_paths
-      return true
+      @callback true
+      return
 
     # Otherwise, prepare an AJAX request for the HEAD only.
     # We don't need a full request because we're only
     # checking to see if the @2x version exists on the server
     else
       http = new XMLHttpRequest
-      http.open('HEAD', @at_2x_path, false)
+      http.open('HEAD', @at_2x_path)
+      http.onreadystatechange = () =>
+        if http.readyState != 4
+          return
+        if http.status in [200..399]
+          RetinaImagePath.confirmed_paths.push @at_2x_path
+          @callback true
+        else
+          @callback false
       http.send()
-      
-      # If we get an A-OK from the server,
-      # push file path onto array of confirmed files
-      if http.status in [200..399]
-        RetinaImagePath.confirmed_paths.push @at_2x_path
-        return true
-      else
-        return false
-    
+      return
 
 root = exports ? window
 root.RetinaImagePath = RetinaImagePath
