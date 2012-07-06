@@ -27,7 +27,9 @@ The JavaScript helper script automatically replaces images on your page with hig
 1. Place the retina.js file on your server
 2. Include the script on your page (put it at the bottom of your template, before your closing \</body> tag)
 
-    <script type="text/javascript" src="/scripts/retina.js"></script>
+``` html
+<script type="text/javascript" src="/scripts/retina.js"></script>
+```
 
 ###LESS
 
@@ -35,7 +37,9 @@ The LESS CSS mixin is a helper for applying high-resolution background images in
 
 *Syntax:*
 
-    .at2x(@path, [optional] @width: auto, [optional] @height: auto);
+``` less
+.at2x(@path, [optional] @width: auto, [optional] @height: auto);
+```
 
 *Steps:*
 
@@ -44,38 +48,46 @@ The LESS CSS mixin is a helper for applying high-resolution background images in
 
 This:
 
-    .logo {
-      .at2x('/images/my_image.png', 200px, 100px);
-    }
+``` less
+.logo {
+  .at2x('/images/my_image.png', 200px, 100px);
+}
+```
 
 Will compile to:
 
-    .logo {
-      background-image: url('/images/my_image.png');
-    }
+``` less
+.logo {
+  background-image: url('/images/my_image.png');
+}
 
-    @media all and (-webkit-min-device-pixel-ratio: 1.5) {
-      .logo {
-        background-image: url('/images/my_image@2x.png');
-        background-size: 200px 100px;
-      }
-    }
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .logo {
+    background-image: url('/images/my_image@2x.png');
+    background-size: 200px 100px;
+  }
+}
+```
 
 ##How to test
 
-We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install -g mocha should`.
+We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install`.
 
 To run the test suite:
 
-    $ mocha
+``` bash
+$ npm test
+```
 
-Use [http-server](https://github.com/nodeapps/http-server) for node.js to test it.
+Use [http-server](https://github.com/nodeapps/http-server) for node.js to test it. To install, run `npm install -g http-server`.
 
 If you've updated `retina.js` be sure to copy it from `src/retina.js` to `test/functional/public/retina.js`.
 
 To start the server, run:
 
-    $ cd test/functional && http-server
+``` bash
+$ cd test/functional && http-server
+```
 
 Then navigate your browser to [http://localhost:4567](http://localhost:4567)
 

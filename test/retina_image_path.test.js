@@ -3,8 +3,8 @@
 global.document         = {domain: null};
 global.Image            = require('./fixtures/image').Image;
 global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest;
-global.RetinaImage      = require('../src/retina').RetinaImage;
-global.RetinaImagePath  = require('../src/retina').RetinaImagePath;
+global.RetinaImage      = require('../').RetinaImage;
+global.RetinaImagePath  = require('../').RetinaImagePath;
 
 
 describe('RetinaImagePath', function() {
