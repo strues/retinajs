@@ -4,7 +4,9 @@ class RetinaImage
 
   constructor: (@el) ->
     @path = new RetinaImagePath(@el.getAttribute('src'))
-    @swap() if @path.has_2x_variant()
+    @path.check_2x_variant (swap) =>
+      if (swap)
+        @swap()
 
 
 

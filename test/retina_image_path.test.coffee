@@ -76,33 +76,42 @@ describe 'RetinaImagePath', ->
       path.is_external().should.equal false    
     
 
-  describe '#has_2x_variant()', ->    
-    it 'should return false when #is_external() is true', ->
+
+  describe '#check_2x_variant()', ->
+    it 'should callback with false when #is_external() is true', (done) ->
       document.domain = "www.apple.com"
       path = new RetinaImagePath("http://google.com/images/some_image.png")
-      path.has_2x_variant().should.equal false
+      path.check_2x_variant (response) ->
+        response.should.equal false
+        done()
 
-
-    it 'should return false when remote at2x image does not exist', ->
+    it 'should callback with false when remote at2x image does not exist', (done) ->
       XMLHttpRequest.status = 404 # simulate a failing request
       path = new RetinaImagePath("/images/some_image.png")
-      path.has_2x_variant().should.equal false
-      
+      path.check_2x_variant (response) ->
+        response.should.equal false
+        done()
 
-    it 'should return true when remote at2x image exists', ->
+
+    it 'should callback with true when remote at2x image exists', (done) ->
       XMLHttpRequest.status = 200 # simulate a proper request
       path = new RetinaImagePath("/images/some_image.png")
-      path.has_2x_variant().should.equal true
+      path.check_2x_variant (response) ->
+        response.should.equal true
+        done()
 
-
-    it 'should add path to cache when at2x image exists', ->
+    it 'should add path to cache when at2x image exists', (done) ->
       XMLHttpRequest.status = 200 # simulate a proper request
       path = new RetinaImagePath("/images/some_image.png")
-      path.has_2x_variant()
-      RetinaImagePath.confirmed_paths.should.include path.at_2x_path
+      @RetinaImagePath = RetinaImagePath
+      path.check_2x_variant () =>
+        @RetinaImagePath.confirmed_paths.should.include path.at_2x_path
+        done()
 
 
-    it 'should return true when the at2x image path has already been checked and confirmed', ->
+    it 'should callback with true when the at2x image path has already been checked and confirmed', (done) ->
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
       path = new RetinaImagePath("/images/some_image.png")
-      path.has_2x_variant().should.equal true
+      path.check_2x_variant (response) ->
+        response.should.equal true
+        done()
