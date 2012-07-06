@@ -61,22 +61,6 @@ Will compile to:
       }
     }
 
-#Building & Testing retina.js
-
-##How to build
-
-We use [Coyote](http://imulus.github.com/coyote/) to stitch everything together. Install Coyote by running `gem install coyote`.
-
-    $ rake build
-
-This will compile the CoffeeScript and put the new build in `build/retina.js`
-
-During development, you can use:
-
-    $ rake watch
-
-to keep an eye on the source files and automatically compile them to `test/functional/public`. Handy for testing in the browser.
-
 ##How to test
 
 We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install -g mocha should`.
@@ -85,18 +69,23 @@ To run the test suite:
 
     $ mocha
 
-We also have a [Sinatra](http://sinatrarb.com) app for testing in the browser locally. This is handy for testing on your retina devices.
+Use [http-server](https://github.com/nodeapps/http-server) for node.js to test it.
+
+If you've updated `retina.js` be sure to copy it from `src/retina.js` to `test/functional/public/retina.js`.
 
 To start the server, run:
 
-    $ cd test/functional && ruby app.rb
+    $ cd test/functional && http-server
 
 Then navigate your browser to [http://localhost:4567](http://localhost:4567)
 
+After that, open up `test/functional/public/index.html` in your editor, and try commenting out the line that spoofs retina support, and reloading it.
 
 #License
 
 (MIT License)
+
+Copyright (C) 2012 Ben Atkin
 
 Copyright (C) 2012 [Imulus](http://imulus.com)
 
