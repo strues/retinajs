@@ -89,7 +89,7 @@ To start the server, run:
 $ cd test/functional && http-server
 ```
 
-Then navigate your browser to [http://localhost:4567](http://localhost:4567)
+Then navigate your browser to [http://localhost:8080](http://localhost:8080)
 
 After that, open up `test/functional/public/index.html` in your editor, and try commenting out the line that spoofs retina support, and reloading it.
 
