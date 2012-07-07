@@ -93,13 +93,14 @@ Then navigate your browser to [http://localhost:8080](http://localhost:8080)
 
 After that, open up `test/functional/public/index.html` in your editor, and try commenting out the line that spoofs retina support, and reloading it.
 
+
 #License
 
 (MIT License)
 
-Copyright (C) 2012 Ben Atkin
-
 Copyright (C) 2012 [Imulus](http://imulus.com)
+
+Copyright (C) 2012 Ben Atkin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
