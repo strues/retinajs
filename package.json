@@ -1,7 +1,6 @@
 {
   "name": "retina.js",
-  "version": "0.0.0",
-  "publish": "false",
+  "version": "0.0.1",
   "devDependencies": {
     "mocha": "*",
     "should": "*"
