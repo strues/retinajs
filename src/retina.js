@@ -27,41 +27,47 @@ RetinaImagePath.prototype.is_external = function() {
   return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
 }
 
-RetinaImagePath.prototype.has_2x_variant = function() {
-  var http;
+RetinaImagePath.prototype.check_2x_variant = function(callback) {
+  var http, that = this;
   if (this.is_external()) {
     // If the image path is on an external server,
     // exit early to avoid cross-domain ajax errors
-    return false;
+    return callback(false);
   } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
     // If we have already checked and confirmed that
     // the @2x variant exists, then just return true
-    return true
+    return callback(true);
   } else {
     // Otherwise, prepare an AJAX request for the HEAD only.
     // We don't need a full request because we're only
     // checking to see if the @2x version exists on the server
     http = new XMLHttpRequest;
-    http.open('HEAD', this.at_2x_path, false);
-    http.send();
-    
-    // If we get an A-OK from the server,
-    // push file path onto array of confirmed files
-    if (http.status >= 200 && http.status <= 399) {
-      RetinaImagePath.confirmed_paths.push(this.at_2x_path);
-      return true;
-    } else {
-      return false;
+    http.open('HEAD', this.at_2x_path);
+    http.onreadystatechange = function() {
+      if (http.readyState != 4) {
+        return callback(false);
+      }
+
+      // If we get an A-OK from the server,
+      // push file path onto array of confirmed files
+      if (http.status >= 200 && http.status <= 399) {
+        RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+        return callback(true);
+      } else {
+        return callback(false);
+      }
     }
+    http.send();
   }
 }
 
 function RetinaImage(el) {
   this.el = el;
   this.path = new RetinaImagePath(this.el.getAttribute('src'));
-  if (this.path.has_2x_variant()) {
-    this.swap();
-  }
+  var that = this;
+  this.path.check_2x_variant(function(hasVariant) {
+    if (hasVariant) that.swap();
+  });
 }
 
 root.RetinaImage = RetinaImage;

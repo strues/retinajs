@@ -1,5 +1,7 @@
 function XMLHttpRequest() {
   this.status = XMLHttpRequest.status;
+  this.readyState = 4;
+  this.onreadystatechange = function() {}
 }
 
 XMLHttpRequest.status = 200;
@@ -9,7 +11,7 @@ XMLHttpRequest.prototype.open = function() {
 }
 
 XMLHttpRequest.prototype.send = function() {
-  return true;
+  this.onreadystatechange();
 }
         
 var root = (exports || window);
