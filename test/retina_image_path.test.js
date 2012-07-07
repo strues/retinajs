@@ -78,36 +78,50 @@ describe('RetinaImagePath', function() {
     });
   });
     
-  describe('#has_2x_variant()', function() {
-    it('should return false when #is_external() is true', function() {
+  describe('#check_2x_variant()', function() {
+    it('should callback with false when #is_external() is true', function(done) {
       document.domain = "www.apple.com";
       path = new RetinaImagePath("http://google.com/images/some_image.png");
-      path.has_2x_variant().should.equal(false);
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(false);
+        done();
+      });
     });
 
-    it('should return false when remote at2x image does not exist', function() {
+    it('should callback with false when remote at2x image does not exist', function(done) {
       XMLHttpRequest.status = 404; // simulate a failing request
       path = new RetinaImagePath("/images/some_image.png");
-      path.has_2x_variant().should.equal(false);
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(false);
+        done();
+      });
     });
       
-    it('should return true when remote at2x image exists', function() {
+    it('should callback with true when remote at2x image exists', function(done) {
       XMLHttpRequest.status = 200; // simulate a proper request
       path = new RetinaImagePath("/images/some_image.png");
-      path.has_2x_variant().should.equal(true);
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
+        done();
+      });
     });
 
-    it('should add path to cache when at2x image exists', function() {
+    it('should add path to cache when at2x image exists', function(done) {
       XMLHttpRequest.status = 200; // simulate a proper request
       path = new RetinaImagePath("/images/some_image.png");
-      path.has_2x_variant();
-      RetinaImagePath.confirmed_paths.should.include(path.at_2x_path);
+      path.check_2x_variant(function(hasVariant) {
+        RetinaImagePath.confirmed_paths.should.include(path.at_2x_path);
+        done();
+      });
     });
 
-    it('should return true when the at2x image path has already been checked and confirmed', function() {
+    it('should return true when the at2x image path has already been checked and confirmed', function(done) {
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
       path = new RetinaImagePath("/images/some_image.png")
-      path.has_2x_variant().should.equal(true);
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
+        done();
+      });
     });
   });
 });
