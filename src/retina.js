@@ -1,6 +1,3 @@
-// retina.js
-// Source for retina.js, a high-resolution image swapper (http://www.retinajs.com)
-
 (function() {
 
 var root = (typeof exports == 'undefined' ? window : exports);

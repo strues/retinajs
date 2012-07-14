@@ -5,7 +5,7 @@ package:
 	mkdir -p build
 	cp README.md build/README.md
 	cp src/retina.less build/retina.less
-	cp src/retina.js build/retina.js
-	uglifyjs build/retina.js > build/retina.min.js
-	mv build/retina.js build/retina.$(VERSION).js
-	mv build/retina.min.js build/retina.$(VERSION).min.js	
+	echo "// retina.js, a high-resolution image swapper (http://retinajs.com), v$(VERSION)\n" > build/retina.js
+	uglifyjs src/retina.js >> build/retina.js
+	cat build/retina.js
+
