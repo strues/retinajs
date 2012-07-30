@@ -117,11 +117,14 @@ function checkToLoadRetinaImages() {
 // If we're on a retina device now, bind the image load
 // to the window object's onload. Otherwise, wait for a
 // scroll to check for being moved to a retina device in
-// the future.
+// the future. Don't do anything if the browser doesn't
+// know devicePixelRatio.
 
-if (root.devicePixelRatio > 1)
-  window.onload = checkToLoadRetinaImages;
-else
-  window.onscroll = checkToLoadRetinaImages;
+if (root.devicePixelRatio != undefined) {
+  if (root.devicePixelRatio > 1)
+    window.onload = checkToLoadRetinaImages;
+  else
+    window.onscroll = checkToLoadRetinaImages;
+}
 
 })();
