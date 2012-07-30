@@ -99,19 +99,29 @@ RetinaImage.prototype.swap = function(path) {
   load();
 }
 
-// First check that we're on a retina device.
-// We don't even want this guy executing if we're not.
-// Bind everything to the window object's onload.
-// This helps wait for the images to get loaded into the DOM.
+var loadedRetina = false;
 
-if (root.devicePixelRatio > 1) {
-  window.onload = function() {
-    var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
-    for (i = 0; i < images.length; i++) {
-      image = images[i];
-      retinaImages.push(new RetinaImage(image));
-    }
+function checkToLoadRetinaImages() {
+  if (loadedRetina || root.devicePixelRatio <= 1)
+    return;
+
+  loadedRetina = true;
+
+  var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
+  for (i = 0; i < images.length; i++) {
+    image = images[i];
+    retinaImages.push(new RetinaImage(image));
   }
 }
+
+// If we're on a retina device now, bind the image load
+// to the window object's onload. Otherwise, wait for a
+// scroll to check for being moved to a retina device in
+// the future.
+
+if (root.devicePixelRatio > 1)
+  window.onload = checkToLoadRetinaImages;
+else
+  window.onscroll = checkToLoadRetinaImages;
 
 })();
