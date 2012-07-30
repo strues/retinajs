@@ -16,9 +16,20 @@
     </style>
     
     <script type="text/javascript">
-      // Spoof the browser into thinking it is Retina
-      // comment the next line out to make sure it works without retina
-      window.devicePixelRatio = 2;  
+      showGoRetinaButton = false;
+
+      // Uncomment only the following line to simulate a non-retina display
+      //window.devicePixelRatio = 1;
+
+      // Uncomment only the following line to simulate a retina display
+      window.devicePixelRatio = 2;
+
+      // Uncomment only the following line to show a button that will
+      // simulate moving from a non-retina display to a retina one
+      //showGoRetinaButton = true;
+
+      if (showGoRetinaButton)
+          window.devicePixelRatio = 1;  // Start on non-retina display
     </script>
   </head>
   <body>
@@ -31,8 +42,15 @@
       <img src="ipad_hero.jpeg" />
       <img src="ipad_hero@1x.jpeg" /> <!-- This will not be replaced with a retina version-->      
     </div>
+
+    <p><input id="goretina" type="button" value="Simulate moving this diplay to retina" onclick="javascript: window.devicePixelRatio = 2;" style="visibility: hidden;"></p>
     
     
     <script type="text/javascript" charset="utf-8" src="retina.js"></script>
+
+    <script type="text/javascript">
+      if (showGoRetinaButton)
+        document.getElementById("goretina").style.visibility = "visible";
+    </script>
   </body>
 </html>
