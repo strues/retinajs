@@ -73,11 +73,12 @@ root.RetinaImage = RetinaImage;
 // Applies the dimensions of the existing image
 // to the image with the new image path
 RetinaImage.prototype.swap = function(path) {
+  var that = this, hidden = false, width, height;
+
   if (typeof path == 'undefined') path = this.path.at_2x_path;
 
   // We wrap this in a named self-executer so we can reference 
   // it in a setTimeout if the image has not loaded yet.
-  var that = this;
   function load() {
     if (! that.el.complete) {
       // Check that the image has loaded.
@@ -88,12 +89,34 @@ RetinaImage.prototype.swap = function(path) {
       // and still have the script detect image loads reliably and efficiently.
       setTimeout(load, 5);
     } else {
+      // If offsetWidth is 0, the image is probably hidden
+      width = that.el.offsetWidth;
+      if (!width || width == "0") {
+        // try to get width from the image attribute
+        width = el.getAttribute('width')
+        if (!width || width == "0") {
+          hidden = true;
+        }
+      }
+
+      // same for height
+      height = that.el.offsetHeight;
+      if (!height || height == "0") {
+        // try to get width from the image attribute
+        height = el.getAttribute('height')
+        if (!height || height == "0") {
+          hidden = true;
+        }
+      }
+
       // Once the the image has loaded we know we 
       // can grab the proper dimensions of the original image
       // and go ahead and swap in the new image path and apply the dimensions
-      that.el.setAttribute('width', that.el.offsetWidth);
-      that.el.setAttribute('height', that.el.offsetHeight);
-      that.el.setAttribute('src', path);
+      if (! hidden) {
+        that.el.setAttribute('width', width);
+        that.el.setAttribute('height', height);
+        that.el.setAttribute('src', path);
+      }
     }
   }
   load();
