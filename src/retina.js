@@ -104,7 +104,7 @@ RetinaImage.prototype.swap = function(path) {
 // Bind everything to the window object's onload.
 // This helps wait for the images to get loaded into the DOM.
 
-if (root.devicePixelRatio > 1) {
+if (root.devicePixelRatio > 1 || window.matchMedia('(min-resolution: 1.1dppx)').matches) {
   window.onload = function() {
     var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
     for (i = 0; i < images.length; i++) {
