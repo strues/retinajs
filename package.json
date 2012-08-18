@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "less": "*"
   },
   "main": "./src/retina",
   "scripts": {
