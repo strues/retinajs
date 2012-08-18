@@ -4,21 +4,15 @@ var root = (typeof exports == 'undefined' ? window : exports);
 
 function RetinaImagePath(path) {
   this.path = path;
-  // Split the file extension off the image path,
-  // and put it back together with @2x before the extension.
-  // "/path/to/image.png" => "/path/to/image@2x.png"
-  var path_segments           = this.path.split('.');
-  var path_without_extension  = path_segments.slice(0, (path_segments.length - 1)).join(".");
-  var extension               = path_segments[path_segments.length - 1];
-  this.at_2x_path             = path_without_extension + "@2x." + extension;
+  this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
 }
-    
+
 root.RetinaImagePath = RetinaImagePath;
-  
-// Class variable [Array] 
+
+// Class variable [Array]
 // cache of files we've checked on the server
 RetinaImagePath.confirmed_paths = [];
-  
+
 // Function to test if image is external
 RetinaImagePath.prototype.is_external = function() {
   return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
@@ -75,7 +69,7 @@ root.RetinaImage = RetinaImage;
 RetinaImage.prototype.swap = function(path) {
   if (typeof path == 'undefined') path = this.path.at_2x_path;
 
-  // We wrap this in a named self-executer so we can reference 
+  // We wrap this in a named self-executer so we can reference
   // it in a setTimeout if the image has not loaded yet.
   var that = this;
   function load() {
@@ -88,7 +82,7 @@ RetinaImage.prototype.swap = function(path) {
       // and still have the script detect image loads reliably and efficiently.
       setTimeout(load, 5);
     } else {
-      // Once the the image has loaded we know we 
+      // Once the the image has loaded we know we
       // can grab the proper dimensions of the original image
       // and go ahead and swap in the new image path and apply the dimensions
       that.el.setAttribute('width', that.el.offsetWidth);
