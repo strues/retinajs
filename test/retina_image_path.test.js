@@ -9,7 +9,14 @@ global.RetinaImagePath  = require('../').RetinaImagePath;
 
 describe('RetinaImagePath', function() {
   var path = null;
-  
+
+  describe('@at_2x_path', function(){
+    it('adds "@2x" before the extension', function(){
+      path = new RetinaImagePath("/path/to/image.png");
+      path.at_2x_path.should.equal("/path/to/image@2x.png");
+    });
+  });
+
   describe('#is_external()', function() {
     it('should return true when image path references a remote domain with www', function() {
       document.domain = "www.apple.com";
@@ -40,7 +47,7 @@ describe('RetinaImagePath', function() {
       path = new RetinaImagePath("http://google.com/images/some_image.png")
       path.is_external().should.equal(true);
     });
-    
+
     it('should return true when image path has www and domain does not', function() {
       document.domain = "apple.com";
       path = new RetinaImagePath("http://www.apple.com/images/some_image.png");
@@ -64,20 +71,20 @@ describe('RetinaImagePath', function() {
       path = new RetinaImagePath("/images/some_image.png");
       path.is_external().should.equal(false);
     });
-    
+
     it('should return false when image path is relative to localhost', function() {
       document.domain = "localhost";
       path = new RetinaImagePath("/images/some_image.png");
       path.is_external().should.equal(false);
     });
-    
+
     it('should return false when image path has same domain as current site with www', function() {
       document.domain = "www.apple.com";
       path = new RetinaImagePath("http://www.apple.com/images/some_image.png");
       path.is_external().should.equal(false);
     });
   });
-    
+
   describe('#check_2x_variant()', function() {
     it('should callback with false when #is_external() is true', function(done) {
       document.domain = "www.apple.com";
@@ -96,7 +103,7 @@ describe('RetinaImagePath', function() {
         done();
       });
     });
-      
+
     it('should callback with true when remote at2x image exists', function(done) {
       XMLHttpRequest.status = 200; // simulate a proper request
       path = new RetinaImagePath("/images/some_image.png");

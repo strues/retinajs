@@ -1,0 +1,9 @@
+body {
+  background-image: url('/path/to/image.png');
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  body {
+    background-image: url('/path/to/image@2x.png');
+    background-size: 200px 100px;
+  }
+}
