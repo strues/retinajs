@@ -1,0 +1,18 @@
+body {
+  background-image: url('/path/to/image.png');
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+  body {
+    background-image: url("/path/to/image@2x.png");
+    background-size: 200px 100px;
+  }
+}
+header {
+  background-image: url("/path/to/header.png");
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+  header {
+    background-image: url("/path/to/header@2x.png");
+    background-size: 600px 50px;
+  }
+}
