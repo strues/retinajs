@@ -31,6 +31,11 @@
         }
 
         if (http.status >= 200 && http.status <= 399) {
+          var type = http.getResponseHeader('Content-Type');
+          if (type == null || !type.match(/^image/i)) {
+            return callback(false);
+          }
+
           RetinaImagePath.confirmed_paths.push(that.at_2x_path);
           return callback(true);
         } else {
