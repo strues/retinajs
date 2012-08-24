@@ -5,7 +5,7 @@
 
   function RetinaImagePath(path) {
     this.path = path;
-    this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+    this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
   }
 
   root.RetinaImagePath = RetinaImagePath;
