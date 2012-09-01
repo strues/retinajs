@@ -115,6 +115,18 @@ describe('RetinaImagePath', function() {
       });
     });
 
+    it('should callback with true when content-type is wrong, but check_mime_type is false', function(done) {
+      XMLHttpRequest.status = 200; // simulate a proper request
+      XMLHttpRequest.contentType = 'text/html'; // but with an incorrect content type
+      global.RetinaImagePath.set_options({check_mime_type: false}); // but ignore it
+      path = new RetinaImagePath("/images/some_image.png");
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
+        global.RetinaImagePath.set_options({check_mime_type: true});
+        done();
+      });
+    });
+
     it('should callback with true when remote at2x image exists', function(done) {
       XMLHttpRequest.status = 200; // simulate a proper request
       XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
