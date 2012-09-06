@@ -72,12 +72,14 @@
 
 
   if (root.devicePixelRatio > 1) {
+    var existing_onload = window.onload || new Function;
     window.onload = function() {
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
         retinaImages.push(new RetinaImage(image));
       }
+      existing_onload();
     }
   }
 
