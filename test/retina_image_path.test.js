@@ -1,5 +1,6 @@
 // Create a document object because we don't have one
 // in our Node test environment
+delete global.document;
 global.document         = {domain: null};
 global.Image            = require('./fixtures/image').Image;
 global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest;
