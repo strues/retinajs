@@ -42,6 +42,9 @@
   }
 
 
+
+
+
   function RetinaImage(el) {
     this.el = el;
     this.path = new RetinaImagePath(this.el.getAttribute('src'));
@@ -71,9 +74,18 @@
 
 
 
-  if (root.devicePixelRatio > 1) {
-    var existing_onload = window.onload || new Function;
-    window.onload = function() {
+
+
+  function Retina() {}
+
+  root.Retina = Retina;
+
+  Retina.init = function(context){
+    if (context == null) context = root;
+
+    var existing_onload = context.onload || new Function;
+
+    context.onload = function() {
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
@@ -81,6 +93,12 @@
       }
       existing_onload();
     }
+  }
+
+
+
+  if (root.devicePixelRatio > 1) {
+    Retina.init(root);
   }
 
 })();
