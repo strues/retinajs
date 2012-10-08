@@ -1,15 +1,20 @@
 // Create a document object because we don't have one
 // in our Node test environment
 delete global.document;
-global.document         = {domain: null};
+global.document         = {};
 global.Image            = require('./fixtures/image').Image;
 global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest;
+global.Retina           = require('../').Retina;
 global.RetinaImage      = require('../').RetinaImage;
 global.RetinaImagePath  = require('../').RetinaImagePath;
 
 
 describe('RetinaImagePath', function() {
   var path = null;
+
+  before(function(){
+    global.document = {domain: null};
+  });
 
   describe('@at_2x_path', function(){
     it('adds "@2x" before the extension', function(){
@@ -119,11 +124,19 @@ describe('RetinaImagePath', function() {
     it('should callback with true when content-type is wrong, but check_mime_type is false', function(done) {
       XMLHttpRequest.status = 200; // simulate a proper request
       XMLHttpRequest.contentType = 'text/html'; // but with an incorrect content type
-      global.RetinaImagePath.set_options({check_mime_type: false}); // but ignore it
+
+      Retina.configure({
+        check_mime_type: false // but ignore it
+      });
+
       path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(true);
-        global.RetinaImagePath.set_options({check_mime_type: true});
+
+        Retina.configure({
+          check_mime_type: true
+        });
+
         done();
       });
     });
