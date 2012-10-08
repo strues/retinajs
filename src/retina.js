@@ -32,17 +32,30 @@
       }
       existing_onload();
     }
-  }
+  };
+
+  Retina.isRetina = function(){
+    var mediaQuery = "(-webkit-min-device-pixel-ratio: 1.5),\
+                      (min--moz-device-pixel-ratio: 1.5),\
+                      (-o-min-device-pixel-ratio: 3/2),\
+                      (min-resolution: 1.5dppx)";
+
+    if (root.devicePixelRatio > 1)
+      return true;
+
+    if (root.matchMedia && root.matchMedia(mediaQuery).matches)
+      return true;
+
+    return false;
+  };
 
 
-
+  root.RetinaImagePath = RetinaImagePath;
 
   function RetinaImagePath(path) {
     this.path = path;
     this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
   }
-
-  root.RetinaImagePath = RetinaImagePath;
 
   RetinaImagePath.confirmed_paths = [];
 
@@ -113,8 +126,10 @@
 
 
 
-  if (root.devicePixelRatio > 1) {
+
+  if (Retina.isRetina()) {
     Retina.init(root);
   }
 
 })();
+

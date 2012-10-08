@@ -20,6 +20,9 @@ describe('Retina', function() {
     it('stashes the existing onload and executes it later', function(){
       var existingOnloadExecutions = 0;
       var window = {
+        matchMedia : function() {
+          return { matches: false }
+        },
         onload : function() {
           existingOnloadExecutions++;
         }

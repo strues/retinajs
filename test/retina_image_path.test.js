@@ -4,9 +4,19 @@ delete global.document;
 global.document         = {};
 global.Image            = require('./fixtures/image').Image;
 global.XMLHttpRequest   = require('./fixtures/xml_http_request').XMLHttpRequest;
-global.Retina           = require('../').Retina;
-global.RetinaImage      = require('../').RetinaImage;
-global.RetinaImagePath  = require('../').RetinaImagePath;
+
+global.exports = {
+  devicePixelRatio : 0.9,
+  matchMedia : function() {
+    return {
+      matches : false
+    }
+  }
+}
+
+var Retina           = require('../').Retina;
+var RetinaImage      = require('../').RetinaImage;
+var RetinaImagePath  = require('../').RetinaImagePath;
 
 
 describe('RetinaImagePath', function() {
