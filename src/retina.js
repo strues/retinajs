@@ -3,6 +3,12 @@
   var root = (typeof exports == 'undefined' ? window : exports);
 
   var config = {
+    // An option to choose a suffix for 2x images
+    retinaImageSuffix : "@2x",
+    
+    // An option to select some of the img tags to make their image retina.
+    retinaImgTagSelector : "body img",
+    
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
     check_mime_type: true
@@ -25,7 +31,7 @@
     var existing_onload = context.onload || new Function;
 
     context.onload = function() {
-      var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
+      var images = document.querySelectorAll(config.retinaImgTagSelector), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
         retinaImages.push(new RetinaImage(image));
@@ -54,7 +60,7 @@
 
   function RetinaImagePath(path) {
     this.path = path;
-    this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+    this.at_2x_path = path.replace(/\.\w+$/, function(match) { return config.retinaImageSuffix + match; });
   }
 
   RetinaImagePath.confirmed_paths = [];
