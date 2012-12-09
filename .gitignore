@@ -2,5 +2,6 @@ build
 pkg
 tmp
 .DS_Store
+test/functional/retina.*
 test/functional/public/retina.*
 node_modules
