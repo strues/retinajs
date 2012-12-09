@@ -1,6 +1,6 @@
 # retina.js
 
-### JavaScript and LESS helpers for rendering high-resolution image variants
+### JavaScript, LESS and SASS helpers for rendering high-resolution image variants
 
 retina.js makes it easy to serve high-resolution images to devices with retina displays
 
@@ -33,9 +33,9 @@ The JavaScript helper script automatically replaces images on your page with hig
 <script type="text/javascript" src="/scripts/retina.js"></script>
 ```
 
-###LESS
+###LESS & SASS
 
-The LESS CSS mixin is a helper for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a background-size of the original image in order to maintain proper dimensions. To use it, download the mixin, import or include it in your LESS stylesheet, and apply it to elements of your choice.
+The LESS & SASS CSS mixins are helpers for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a background-size of the original image in order to maintain proper dimensions. To use it, download the mixin, import or include it in your LESS or SASS stylesheet, and apply it to elements of your choice. The SASS versions require you pass the extension separately from the path.
 
 *Syntax:*
 
@@ -43,10 +43,16 @@ The LESS CSS mixin is a helper for applying high-resolution background images in
 .at2x(@path, [optional] @width: auto, [optional] @height: auto);
 ```
 
+``` scss
+@include at2x($path, [option] $ext: "jpg", [optional] $width: auto, [optional] $height: auto);
+```
+
 *Steps:*
 
-1. Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
-2. In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
+1. LESS - Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
+SASS - Add the @mixin at2x() from retina.scss or retina.sass to your SASS stylesheet (or reference it in an @import)
+2. LESS - In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
+SASS - In your stylesheet, call @include at2x() anywhere instead of using background-image
 
 This:
 
@@ -56,9 +62,15 @@ This:
 }
 ```
 
+``` sass
+.logo {
+  @include at2x('/images/my_image', png, 200px, 100px);
+}
+```
+
 Will compile to:
 
-``` less
+``` css
 .logo {
   background-image: url('/images/my_image.png');
 }
