@@ -1,0 +1,11 @@
+@import 'src/retina.scss';
+
+// Single quoted
+body {
+  @include at2x('/path/to/image', png, 200px, 100px);
+}
+
+// Double quoted
+header {
+  @include at2x("/path/to/header", png, 600px, 50px);
+}
