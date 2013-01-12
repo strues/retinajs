@@ -10,15 +10,25 @@ retina.js makes it easy to serve high-resolution images to devices with retina d
 
 When your users load a page, retina.js checks each image on the page to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.
 
-The script assumes you use Apple's prescribed high-resolution modifier (@2x) to denote high-resolution image variants on your server.
+The script assumes you use Apple's prescribed high-resolution modifier (@2x) to denote high-resolution image variants on your server. It is also possible to override this by manually specifying the URL for the @2x images using `data-at2x` attributes.
 
 For example, if you have an image on your page that looks like this:
 
+```html
     <img src="/images/my_image.png" />
+```
 
 The script will check your server to see if an alternative image exists at this path:
 
     "/images/my_image@2x.png"
+
+However, if you have:
+
+```html
+    <img src="/images/my_image.png" data-at2x="http://example.com/my_image@2x.png" />
+```
+
+The script will use `http://example.com/my_image@2x.png` as the high-resolution image. No checks to the server will be performed.
 
 ##How to use
 
@@ -69,6 +79,36 @@ Will compile to:
     background-size: 200px 100px;
   }
 }
+```
+
+### Ruby on Rails 3.x
+
+...or any framework that embeds some unique hash to the asset URLs, e.g. `/images/image-{hash1}.jpg`.
+
+The problem with this is that the high-resolution version would have a different hash, and would not conform the usual pattern, i.e. `/images/image@2x-{hash2}.jpg`. So automatic detection would fail because retina.js would check the existence of `/images/image-{hash1}@2x.jpg`.
+
+There's no way for retina.js to know beforehand what the high-resolution image's hash would be without some sort of help from the server side. So in this case, the suggested method is to supply the high-resolution URLs using the `data-at2x` attributes as previously described in the How It Works section.
+
+In Rails, one way to automate this is using a helper, e.g.:
+
+```ruby
+    # in app/helpers/some_helper.rb or app/helpers/application_helper.rb
+    def image_tag_with_at2x(name_at_1x, options={})
+      name_at_2x = name_at_1x.gsub(%r{\.\w+$}, '@2x\0')
+      image_tag(name_at_1x, options.merge("data-at2x" => asset_path(name_at_2x)))
+    end
+```
+
+And then in your views (templates), instead of using image_tag, you would use image_tag_with_at2x, e.g. for ERB:
+
+```erb
+  <%= image_tag_with_at2x "logo.png" %>
+```
+
+It would generate something like:
+
+```html
+  <img src="logo-{hash1}.png" data-at2x="logo@2x-{hash2}.png" />
 ```
 
 ##How to test
