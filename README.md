@@ -83,7 +83,7 @@ Will compile to:
 
 ### Ruby on Rails 3.x
 
-...or any framework that embeds some unique hash to the asset URLs, e.g. `/images/image-{hash1}.jpg`.
+...or any framework that embeds some digest/hash to the asset URLs based on the contents, e.g. `/images/image-{hash1}.jpg`.
 
 The problem with this is that the high-resolution version would have a different hash, and would not conform the usual pattern, i.e. `/images/image@2x-{hash2}.jpg`. So automatic detection would fail because retina.js would check the existence of `/images/image-{hash1}@2x.jpg`.
 
