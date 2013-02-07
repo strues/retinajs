@@ -1,14 +1,15 @@
 (function() {
-
   var root = (typeof exports == 'undefined' ? window : exports);
 
   var config = {
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
-    check_mime_type: true
-  };
+    check_mime_type: true,
 
-
+    // Resize high-resolution images to original image's pixel dimensions
+    // https://github.com/imulus/retinajs/issues/8
+    force_original_dimensions: true
+ };
 
   root.Retina = Retina;
 
@@ -116,8 +117,11 @@
       if (! that.el.complete) {
         setTimeout(load, 5);
       } else {
-        that.el.setAttribute('width', that.el.offsetWidth);
-        that.el.setAttribute('height', that.el.offsetHeight);
+        if (config.force_original_dimensions) {
+          that.el.setAttribute('width', that.el.offsetWidth);
+          that.el.setAttribute('height', that.el.offsetHeight);
+        }
+
         that.el.setAttribute('src', path);
       }
     }
