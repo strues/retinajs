@@ -8,11 +8,9 @@
     check_mime_type: true
   };
 
-
+  function Retina() {}
 
   root.Retina = Retina;
-
-  function Retina() {}
 
   Retina.configure = function(options) {
     if (options == null) options = {};
