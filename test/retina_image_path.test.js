@@ -172,6 +172,7 @@ describe('RetinaImagePath', function() {
     });
 
     it('should return true when the at2x image path has already been checked and confirmed', function(done) {
+      XMLHttpRequest.status = 404; // just to cofirm that's not making any unecessary request
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png'];
       path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {

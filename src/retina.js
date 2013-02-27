@@ -8,9 +8,9 @@
     check_mime_type: true
   };
 
-  function Retina() {}
 
-  root.Retina = Retina;
+
+  function Retina() {}
 
   Retina.configure = function(options) {
     if (options == null) options = {};
@@ -47,8 +47,9 @@
     return false;
   };
 
+  root.Retina = Retina;
 
-  root.RetinaImagePath = RetinaImagePath;
+
 
   function RetinaImagePath(path) {
     this.path = path;
@@ -65,7 +66,7 @@
     var http, that = this;
     if (this.is_external()) {
       return callback(false);
-    } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+    } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) >= 0) {
       return callback(true);
     } else {
       http = new XMLHttpRequest;
@@ -93,6 +94,8 @@
     }
   }
 
+  root.RetinaImagePath = RetinaImagePath;
+
 
 
   function RetinaImage(el) {
@@ -103,8 +106,6 @@
       if (hasVariant) that.swap();
     });
   }
-
-  root.RetinaImage = RetinaImage;
 
   RetinaImage.prototype.swap = function(path) {
     if (typeof path == 'undefined') path = this.path.at_2x_path;
@@ -122,6 +123,7 @@
     load();
   }
 
+  root.RetinaImage = RetinaImage;
 
 
 
@@ -130,4 +132,3 @@
   }
 
 })();
-
