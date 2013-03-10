@@ -63,6 +63,13 @@
     return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
   }
 
+  RetinaImagePath.prototype.at_2x_path_loads = function(callback) {
+    var variant = new Image();
+    variant.onload  = function() { return callback(true);  }
+    variant.onerror = function() { return callback(false); }
+    variant.src = this.at_2x_path;
+  }
+
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var http, that = this;
     if (this.is_external()) {
