@@ -73,6 +73,10 @@ describe('RetinaImagePath', function() {
     it('should return true when the at2x image path has already been checked and confirmed', function(done) {
       RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
       path = new RetinaImagePath("/images/some_image.png")
+
+      // Simulate error when loading 2x image
+      path.at_2x_path_loads = function(callback) { callback(false); }
+
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(true);
         done();

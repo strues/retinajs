@@ -68,7 +68,7 @@
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var that = this;
-    if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+    if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) != -1) {
       return callback(true);
     } else {
       this.at_2x_path_loads(function(wasLoaded) {
