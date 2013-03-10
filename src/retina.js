@@ -59,10 +59,6 @@
 
   RetinaImagePath.confirmed_paths = [];
 
-  RetinaImagePath.prototype.is_external = function() {
-    return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
-  }
-
   RetinaImagePath.prototype.at_2x_path_loads = function(callback) {
     var variant = new Image();
     variant.onload  = function() { return callback(true);  }
@@ -72,9 +68,7 @@
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var http, that = this;
-    if (this.is_external()) {
-      return callback(false);
-    } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+    if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
       return callback(true);
     } else {
       http = new XMLHttpRequest;
