@@ -67,32 +67,14 @@
   }
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
-    var http, that = this;
+    var that = this;
     if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
       return callback(true);
     } else {
-      http = new XMLHttpRequest;
-      http.open('HEAD', this.at_2x_path);
-      http.onreadystatechange = function() {
-        if (http.readyState != 4) {
-          return callback(false);
-        }
-
-        if (http.status >= 200 && http.status <= 399) {
-          if (config.check_mime_type) {
-            var type = http.getResponseHeader('Content-Type');
-            if (type == null || !type.match(/^image/i)) {
-              return callback(false);
-            }
-          }
-
-          RetinaImagePath.confirmed_paths.push(that.at_2x_path);
-          return callback(true);
-        } else {
-          return callback(false);
-        }
-      }
-      http.send();
+      this.at_2x_path_loads(function(wasLoaded) {
+        if (wasLoaded) RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+        return callback(wasLoaded);
+      });
     }
   }
 

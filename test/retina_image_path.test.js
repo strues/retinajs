@@ -34,59 +34,24 @@ describe('RetinaImagePath', function() {
   });
 
   describe('#check_2x_variant()', function() {
-    it('should callback with false when #is_external() is true', function(done) {
-      document.domain = "www.apple.com";
-      path = new RetinaImagePath("http://google.com/images/some_image.png");
+    it('should callback with false when remote at2x image cannot be loaded', function(done) {
+      path = new RetinaImagePath("/images/some_image.png");
+
+      // Simulate error when loading 2x image
+      path.at_2x_path_loads = function(callback) { callback(false); }
+
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(false);
-        done();
-      });
-    });
-
-    it('should callback with false when remote at2x image does not exist', function(done) {
-      XMLHttpRequest.status = 404; // simulate a failing request
-      XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
-      path = new RetinaImagePath("/images/some_image.png");
-      path.check_2x_variant(function(hasVariant) {
-        hasVariant.should.equal(false);
-        done();
-      });
-    });
-
-    it('should callback with false when content-type is not an image type', function(done) {
-      XMLHttpRequest.status = 200; // simulate a an image request that comes back OK
-      XMLHttpRequest.contentType = 'text/html'; // but is actually an improperly coded 404 page
-      path = new RetinaImagePath("/images/some_image.png");
-      path.check_2x_variant(function(hasVariant) {
-        hasVariant.should.equal(false);
-        done();
-      });
-    });
-
-    it('should callback with true when content-type is wrong, but check_mime_type is false', function(done) {
-      XMLHttpRequest.status = 200; // simulate a proper request
-      XMLHttpRequest.contentType = 'text/html'; // but with an incorrect content type
-
-      Retina.configure({
-        check_mime_type: false // but ignore it
-      });
-
-      path = new RetinaImagePath("/images/some_image.png");
-      path.check_2x_variant(function(hasVariant) {
-        hasVariant.should.equal(true);
-
-        Retina.configure({
-          check_mime_type: true
-        });
-
         done();
       });
     });
 
     it('should callback with true when remote at2x image exists', function(done) {
-      XMLHttpRequest.status = 200; // simulate a proper request
-      XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
       path = new RetinaImagePath("/images/some_image.png");
+
+      // Simulate successful loading of 2x image
+      path.at_2x_path_loads = function(callback) { callback(true); }
+
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(true);
         done();
@@ -94,9 +59,11 @@ describe('RetinaImagePath', function() {
     });
 
     it('should add path to cache when at2x image exists', function(done) {
-      XMLHttpRequest.status = 200; // simulate a proper request
-      XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
       path = new RetinaImagePath("/images/some_image.png");
+
+      // Simulate successful loading of 2x image
+      path.at_2x_path_loads = function(callback) { callback(true); }
+
       path.check_2x_variant(function(hasVariant) {
         RetinaImagePath.confirmed_paths.should.include(path.at_2x_path);
         done();
