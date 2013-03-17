@@ -10,8 +10,6 @@
 
 
 
-  root.Retina = Retina;
-
   function Retina() {}
 
   Retina.configure = function(options) {
@@ -49,8 +47,9 @@
     return false;
   };
 
+  root.Retina = Retina;
 
-  root.RetinaImagePath = RetinaImagePath;
+
 
   function RetinaImagePath(path, at_2x_path) {
     this.path = path;
@@ -75,7 +74,7 @@
       return callback(false);
     } else if (!this.perform_check && typeof this.at_2x_path !== "undefined" && this.at_2x_path !== null) {
       return callback(true);
-    } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+    } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) >= 0) {
       return callback(true);
     } else {
       http = new XMLHttpRequest;
@@ -103,6 +102,8 @@
     }
   }
 
+  root.RetinaImagePath = RetinaImagePath;
+
 
 
   function RetinaImage(el) {
@@ -113,8 +114,6 @@
       if (hasVariant) that.swap();
     });
   }
-
-  root.RetinaImage = RetinaImage;
 
   RetinaImage.prototype.swap = function(path) {
     if (typeof path == 'undefined') path = this.path.at_2x_path;
@@ -132,6 +131,7 @@
     load();
   }
 
+  root.RetinaImage = RetinaImage;
 
 
 
@@ -140,4 +140,3 @@
   }
 
 })();
-

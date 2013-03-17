@@ -9,3 +9,5 @@ package:
 	uglifyjs src/retina.js >> build/retina.js
 	cat build/retina.js
 
+setup:
+	cat requirements.txt | xargs npm install

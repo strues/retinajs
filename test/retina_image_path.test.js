@@ -10,9 +10,9 @@ global.exports = {
   matchMedia : function() {
     return {
       matches : false
-    }
+    };
   }
-}
+};
 
 var Retina           = require('../').Retina;
 var RetinaImage      = require('../').RetinaImage;
@@ -63,8 +63,8 @@ describe('RetinaImagePath', function() {
     });
 
     it('should return true when image path is a remote domain without www and domain is localhost', function() {
-      document.domain = "localhost"
-      path = new RetinaImagePath("http://google.com/images/some_image.png")
+      document.domain = "localhost";
+      path = new RetinaImagePath("http://google.com/images/some_image.png");
       path.is_external().should.equal(true);
     });
 
@@ -184,8 +184,9 @@ describe('RetinaImagePath', function() {
     });
 
     it('should return true when the at2x image path has already been checked and confirmed', function(done) {
-      RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png']
-      path = new RetinaImagePath("/images/some_image.png")
+      XMLHttpRequest.status = 404; // just to cofirm that's not making any unecessary request
+      RetinaImagePath.confirmed_paths = ['/images/some_image@2x.png'];
+      path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(true);
         done();
