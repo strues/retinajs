@@ -10,4 +10,4 @@ package:
 	cat build/retina.js
 
 setup:
-	cat requirements.txt | xargs npm install -g
+	cat requirements.txt | xargs npm install
