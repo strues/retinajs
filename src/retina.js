@@ -2,22 +2,11 @@
 
   var root = (typeof exports == 'undefined' ? window : exports);
 
-  var config = {
-    // Ensure Content-Type is an image before trying to load @2x image
-    // https://github.com/imulus/retinajs/pull/45)
-    check_mime_type: true
-  };
-
 
 
   root.Retina = Retina;
 
   function Retina() {}
-
-  Retina.configure = function(options) {
-    if (options == null) options = {};
-    for (var prop in options) config[prop] = options[prop];
-  };
 
   Retina.init = function(context) {
     if (context == null) context = root;
