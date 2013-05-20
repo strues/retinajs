@@ -4,7 +4,7 @@
 @highdpi: ~"(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)";
 
 .at2x(@path, @w: auto, @h: auto) {
-  background-image: url(@path);
+  background-image: url("@path");
   @at2x_path: ~`@{path}.replace(/\.\w+$/, function(match) { return "@2x" + match; })`;
 
   @media @highdpi {
