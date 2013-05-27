@@ -3,6 +3,7 @@
   var root = (typeof exports == 'undefined' ? window : exports);
 
   var config = {
+    cssPath: "/static/css/retina.css",
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
     check_mime_type: true
@@ -24,9 +25,8 @@
 
     var existing_onload = context.onload || new Function;
 
-    var cssName = "/static/css/retina.css";
     var head  = document.head;//.getElementsByTagName('head')[0];
-    head.innerHTML += "<link id='retinacss' href='" + cssName + "' type='text/css' rel='stylesheet' />";
+    head.innerHTML += "<link id='retinacss' href='" + config.cssPath + "' type='text/css' rel='stylesheet' />";
 
     context.onload = function() {
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
