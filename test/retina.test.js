@@ -12,6 +12,9 @@ describe('Retina', function() {
     global.document = {
       getElementsByTagName : function(){
         return [];
+      },
+      head: {
+        innerHTML: ''
       }
     }
   });

@@ -25,12 +25,8 @@
     var existing_onload = context.onload || new Function;
 
     var cssName = "/static/css/retina.css";
-    var head  = document.getElementsByTagName('head')[0];
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = cssName;
-    head.appendChild(link);
+    var head  = document.head;//.getElementsByTagName('head')[0];
+    head.innerHTML += "<link id='retinacss' href='" + cssName + "' type='text/css' rel='stylesheet' />";
 
     context.onload = function() {
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
