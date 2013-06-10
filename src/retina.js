@@ -5,7 +5,8 @@
   var config = {
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
-    check_mime_type: true
+    check_mime_type: true,
+    img_tag_selector: 'img'
   };
 
 
@@ -25,7 +26,8 @@
     var existing_onload = context.onload || new Function;
 
     context.onload = function() {
-      var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
+      var images = document.querySelectorAll(config.img_tag_selector),
+          retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
         retinaImages.push(new RetinaImage(image));
