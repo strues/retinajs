@@ -8,9 +8,12 @@ var Retina = require('../').Retina;
 describe('Retina', function() {
 
   before(function(){
-    // stub out the getElementsByTagName method
     global.document = {
       getElementsByTagName : function(){
+        return [];
+      },
+      querySelectorAll : function (selector){
+        global.document.imgTagSelector = selector;
         return [];
       }
     }
@@ -30,6 +33,11 @@ describe('Retina', function() {
       Retina.init(window);
       window.onload();
       existingOnloadExecutions.should.equal(1);
+    });
+
+    it('uses standard img tag selector by default', function(){
+      Retina.init();
+      global.document.imgTagSelector.should.equal('img');
     });
   });
 

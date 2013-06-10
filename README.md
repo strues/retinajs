@@ -10,6 +10,8 @@ retina.js makes it easy to serve high-resolution images to devices with retina d
 
 When your users load a page, retina.js checks each image on the page to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.
 
+You can also specify a custom image tag selector if you want to limit the images for which the script performs this check. This is particularly handy in combination with the `data-at2x` attribute described below.
+
 The script assumes you use Apple's prescribed high-resolution modifier (@2x) to denote high-resolution image variants on your server. It is also possible to override this by manually specifying the URL for the @2x images using `data-at2x` attributes.
 
 For example, if you have an image on your page that looks like this:
@@ -42,6 +44,18 @@ The JavaScript helper script automatically replaces images on your page with hig
 ``` html
 <script type="text/javascript" src="/scripts/retina.js"></script>
 ```
+
+If you want to specify a custom image tag selector then add the following below the script tag:
+
+```html
+<script type="text/javascript">
+    window.Retina.configure({
+        img_tag_selector : 'img[data-at2x]'
+    });
+</script>
+```
+
+This particular selector `img[data-at2x]` will make sure that retina.js only retrieves retina images for those image tags that have the `data-at2x` attribute set.
 
 ###LESS
 
