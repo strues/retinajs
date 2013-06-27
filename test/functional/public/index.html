@@ -13,6 +13,9 @@
         height: auto;
         max-width: 100%;
       }
+      .with-border{
+        border: 2px solid red;
+      }
     </style>
 
     <script type="text/javascript">
@@ -26,6 +29,9 @@
     <img src="google.png" /> <!-- It will find the @2x version of this in the confirmed_paths cache because it is a duplicate -->
     <img src="google@1x.png" /> <!-- This will not be replaced with a retina version-->
     <img src="https://www.google.com/logos/2012/doisneau12-hp.jpg" />
+    <br />
+    <img src="google.png" class="with-border" /> <!-- retina image should be the same size as low res image when border is specified -->
+    <img src="google@1x.png" class="with-border" />
 
     <div class="responsive">
       <img src="ipad_hero.jpeg" />

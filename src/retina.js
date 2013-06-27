@@ -124,8 +124,8 @@
       if (! that.el.complete) {
         setTimeout(load, 5);
       } else {
-        that.el.setAttribute('width', that.el.offsetWidth);
-        that.el.setAttribute('height', that.el.offsetHeight);
+        that.el.setAttribute('width', that.el.clientWidth);
+        that.el.setAttribute('height', that.el.clientHeight);
         that.el.setAttribute('src', path);
       }
     }
