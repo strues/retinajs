@@ -123,16 +123,29 @@
     function load() {
       if (! that.el.complete) {
         setTimeout(load, 5);
-      } else {
-        that.el.setAttribute('width', that.el.offsetWidth);
-        that.el.setAttribute('height', that.el.offsetHeight);
-        that.el.setAttribute('src', path);
-      }
+      } else{
+        if( that.el.offsetWidth != 0 ){
+          width = that.el.offsetWidth;
+        }
+        else{
+          if(that.el.getAttribute('width')){
+                width = that.el.getAttribute('width');
+          }
+        }
+          if (that.el.offsetHeight != 0){
+            height = that.el.offsetHeight;
+          }else{
+            if (that.el.getAttribute('height')){
+              height = that.el.getAttribute('height');
+            }
+          }
+          that.el.setAttribute('width', width);
+          that.el.setAttribute('height', height);
+          that.el.setAttribute('src', path);
+        }
     }
     load();
   }
-
-
 
 
   if (Retina.isRetina()) {
