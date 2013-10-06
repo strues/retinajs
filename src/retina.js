@@ -75,7 +75,7 @@
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var http, that = this;
-    if (this.is_external()) {
+    if (this.is_external() || this.is_data_uri()) {
       return callback(false);
     } else if (!this.perform_check && typeof this.at_2x_path !== "undefined" && this.at_2x_path !== null) {
       return callback(true);

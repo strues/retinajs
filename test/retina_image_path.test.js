@@ -135,6 +135,15 @@ describe('RetinaImagePath', function() {
       });
     });
 
+    it('should callback with false when #is_data_uri() is true', function(done) {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("data:image/png;base64,foobar");
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(false);
+        done();
+      });
+    });
+
     it('should callback with true when at2x is supplied', function(done) {
       path = new RetinaImagePath("/images/some_image.png", "/images/some_image@100x.png");
       path.check_2x_variant(function(hasVariant) {
