@@ -105,6 +105,26 @@ describe('RetinaImagePath', function() {
     });
   });
 
+  describe('#is_data_uri()', function() {
+    it('should return true when image path references a data uri', function() {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("data:image/png;base64,foobar");
+      path.is_data_uri().should.equal(true);
+    });
+
+    it('should return false when image path is an absolute url', function() {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("http://apple.com/images/some_image.png");
+      path.is_data_uri().should.equal(false);
+    });
+
+    it('should return false when image path is a relative url', function() {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("images/some_image.png");
+      path.is_data_uri().should.equal(false);
+    });
+  });
+
   describe('#check_2x_variant()', function() {
     it('should callback with false when #is_external() is true', function(done) {
       document.domain = "www.apple.com";

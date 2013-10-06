@@ -69,6 +69,10 @@
     return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
   }
 
+  RetinaImagePath.prototype.is_data_uri = function() {
+    return !!this.path.match(/^data\:[^\/]+\/[^\;]/i);
+  }
+
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var http, that = this;
     if (this.is_external()) {
