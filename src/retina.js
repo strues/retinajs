@@ -61,7 +61,7 @@
       if (undefined != document.createElement) {
         var locationObject = document.createElement('a');
         locationObject.href = path;
-        locationObject.pathname = locationObject.pathname.replace(/\.\w+\??$/, function(match) { return "@2x" + match; });
+        locationObject.pathname = locationObject.pathname.replace(/\.\w+$/, function(match) { return "@2x" + match; });
         this.at_2x_path = locationObject.href;
       } else {
         var parts = path.split('?');
