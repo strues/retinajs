@@ -18,7 +18,6 @@ var Retina           = require('../').Retina;
 var RetinaImage      = require('../').RetinaImage;
 var RetinaImagePath  = require('../').RetinaImagePath;
 
-
 describe('RetinaImagePath', function() {
   var path = null;
 
@@ -30,6 +29,11 @@ describe('RetinaImagePath', function() {
     it('adds "@2x" before the extension', function(){
       path = new RetinaImagePath("/path/to/image.png");
       path.at_2x_path.should.equal("/path/to/image@2x.png");
+    });
+
+    it('uses data-@2x when supplied', function(){
+      path = new RetinaImagePath("/path/to/image-hash1.png", "/path/to/image@2x-hash2.png");
+      path.at_2x_path.should.equal("/path/to/image@2x-hash2.png");
     });
   });
 
@@ -107,6 +111,14 @@ describe('RetinaImagePath', function() {
       path = new RetinaImagePath("http://google.com/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(false);
+        done();
+      });
+    });
+
+    it('should callback with true when at2x is supplied', function(done) {
+      path = new RetinaImagePath("/images/some_image.png", "/images/some_image@100x.png");
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
         done();
       });
     });

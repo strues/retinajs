@@ -53,9 +53,15 @@
 
   root.RetinaImagePath = RetinaImagePath;
 
-  function RetinaImagePath(path) {
+  function RetinaImagePath(path, at_2x_path) {
     this.path = path;
-    this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+    if (typeof at_2x_path !== "undefined" && at_2x_path !== null) {
+      this.at_2x_path = at_2x_path;
+      this.perform_check = false;
+    } else {
+      this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+      this.perform_check = true;
+    }
   }
 
   RetinaImagePath.confirmed_paths = [];
@@ -68,6 +74,8 @@
     var http, that = this;
     if (this.is_external()) {
       return callback(false);
+    } else if (!this.perform_check && typeof this.at_2x_path !== "undefined" && this.at_2x_path !== null) {
+      return callback(true);
     } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
       return callback(true);
     } else {
@@ -100,7 +108,7 @@
 
   function RetinaImage(el) {
     this.el = el;
-    this.path = new RetinaImagePath(this.el.getAttribute('src'));
+    this.path = new RetinaImagePath(this.el.getAttribute('src'), this.el.getAttribute('data-at2x'));
     var that = this;
     this.path.check_2x_variant(function(hasVariant) {
       if (hasVariant) that.swap();
