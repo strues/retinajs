@@ -4,7 +4,8 @@
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "less": "*"
+    "less": "*",
+    "node-sass": "*"
   },
   "main": "./src/retina",
   "scripts": {
