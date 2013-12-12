@@ -106,11 +106,23 @@ describe('RetinaImagePath', function() {
   });
 
   describe('#check_2x_variant()', function() {
-    it('should callback with false when #is_external() is true', function(done) {
+    it('should callback with false when #is_external() is true and missing at_2x_path', function(done) {
       document.domain = "www.apple.com";
       path = new RetinaImagePath("http://google.com/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
         hasVariant.should.equal(false);
+        done();
+      });
+    });
+
+    it('should callback with true when #is_external() is true and at_2x_path specified', function(done) {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath(
+        "http://google.com/images/some_image.png",
+        "http://google.com/images/some_image@2x.png"
+      );
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
         done();
       });
     });
