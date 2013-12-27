@@ -126,8 +126,14 @@
         setTimeout(load, 5);
       } else {
         if (config.force_original_dimensions) {
-          that.el.setAttribute('width', that.el.offsetWidth);
-          that.el.setAttribute('height', that.el.offsetHeight);
+          if(that.el.offsetWidth === 0 || that.el.offsetHeight === 0) {
+            that.el.setAttribute('width', '100%');
+            that.el.setAttribute('height', '100%');
+          } else {
+            that.el.setAttribute('width', that.el.offsetWidth);
+            that.el.setAttribute('height', that.el.offsetHeight);
+            
+          }
         }
 
         that.el.setAttribute('src', path);
