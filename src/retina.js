@@ -25,14 +25,14 @@
 
     var existing_onload = context.onload || new Function;
 
-    context.onload = function() {
+    context.addEventListener('load', function (){
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
         retinaImages.push(new RetinaImage(image));
       }
       existing_onload();
-    }
+    });
   };
 
   Retina.isRetina = function(){
