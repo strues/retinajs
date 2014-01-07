@@ -23,8 +23,6 @@
   Retina.init = function(context) {
     if (context == null) context = root;
 
-    var existing_onload = context.onload || new Function;
-
     context.addEventListener('load', function (){
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
