@@ -28,6 +28,12 @@ However, if you have:
 
 The script will use `http://example.com/my_image@2x.png` as the high-resolution image. No checks to the server will be performed.
 
+You can prevent the script from trying to find a retina equivalent by giving it the class `non-retina`. For example:
+
+```html
+<img src="/images/my_image.png" class="non-retina" />
+```
+
 ## How to use
 
 ### JavaScript
