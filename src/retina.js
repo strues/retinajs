@@ -29,7 +29,7 @@
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
-        if ( image.getAttribute('class').indexOf('non-retina') == -1 ) {
+        if ( image.className.indexOf('non-retina') == -1 ) {
           retinaImages.push(new RetinaImage(image));
         }
       }
