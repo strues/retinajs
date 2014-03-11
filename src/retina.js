@@ -29,7 +29,9 @@
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
-        retinaImages.push(new RetinaImage(image));
+        if (image.hasAttribute("data-no-retina") == false) {
+          retinaImages.push(new RetinaImage(image));
+        }
       }
       existing_onload();
     }
@@ -124,7 +126,7 @@
     function load() {
       if (! that.el.complete) {
         setTimeout(load, 5);
-      } else if (!that.el.getAttribute('data-no-retina')) {
+      } else {
         if (config.force_original_dimensions) {
           that.el.setAttribute('width', that.el.offsetWidth);
           that.el.setAttribute('height', that.el.offsetHeight);
