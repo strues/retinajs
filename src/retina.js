@@ -126,7 +126,7 @@
     function load() {
       if (! that.el.complete) {
         setTimeout(load, 5);
-      } else {
+      } else if (that.el.hasAttribute("data-no-retina") == false) {
         if (config.force_original_dimensions) {
           that.el.setAttribute('width', that.el.offsetWidth);
           that.el.setAttribute('height', that.el.offsetHeight);
@@ -144,6 +144,4 @@
   if (Retina.isRetina()) {
     Retina.init(root);
   }
-
 })();
-
