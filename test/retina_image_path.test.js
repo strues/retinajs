@@ -123,6 +123,14 @@ describe('RetinaImagePath', function() {
       });
     });
 
+    it('should callback with true when at2x is supplied even if referencing a external over https', function(done){
+      path = new RetinaImagePath("https://google.com/images/some_image.png", "https://google.com/images/some_image_hidpi.png");
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
+        done();
+      });
+    });
+
     it('should callback with false when remote at2x image does not exist', function(done) {
       XMLHttpRequest.status = 404; // simulate a failing request
       XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
