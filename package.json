@@ -6,12 +6,11 @@
     "should": "*",
     "less": "*",
     "node-sass": "*",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt": "^0.4.4",
-    "grunt-contrib-uglify": "^0.4.0",
-    "grunt-contrib-less": "^0.11.0",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-compress": "^0.7.0"
+    "grunt": "~0.4.4",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "~0.7.0"
   },
   "main": "./src/retina",
   "scripts": {
