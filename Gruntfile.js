@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             return new Date().getFullYear();
         })(),
 
-        clean: ['build'],
+        clean: ['build', 'pkg'],
 
         copy: {
             README: {
@@ -49,11 +49,11 @@ module.exports = function (grunt) {
         compress: {
             pkg: {
                 options: {
-                    archive: 'retina-<%= pkg.version %>.zip'
+                    archive: 'pkg/retina-<%= pkg.version %>.zip'
                 },
-                cwd: 'build/',
-                src: ['**'],
-                dest: 'pkg/'
+                files: [
+                    {src: ['**'], cwd: 'build/', dest: '/', expand: true }
+                ]
             }
         }
     });
@@ -63,5 +63,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-compress');
 
-    grunt.registerTask('default', ['clean', 'copy', 'uglify']);
+    grunt.registerTask('default', ['clean', 'copy', 'uglify', 'compress']);
 };
