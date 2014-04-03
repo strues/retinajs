@@ -1,0 +1,9 @@
+/*!
+ * Retina.js v<%= pkg.version %>
+ *
+ * Copyright <%= year %> Imulus, LLC
+ * Released under the MIT license
+ *
+ * Retina.js is an open source script that makes it easy to serve
+ * high-resolution images to devices with retina displays.
+ */
