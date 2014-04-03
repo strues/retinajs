@@ -1,3 +1,4 @@
+/* jshint multistr:true */
 (function() {
   var root = (typeof exports == 'undefined' ? window : exports);
 
@@ -16,14 +17,14 @@
   function Retina() {}
 
   Retina.configure = function(options) {
-    if (options == null) options = {};
+    if (options === null) options = {};
     for (var prop in options) config[prop] = options[prop];
   };
 
   Retina.init = function(context) {
-    if (context == null) context = root;
+    if (context === null) context = root;
 
-    var existing_onload = context.onload || new Function;
+    var existing_onload = context.onload || function(){};
 
     context.onload = function() {
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
@@ -32,7 +33,7 @@
         retinaImages.push(new RetinaImage(image));
       }
       existing_onload();
-    }
+    };
   };
 
   Retina.isRetina = function(){
@@ -67,8 +68,8 @@
   RetinaImagePath.confirmed_paths = [];
 
   RetinaImagePath.prototype.is_external = function() {
-    return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) )
-  }
+    return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) );
+  };
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
     var http, that = this;
@@ -79,7 +80,7 @@
     } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
       return callback(true);
     } else {
-      http = new XMLHttpRequest;
+      http = new XMLHttpRequest();
       http.open('HEAD', this.at_2x_path);
       http.onreadystatechange = function() {
         if (http.readyState != 4) {
@@ -89,7 +90,7 @@
         if (http.status >= 200 && http.status <= 399) {
           if (config.check_mime_type) {
             var type = http.getResponseHeader('Content-Type');
-            if (type == null || !type.match(/^image/i)) {
+            if (type === null || !type.match(/^image/i)) {
               return callback(false);
             }
           }
@@ -99,10 +100,10 @@
         } else {
           return callback(false);
         }
-      }
+      };
       http.send();
     }
-  }
+  };
 
 
 
@@ -134,7 +135,7 @@
       }
     }
     load();
-  }
+  };
 
 
 
