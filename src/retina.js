@@ -30,7 +30,9 @@
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
-        retinaImages.push(new RetinaImage(image));
+        if ( image.className.indexOf('non-retina') == -1 ) {
+          retinaImages.push(new RetinaImage(image));
+        }
       }
       existing_onload();
     };
