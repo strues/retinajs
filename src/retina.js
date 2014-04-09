@@ -30,7 +30,7 @@
       var images = document.getElementsByTagName("img"), retinaImages = [], i, image;
       for (i = 0; i < images.length; i++) {
         image = images[i];
-        if (image.hasAttribute("data-no-retina") == false) {
+        if (!!image.getAttributeNode('data-no-retina')) {
           retinaImages.push(new RetinaImage(image));
         }
       }
@@ -108,7 +108,6 @@
   };
 
 
-
   function RetinaImage(el) {
     this.el = el;
     this.path = new RetinaImagePath(this.el.getAttribute('src'), this.el.getAttribute('data-at2x'));
@@ -127,7 +126,7 @@
     function load() {
       if (! that.el.complete) {
         setTimeout(load, 5);
-      } else if (that.el.hasAttribute("data-no-retina") == false) {
+      } else if (!!that.el.getAttributeNode("data-no-retina")) {
         if (config.force_original_dimensions) {
           that.el.setAttribute('width', that.el.offsetWidth);
           that.el.setAttribute('height', that.el.offsetHeight);
@@ -138,8 +137,6 @@
     }
     load();
   };
-
-
 
 
   if (Retina.isRetina()) {
