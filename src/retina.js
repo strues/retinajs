@@ -126,7 +126,7 @@
     function load() {
       if (! that.el.complete) {
         setTimeout(load, 5);
-      } else if (!!that.el.getAttributeNode("data-no-retina")) {
+      } else {
         if (config.force_original_dimensions) {
           that.el.setAttribute('width', that.el.offsetWidth);
           that.el.setAttribute('height', that.el.offsetHeight);
