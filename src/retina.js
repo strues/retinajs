@@ -65,7 +65,16 @@
       this.at_2x_path = at_2x_path;
       this.perform_check = false;
     } else {
-      this.at_2x_path = this.path.replace(/\.\w+$/, function(match) { return config.retinaImageSuffix + match; });
+      if (undefined !== document.createElement) {
+        var locationObject = document.createElement('a');
+        locationObject.href = this.path;
+        locationObject.pathname = locationObject.pathname.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+        this.at_2x_path = locationObject.href;
+      } else {
+        var parts = this.path.split('?');
+        parts[0] = parts[0].replace(/\.\w+$/, function(match) { return "@2x" + match; });
+        this.at_2x_path = parts.join('?');
+      }
       this.perform_check = true;
     }
   }
