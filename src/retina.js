@@ -60,12 +60,12 @@
   root.RetinaImagePath = RetinaImagePath;
 
   function RetinaImagePath(path, at_2x_path) {
-    this.path = path;
+    this.path = path || '';
     if (typeof at_2x_path !== "undefined" && at_2x_path !== null) {
       this.at_2x_path = at_2x_path;
       this.perform_check = false;
     } else {
-      this.at_2x_path = path.replace(/\.\w+$/, function(match) { return config.retinaImageSuffix + match; });
+      this.at_2x_path = this.path.replace(/\.\w+$/, function(match) { return config.retinaImageSuffix + match; });
       this.perform_check = true;
     }
   }
