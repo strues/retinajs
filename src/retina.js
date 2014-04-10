@@ -59,6 +59,12 @@
 
   root.RetinaImagePath = RetinaImagePath;
 
+  var regexMatch = /\.\w+$/;
+  function suffixReplace (match)
+  {
+    return config.retinaImageSuffix + match;
+  }
+
   function RetinaImagePath(path, at_2x_path) {
     this.path = path || '';
     if (typeof at_2x_path !== "undefined" && at_2x_path !== null) {
@@ -68,11 +74,11 @@
       if (undefined !== document.createElement) {
         var locationObject = document.createElement('a');
         locationObject.href = this.path;
-        locationObject.pathname = locationObject.pathname.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+        locationObject.pathname = locationObject.pathname.replace(regexMatch, suffixReplace);
         this.at_2x_path = locationObject.href;
       } else {
         var parts = this.path.split('?');
-        parts[0] = parts[0].replace(/\.\w+$/, function(match) { return "@2x" + match; });
+        parts[0] = parts[0].replace(regexMatch, suffixReplace);
         this.at_2x_path = parts.join('?');
       }
       this.perform_check = true;
