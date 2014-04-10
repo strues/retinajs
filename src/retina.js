@@ -3,6 +3,9 @@
   var root = (typeof exports == 'undefined' ? window : exports);
 
   var config = {
+    // An option to choose a suffix for 2x images
+    retinaImageSuffix : "@2x",
+    
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
     check_mime_type: true,
@@ -62,7 +65,7 @@
       this.at_2x_path = at_2x_path;
       this.perform_check = false;
     } else {
-      this.at_2x_path = path.replace(/\.\w+$/, function(match) { return "@2x" + match; });
+      this.at_2x_path = path.replace(/\.\w+$/, function(match) { return config.retinaImageSuffix + match; });
       this.perform_check = true;
     }
   }
