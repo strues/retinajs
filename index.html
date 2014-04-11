@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Retina.js | Retina graphics for your website</title>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+  <![endif]-->
+
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans:700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/assets/application.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">retina.js</a>
+      <nav>
+        <a href="#how-it-works" class="scroller">how it works</a>
+        <b>/</b>
+        <a href="#how-to-use" class="scroller">how to use</a>
+        <b>/</b>
+        <a href="#download" class="scroller">download</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="intro">
+      <h1>
+        <span>Retina graphics</span>
+        <span class="light">for your website</span>
+      </h1>
+
+      <p>
+        retina.js is an open source script that makes it easy to serve <br />
+        high-resolution images to devices with retina displays
+      </p>
+      <p>
+        <a href="https://github.com/imulus/retinajs/releases/download/v1.1.0/retina-1.1.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i>&nbsp; Download zip</a>
+        <a href="#how-it-works" class="scroller btn btn-large btn-primary">How it works &nbsp;<i class="icon-chevron-down"></i></a>
+      </p>
+    </section>
+  </div>
+
+
+    <div class="container dark">
+      <section id="how-it-works">
+        <h2>How it works</h2>
+        <p>When your users load a page, retina.js checks each image on the page to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.</p>
+
+        <p>The script assumes you use <a href="http://developer.apple.com/library/ios/#documentation/2DDrawing/Conceptual/DrawingPrintingiOS/SupportingHiResScreensInViews/SupportingHiResScreensInViews.html#//apple_ref/doc/uid/TP40010156-CH15-SW1">Apple's prescribed high-resolution modifier (@2x)</a> to denote high-resolution image variants on your server.</p>
+
+        <p>For example, if you have an image on your page that looks like this:<br />
+        <code>&lt;img src=&quot;/images/my_image.png&quot; /&gt;</code>
+        </p>
+
+        <p>The script will check your server to see if an alternative image exists at this path:<br />
+        <code>&quot;/images/my_image@2x.png&quot;</code>
+        </p>
+      </section>
+
+      <section id="how-to-use">
+        <h2>How to use</h2>
+
+        <h3>JavaScript</h3>
+
+        <p>The JavaScript helper script automatically replaces images on your page with high-resolution variants (if they exist). To use it, <a href="#download" class="scroller">download the script</a> and include it at the bottom of your page.</p>
+
+        <ol>
+          <li>Place the <code>retina.js</code> file on your server</li>
+          <li>
+            Include the script on your page
+            <br /><br />
+            <code>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/retina.js&quot;&gt;&lt;/script&gt;</code>
+            <br /><br />
+            (put it at the bottom of your template, before your closing <code>&lt;/body&gt;</code> tag)
+          </li>
+          <li>That's it!</li>
+        </ol>
+
+
+
+
+        <h3>LESS</h3>
+
+        <p>The LESS CSS mixin is a helper for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a <code>background-size</code> of the original image in order to maintain proper dimensions. To use it, <a href="#download"  class="scroller">download the mixin</a>, import or include it in your LESS stylesheet, and apply it to elements of your choice.</p>
+
+        <h4>Steps:</h4>
+        <p>
+          <strong>Syntax:</strong><br />
+          <code>.at2x(@path, [optional] @width: auto, [optional] @height: auto);</code>
+        </p>
+
+        <h4>Steps:</h4>
+
+        <ol>
+          <li>Add the <code>.at2x()</code> mixin from <code>retina.less</code> to your LESS stylesheet</li>
+          <li>
+            In your stylesheet, call the <code>.at2x()</code> mixin anywhere instead of using <code>background-image</code>
+
+            <br /><br />
+
+<code class="big">#logo {
+  .at2x('/images/my_image.png', 200px, 100px);
+}</code>
+
+            <br /><br />
+
+            Will compile to:
+
+            <br /><br />
+
+<code class="big">#logo {
+  background-image: url('/images/my_image.png');
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  #logo {
+    background-image: url('/images/my_image@2x.png');
+    background-size: 200px 100px;
+  }
+}</code>
+
+          </li>
+        </ol>
+
+      </section>
+
+
+      <section id="download">
+        <h2>Download</h2>
+        <p>
+          <a href="https://github.com/imulus/retinajs/releases/download/v1.1.0/retina-1.1.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i> Download zip</a>
+          <a href="https://github.com/imulus/retinajs" class="btn btn-large btn-primary"><i class="icon-download"></i> Download source</a>
+        </p>
+      </section>
+
+
+      <section id="contribute">
+        <h2>Contribute</h2>
+        <p>We'd love your help. <a href="http://github.com/imulus/retinajs">Fork us</a> so we can make retina graphics easier for everyone.</p>
+        <p>
+          <a href="http://github.com/imulus/retinajs" class="btn btn-large btn-primary">http://github.com/imulus/retinajs &nbsp;<i class="icon-chevron-right"></i></a>
+        </p>
+      </section>
+
+
+      <section>
+        <p>Made with love in Boulder, CO by <a href="http://imulus.com" rel="retinajs">imulus</a></p>
+        <p>Thanks to <a href="http://www.flickr.com/zachd1_618/">Zach Dischner</a> for the kickass background photo. Check out his work on <a href="http://www.flickr.com/photos/zachd1_618/">Flickr</a>.</p>
+      </section>
+    </div>
+
+
+    <footer>
+      <div class="container">
+        <a href="http://imulus.com" rel="retinajs" class="logo">Imulus</a>
+      </div>
+    </footer>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="/assets/application.js"></script>
+  <script src="/assets/retina.js"></script>
+
+  <script type="text/javascript">
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-67985-43']);
+   _gaq.push(['_trackPageview']);
+
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+  </script>
+
+</body>
+</html>
+
