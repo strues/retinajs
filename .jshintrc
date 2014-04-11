@@ -7,7 +7,7 @@
   "forin": true,
   "freeze": true,
   "immed": true,
-  "indent": 2,
+  "indent": 4,
   "jquery": true,
   "latedef": true,
   "maxcomplexity": 6,
