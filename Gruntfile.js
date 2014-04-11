@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                 ' * high-resolution images to devices with retina displays.\n' +
                 ' */\n',
 
-        clean: ['build', 'pkg'],
+        clean: ['dist'],
 
         jshint: {
             options: {
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
         compress: {
             pkg: {
                 options: {
-                    archive: 'pkg/retina-<%= pkg.version %>.zip'
+                    archive: 'dist/retina-<%= pkg.version %>.zip'
                 },
                 files: [{
                     src: ['**'],
