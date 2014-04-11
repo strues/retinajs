@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var addBanner = function (content, srcPath) {
+    var addBanner = function (content) {
         var banner = grunt.config.get('banner');
         banner = grunt.template.process(banner);
         return banner.concat('\n', content);
@@ -18,20 +18,9 @@ module.exports = function (grunt) {
         clean: ['build', 'pkg'],
 
         copy: {
-            README: {
-                src: 'README.md',
-                dest: 'build/README.md'
-            },
             js: {
                 src: 'src/retina.js',
-                dest: 'build/js/retina-<%= pkg.version %>.js',
-                options: {
-                    process: addBanner
-                }
-            },
-            less: {
-                src: 'src/retina.less',
-                dest: 'build/less/retina-<%= pkg.version %>.less',
+                dest: 'dist/retina.js',
                 options: {
                     process: addBanner
                 }
@@ -40,8 +29,11 @@ module.exports = function (grunt) {
 
         uglify: {
             build: {
+                options: {
+                    banner: '<%= banner %>'
+                },
                 files: {
-                    'build/js/retina-<%= pkg.version %>.min.js': ['src/retina.js']
+                    'dist/retina.min.js': 'dist/retina.js'
                 }
             }
         },
@@ -51,9 +43,12 @@ module.exports = function (grunt) {
                 options: {
                     archive: 'pkg/retina-<%= pkg.version %>.zip'
                 },
-                files: [
-                    {src: ['**'], cwd: 'build/', dest: '/', expand: true }
-                ]
+                files: [{
+                    src: ['**'],
+                    cwd: 'dist/',
+                    dest: '/',
+                    expand: true
+                }]
             }
         }
     });
