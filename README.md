@@ -41,7 +41,7 @@ The JavaScript helper script automatically replaces images on your page with hig
 <script type="text/javascript" src="/scripts/retina.js"></script>
 ```
 
-You can also exlude an image, which has no high-res version. Simple add `data-no-retina`.
+You can also exclude images that have no high-res version. Simply add the `data-no-retina` attribute.
 
 
 ``` html
@@ -50,7 +50,7 @@ You can also exlude an image, which has no high-res version. Simple add `data-no
 
 ###LESS & SASS
 
-The LESS & SASS CSS mixins are helpers for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a background-size of the original image in order to maintain proper dimensions. To use it, download the mixin, import or include it in your LESS or SASS stylesheet, and apply it to elements of your choice. The SASS versions require you pass the extension separately from the path.
+The LESS &amp; SASS CSS mixins are helpers for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a background-size of the original image in order to maintain proper dimensions. To use it, download the mixin, import or include it in your LESS or SASS stylesheet, and apply it to elements of your choice. The SASS versions require you pass the extension separately from the path.
 
 *Syntax:*
 
