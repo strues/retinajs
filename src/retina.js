@@ -1,3 +1,13 @@
+/*!
+ * Retina.js v1.3.0
+ *
+ * Copyright 2014 Imulus, LLC
+ * Released under the MIT license
+ *
+ * Retina.js is an open source script that makes it easy to serve
+ * high-resolution images to devices with retina displays.
+ */
+
 (function() {
     var root = (typeof exports === 'undefined' ? window : exports);
     var config = {
@@ -44,6 +54,19 @@
                     retinaImages.push(new RetinaImage(image));
                 }
             }
+            
+/* -- Handle retina background images for DOM elements of the class 'retina-background' -- aaw 5/12/2014 */
+
+            var backgrounds = document.getElementsByClassName('retina-background'), retinaBackgrounds = [], i, background;
+            for (i = 0; i < backgrounds.length; i += 1) {
+                background = backgrounds[i];
+                if (!!!background.getAttributeNode('data-no-retina')) {
+                    retinaBackgrounds.push(new RetinaBackground(background));
+                }
+			}
+
+/* -- End modifications by aaw 5/12/2014 */
+
             existing_onload();
         };
     };
@@ -165,6 +188,43 @@
         load();
     };
 
+/* -- Handle retina background images for DOM elements of the class 'retina-background' -- aaw 5/12/2014 */
+
+    function RetinaBackground(el) {
+        this.el = el;
+		var m = (window.getComputedStyle(el).getPropertyValue('background-image')).match(/url\(([^)]+)\)/i);
+		if (m) {
+			a = document.createElement('a');
+			a.href = m[1].replace(/["']{1}/gi, "");
+			var path = a.pathname + a.search;
+	        this.path = new RetinaImagePath(path, this.el.getAttribute('data-at2x'));
+	        var that = this;
+	        this.path.check_2x_variant(function(hasVariant) {
+	            if (hasVariant) {
+	                that.swap();
+	            }
+	        });
+		}
+    }
+
+    root.RetinaBackground = RetinaBackground;
+
+    RetinaBackground.prototype.swap = function(path) {
+        if (typeof path === 'undefined') {
+            path = this.path.at_2x_path;
+        }
+
+        var that = this;
+/* -- only images have the "complete" parameter, so just change it immediately */
+        if (config.force_original_dimensions) {
+/* -- leave it up to the designer to set the size of the background, eg: 400px 400px or cover */
+        }
+        pathname = "url(" + path + ")";
+        that.el.style.backgroundImage = pathname;
+
+    };
+
+/* -- End modifications by aaw 5/12/2014 */
 
     if (Retina.isRetina()) {
         Retina.init(root);
