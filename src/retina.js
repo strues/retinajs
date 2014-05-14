@@ -10,7 +10,10 @@
 
         // Resize high-resolution images to original image's pixel dimensions
         // https://github.com/imulus/retinajs/issues/8
-        force_original_dimensions: true
+        force_original_dimensions: true,
+        
+        // Ignore srcset
+        ignore_srcset: false
     };
 
     function Retina() {}
@@ -28,6 +31,16 @@
             }
         }
     };
+    
+    Retina.canUseSrcset = function() {
+      if (config.ignore_srcset) {
+        return false;
+      }
+      
+      var img = document.createElement('img');
+      
+      return img.hasOwnProperty('srcset');
+    };
 
     Retina.init = function(context) {
         if (context === null) {
@@ -40,6 +53,15 @@
             var images = document.getElementsByTagName('img'), retinaImages = [], i, image;
             for (i = 0; i < images.length; i += 1) {
                 image = images[i];
+                
+                if (Retina.canUseSrcset()) {
+                  var srcset = image.getAttribute('srcset');
+                  
+                  if (srcset != null && srcset != undefined) {
+                    continue;
+                  }
+                }
+                
                 if (!!!image.getAttributeNode('data-no-retina')) {
                     retinaImages.push(new RetinaImage(image));
                 }
@@ -61,7 +83,6 @@
 
         return false;
     };
-
 
     var regexMatch = /\.\w+$/;
     function suffixReplace (match) {
