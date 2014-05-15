@@ -6,7 +6,7 @@
     "Imulus, LLC <developer@imulus.com>"
   ],
   "description": "JavaScript, Less and Sass helpers for rendering high-resolution image variants",
-  "main": "build/js/retina-1.2.0.js",
+  "main": "dist/retina.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
