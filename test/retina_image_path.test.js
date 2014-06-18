@@ -120,6 +120,15 @@ describe('RetinaImagePath', function() {
       });
     });
 
+    it('should callback with true when #is_external() is true but has a data-at2x', function(done) {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("http://google.com/images/some_image.png", "http://google.com/images/some_image@2x-sha.png");
+      path.check_2x_variant(function(hasVariant) {
+        hasVariant.should.equal(true);
+        done();
+      });
+    });
+
     it('should callback with true when at2x is supplied', function(done) {
       path = new RetinaImagePath("/images/some_image.png", "/images/some_image@100x.png");
       path.check_2x_variant(function(hasVariant) {
@@ -183,7 +192,7 @@ describe('RetinaImagePath', function() {
       XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
       path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
-        RetinaImagePath.confirmed_paths.should.include(path.at_2x_path);
+        RetinaImagePath.confirmed_paths.should.containEql(path.at_2x_path);
         done();
       });
     });
