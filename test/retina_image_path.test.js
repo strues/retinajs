@@ -192,7 +192,7 @@ describe('RetinaImagePath', function() {
       XMLHttpRequest.contentType = 'image/png'; // simulate a proper content type
       path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
-        RetinaImagePath.confirmed_paths.should.include(path.at_2x_path);
+        RetinaImagePath.confirmed_paths.should.containEql(path.at_2x_path);
         done();
       });
     });
