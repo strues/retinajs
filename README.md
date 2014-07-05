@@ -41,7 +41,7 @@ The JavaScript helper script automatically replaces images on your page with hig
 <script type="text/javascript" src="/scripts/retina.js"></script>
 ```
 
-You can also exlude an image, which has no high-res version. Simple add `data-no-retina`.
+You can also exclude an image, which has no high-res version. Simple add `data-no-retina`.
 
 
 ``` html
