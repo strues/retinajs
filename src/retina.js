@@ -104,6 +104,11 @@
             return callback(true);
         } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
             return callback(true);
+        } else if (window.location.protocol === 'file:') {
+            var img = new Image();
+            img.src = this.at_2x_path;
+            img.onload = function() { return callback(true); };
+            img.onerror = function() { return callback(false); };
         } else {
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
