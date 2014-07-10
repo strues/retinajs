@@ -31,6 +31,11 @@ describe('RetinaImagePath', function() {
       path.at_2x_path.should.equal("/path/to/image@2x.png");
     });
 
+    it('adds "@2x" before the extension when there are query strings', function(){
+      path = new RetinaImagePath("/path/to/image.png?param=www.example.com");
+      path.at_2x_path.should.equal("/path/to/image@2x.png?param=www.example.com");
+    });
+
     it('uses data-@2x when supplied', function(){
       path = new RetinaImagePath("/path/to/image-hash1.png", "/path/to/image@2x-hash2.png");
       path.at_2x_path.should.equal("/path/to/image@2x-hash2.png");
