@@ -155,8 +155,12 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    that.el.setAttribute('width', that.el.offsetWidth);
-                    that.el.setAttribute('height', that.el.offsetHeight);
+                    image = new Image();
+                    image.onload = function() {
+                        that.el.setAttribute('width', this.width);
+                        that.el.setAttribute('height', this.height);
+                    };
+                    image.src = that.el.src;
                 }
 
                 that.el.setAttribute('src', path);
