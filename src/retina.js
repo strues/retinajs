@@ -37,8 +37,8 @@
         var existing_onload = context.onload || function(){};
 
         context.onload = function() {
-            var images = document.getElementsByTagName('img'), retinaImages = [], i, image;
-            for (i = 0; i < images.length; i += 1) {
+            var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
+            for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
                 if (!!!image.getAttributeNode('data-no-retina')) {
                     retinaImages.push(new RetinaImage(image));
