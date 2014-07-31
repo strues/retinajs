@@ -41,7 +41,9 @@
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
                 if (!!!image.getAttributeNode('data-no-retina')) {
-                    retinaImages.push(new RetinaImage(image));
+                    if (image.src) {
+                        retinaImages.push(new RetinaImage(image));
+                    }
                 }
             }
             existing_onload();
