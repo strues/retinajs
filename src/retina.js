@@ -98,12 +98,12 @@
 
     RetinaImagePath.prototype.check_2x_variant = function(callback) {
         var http, that = this;
-        if (this.is_external()) {
-            return callback(false);
-        } else if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
+        if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
         } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
             return callback(true);
+        } else if (this.is_external()) {
+            return callback(false);
         } else {
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
