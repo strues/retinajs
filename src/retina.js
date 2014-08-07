@@ -40,7 +40,7 @@
             var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
-                if (!!!image.getAttributeNode('data-no-retina')) {
+                if (!!!image.getAttributeNode('data-no-retina') && !!!image.getAttributeNode('srcset')) {
                     if (image.src) {
                         retinaImages.push(new RetinaImage(image));
                     }
@@ -156,7 +156,7 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
+                    if (that.el.offsetWidth === 0 && that.el.offsetHeight === 0) {
                         that.el.setAttribute('width', that.el.naturalWidth);
                         that.el.setAttribute('height', that.el.naturalHeight);
                     } else {
