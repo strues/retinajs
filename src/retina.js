@@ -40,7 +40,7 @@
             var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
-                if (!!!image.getAttributeNode('data-no-retina') && !!!image.getAttributeNode('srcset')) {
+                if (!!!image.getAttributeNode('data-no-retina') || (('srcset' in document.createElement('img')) && !!!image.getAttributeNode('srcset'))) {
                     if (image.src) {
                         retinaImages.push(new RetinaImage(image));
                     }
