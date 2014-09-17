@@ -111,7 +111,7 @@
             http.open('HEAD', this.at_2x_path);
             http.onreadystatechange = function() {
                 if (http.readyState !== 4) {
-                    return callback(false);
+                    return;
                 }
 
                 if (http.status >= 200 && http.status <= 399) {
