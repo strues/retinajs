@@ -16,21 +16,4 @@ describe('Retina', function() {
     }
   });
 
-  describe('init', function(){
-    it('stashes the existing onload and executes it later', function(){
-      var existingOnloadExecutions = 0;
-      var window = {
-        matchMedia : function() {
-          return { matches: false }
-        },
-        onload : function() {
-          existingOnloadExecutions++;
-        }
-      };
-      Retina.init(window);
-      window.onload();
-      existingOnloadExecutions.should.equal(1);
-    });
-  });
-
 });
