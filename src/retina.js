@@ -44,7 +44,6 @@
                     }
                 }
             }
-            existing_onload();
         });
     };
 
