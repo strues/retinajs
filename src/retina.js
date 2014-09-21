@@ -33,13 +33,11 @@
         if (context === null) {
             context = root;
         }
-
-        var existing_onload = context.onload || function(){};
-
-        context.onload = function() {
+        context.addEventListener('load', function (){
             var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
+
                 if (!!!image.getAttributeNode('data-no-retina')) {
                     if (image.src) {
                         retinaImages.push(new RetinaImage(image));
@@ -47,7 +45,7 @@
                 }
             }
             existing_onload();
-        };
+        });
     };
 
     Retina.isRetina = function(){
