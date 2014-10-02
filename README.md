@@ -43,6 +43,14 @@ The JavaScript helper script automatically replaces images on your page with hig
 
 You can also exclude images that have no high-res version. Simply add the `data-no-retina` attribute.
 
+### Install using bower
+
+Retina.js is also available as a bower package. Just run the following command to install retina.js in your bower enabled project: 
+
+``` sh
+bower install retinajs
+```
+
 
 ``` html
 <img src="/path/to/image" data-no-retina />
