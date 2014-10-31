@@ -163,6 +163,7 @@
                 }
 
                 that.el.setAttribute('src', path);
+                that.el.setAttribute('data-no-retina', true);
             }
         }
         load();
