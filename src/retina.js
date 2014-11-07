@@ -1,4 +1,8 @@
-(function() {
+/* global RetinaJSConfig */
+
+(function(userConfig) {
+    'use strict';
+
     var root = (typeof exports === 'undefined' ? window : exports);
     var config = {
         // An option to choose a suffix for 2x images
@@ -12,6 +16,15 @@
         // https://github.com/imulus/retinajs/issues/8
         force_original_dimensions: true
     };
+
+    // Merge in the userConfig if provided
+    if (!!userConfig) {
+        for (var attr in userConfig) {
+            if (userConfig.hasOwnProperty(attr)) {
+                config[attr] = userConfig[attr];
+            }
+        }
+    }
 
     function Retina() {}
 
@@ -153,7 +166,7 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
+                    if (that.el.offsetWidth === 0 && that.el.offsetHeight === 0) {
                         that.el.setAttribute('width', that.el.naturalWidth);
                         that.el.setAttribute('height', that.el.naturalHeight);
                     } else {
@@ -172,4 +185,4 @@
     if (Retina.isRetina()) {
         Retina.init(root);
     }
-})();
+})(RetinaJSConfig || {});
