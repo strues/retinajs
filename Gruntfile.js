@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                     archive: 'dist/retina-<%= pkg.version %>.zip'
                 },
                 files: [{
-                    src: ['**'],
+                    src: ['*'],
                     cwd: 'dist/',
                     dest: '/',
                     expand: true
