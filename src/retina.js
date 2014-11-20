@@ -99,7 +99,7 @@
         var http, that = this;
         if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
-        } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+        } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) !== -1) {
             return callback(true);
         } else if (this.is_external()) {
             return callback(false);
@@ -119,7 +119,10 @@
                         }
                     }
 
-                    RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+                    if (RetinaImagePath.confirmed_paths.indexOf(that.at_2x_path) === -1) {
+                        // whithout this check duplicated would be added until first image is fetched
+                        RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+                    }
                     return callback(true);
                 } else {
                     return callback(false);
