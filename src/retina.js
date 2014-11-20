@@ -107,11 +107,7 @@
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
             http.onreadystatechange = function() {
-                if (http.readyState !== 4) {
-                    return callback(false);
-                }
-
-                if (http.status >= 200 && http.status <= 399) {
+                if (http.readyState === 4 && http.status >= 200 && http.status <= 399) {
                     if (config.check_mime_type) {
                         var type = http.getResponseHeader('Content-Type');
                         if (type === null || !type.match(/^image/i)) {
@@ -156,7 +152,7 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
+                    if (that.el.offsetWidth === 0 && that.el.offsetHeight === 0) {
                         that.el.setAttribute('width', that.el.naturalWidth);
                         that.el.setAttribute('height', that.el.naturalHeight);
                     } else {
