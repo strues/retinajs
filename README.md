@@ -68,12 +68,17 @@ at2x($path, [optional] $width = auto, [optional] $height = auto)
 
 *Steps:*
 
-1. LESS - Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
-SASS - Add the @mixin at2x() from retina.scss or retina.sass to your SASS stylesheet (or reference it in an @import)
-Stylus - Add the at2x() mixin from retina.styl to your Stylus stylesheet (or reference it in an @import)
-2. LESS - In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
-SASS - In your stylesheet, call @include at2x() anywhere instead of using background-image
-Stylus - In your stylesheet, call the at2x() mixin anywhere instead of using background-image
+1. __LESS__ - Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
+
+    __SASS__ - Add the @mixin at2x() from retina.scss or retina.sass to your SASS stylesheet (or reference it in an @import)
+
+    __Stylus__ - Add the at2x() mixin from retina.styl to your Stylus stylesheet (or reference it in an @import)
+
+2. __LESS__ - In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
+
+    __SASS__ - In your stylesheet, call @include at2x() anywhere instead of using background-image
+
+    __Stylus__ - In your stylesheet, call the at2x() mixin anywhere instead of using background-image
 
 This:
 
