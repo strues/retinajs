@@ -1,0 +1,16 @@
+// retina.styl
+// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
+
+// Tiago Porto - tiagoporto.com
+
+at2x($path, $width = auto, $height = auto)
+    background-image: url($path)
+
+    @media (-webkit-min-device-pixel-ratio: 1.5),\
+           (-o-min-device-pixel-ratio: 3 / 2),\
+           (min--moz-device-pixel-ratio: 1.5),\
+           (min-device-pixel-ratio: 1.5),
+           (min-resolution: 1.5dppx)
+
+        background-image: url(replace('\.', '@2x.', $path))
+        background-size: $width $height
