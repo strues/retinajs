@@ -10,7 +10,25 @@
 
         // Resize high-resolution images to original image's pixel dimensions
         // https://github.com/imulus/retinajs/issues/8
-        force_original_dimensions: true
+        force_original_dimensions: true,
+
+        // Check external domains for retina images
+        check_external: false,
+
+        // When checking to see if an image exists, a HEAD or GET request
+        // can be used. If the image is hosted on a CDN with appropriate
+        // cache control headers, a GET will be better, because the browser
+        // will cache the original request, and display it immediately. In
+        // this case, a HEAD will cause 2 requests, because the HEAD couldn't
+        // be cached. A HEAD is better when the cache control headers are
+        // not present.
+        check_method: "HEAD",
+
+        // The default behavior of the script is to check for retina versions
+        // of all images on the page. When only_check_marked is true, then
+        // only the images with the data-has-retina attribute will be checked
+        // for retina versions.
+        only_check_marked: false
     };
 
     function Retina() {}
@@ -38,7 +56,14 @@
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
 
-                if (!!!image.getAttributeNode('data-no-retina')) {
+                if (config.only_check_marked) {
+                    if (!!image.getAttributeNode('data-has-retina')) {
+                        if (image.src) {
+                            retinaImages.push(new RetinaImage(image));
+                        }
+                    }
+                }
+                else if (!!!image.getAttributeNode('data-no-retina')) {
                     if (image.src) {
                         retinaImages.push(new RetinaImage(image));
                     }
@@ -101,11 +126,11 @@
             return callback(true);
         } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
             return callback(true);
-        } else if (this.is_external()) {
+        } else if (!config.check_external && this.is_external()) {
             return callback(false);
         } else {
             http = new XMLHttpRequest();
-            http.open('HEAD', this.at_2x_path);
+            http.open(config.check_method, this.at_2x_path);
             http.onreadystatechange = function() {
                 if (http.readyState !== 4) {
                     return callback(false);
