@@ -104,24 +104,27 @@
         } else if (this.is_external()) {
             return callback(false);
         } else {
+            // prematurely add path to avoid duplicate requests - will remove it if necessary
+            RetinaImagePath.confirmed_paths.push(that.at_2x_path);
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
             http.onreadystatechange = function() {
-                if (http.readyState === 4 && http.status >= 200 && http.status <= 399) {
-                    if (config.check_mime_type) {
-                        var type = http.getResponseHeader('Content-Type');
-                        if (type === null || !type.match(/^image/i)) {
-                            return callback(false);
+                var type, isConfirmed = false;
+
+                if (http.readyState === 4) {
+                    if (http.status >= 200 && http.status <= 399) {
+                        type = http.getResponseHeader('Content-Type');
+                        if (!config.check_mime_type || type !== null && type.match(/^image/i)) {
+                            isConfirmed = true;
                         }
                     }
 
-                    if (RetinaImagePath.confirmed_paths.indexOf(that.at_2x_path) === -1) {
-                        // whithout this check duplicated would be added until first image is fetched
-                        RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+                    if (!isConfirmed) {
+                        RetinaImagePath.confirmed_paths = RetinaImagePath.confirmed_paths.filter(function (path) {
+                        return path !== that.at_2x_path;
+                        });
                     }
-                    return callback(true);
-                } else {
-                    return callback(false);
+                    return callback(isConfirmed);
                 }
             };
             http.send();
