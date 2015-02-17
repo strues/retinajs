@@ -33,19 +33,23 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function (){
-            var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
-            for (i = 0; i < imagesLength; i += 1) {
-                image = images[i];
-
-                if (!!!image.getAttributeNode('data-no-retina')) {
-                    if (image.src) {
-                        retinaImages.push(new RetinaImage(image));
-                    }
-                }
-            }
+        context.addEventListener('load', function () {
+            this.process();
         });
     };
+    
+    Retina.process = function() {
+        var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
+        for (i = 0; i < imagesLength; i += 1) {
+            image = images[i];
+
+            if (!!!image.getAttributeNode('data-no-retina')) {
+                if (image.src) {
+                    retinaImages.push(new RetinaImage(image));
+                }
+            }
+        }
+    }
 
     Retina.isRetina = function(){
         var mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';
