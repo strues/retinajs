@@ -33,9 +33,7 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function () {
-            this.process();
-        });
+        context.addEventListener('load', this.process);
     };
     
     Retina.process = function() {
