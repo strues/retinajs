@@ -28,22 +28,29 @@
             }
         }
     };
+    
+    Retina.process = function() {
+        var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
+        for (i = 0; i < imagesLength; i += 1) {
+            image = images[i];
+
+            if (!!!image.getAttributeNode('data-no-retina')) {
+                if (image.src) {
+                    retinaImages.push(new RetinaImage(image));
+                }
+            }
+        }
+    };
 
     Retina.init = function(context) {
         if (context === null) {
             context = root;
         }
         context.addEventListener('load', function (){
-            var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
-            for (i = 0; i < imagesLength; i += 1) {
-                image = images[i];
-
-                if (!!!image.getAttributeNode('data-no-retina')) {
-                    if (image.src) {
-                        retinaImages.push(new RetinaImage(image));
-                    }
-                }
-            }
+            Retina.process();
+        });
+        context.addEventListener('page:load', function (){
+            Retina.process();
         });
     };
 
