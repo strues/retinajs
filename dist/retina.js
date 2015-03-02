@@ -1,7 +1,7 @@
 /*!
  * Retina.js v1.3.0
  *
- * Copyright 2014 Imulus, LLC
+ * Copyright 2015 Imulus, LLC
  * Released under the MIT license
  *
  * Retina.js is an open source script that makes it easy to serve
@@ -38,24 +38,30 @@
             }
         }
     };
+    
+    Retina.process = function() {
+        var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
+        for (i = 0; i < imagesLength; i += 1) {
+            image = images[i];
+
+            if (!!!image.getAttributeNode('data-no-retina')) {
+                if (image.src) {
+                    retinaImages.push(new RetinaImage(image));
+                }
+            }
+        }
+    };
 
     Retina.init = function(context) {
         if (context === null) {
             context = root;
         }
-
-        var existing_onload = context.onload || function(){};
-
-        context.onload = function() {
-            var images = document.getElementsByTagName('img'), retinaImages = [], i, image;
-            for (i = 0; i < images.length; i += 1) {
-                image = images[i];
-                if (!!!image.getAttributeNode('data-no-retina')) {
-                    retinaImages.push(new RetinaImage(image));
-                }
-            }
-            existing_onload();
-        };
+        context.addEventListener('load', function (){
+            Retina.process();
+        });
+        context.addEventListener('page:load', function (){
+            Retina.process();
+        });
     };
 
     Retina.isRetina = function(){
@@ -73,7 +79,7 @@
     };
 
 
-    var regexMatch = /\.\w+$/;
+    var regexMatch = /\.[\w\?=]+$/;
     function suffixReplace (match) {
         return config.retinaImageSuffix + match;
     }
@@ -108,12 +114,12 @@
 
     RetinaImagePath.prototype.check_2x_variant = function(callback) {
         var http, that = this;
-        if (this.is_external()) {
-            return callback(false);
-        } else if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
+        if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
         } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
             return callback(true);
+        } else if (this.is_external()) {
+            return callback(false);
         } else {
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
@@ -140,7 +146,6 @@
         }
     };
 
-
     function RetinaImage(el) {
         this.el = el;
         this.path = new RetinaImagePath(this.el.getAttribute('src'), this.el.getAttribute('data-at2x'));
@@ -165,8 +170,13 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    that.el.setAttribute('width', that.el.offsetWidth);
-                    that.el.setAttribute('height', that.el.offsetHeight);
+                    if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
+                        that.el.setAttribute('width', that.el.naturalWidth);
+                        that.el.setAttribute('height', that.el.naturalHeight);
+                    } else {
+                        that.el.setAttribute('width', that.el.offsetWidth);
+                        that.el.setAttribute('height', that.el.offsetHeight);
+                    }
                 }
 
                 that.el.setAttribute('src', path);
