@@ -1,6 +1,10 @@
 {
   "name": "retina.js",
   "version": "1.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imulus/retinajs.git"
+  },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
