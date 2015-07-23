@@ -15,7 +15,7 @@
         // Option for choose which image to load
         // Default is load all retina images without attr data-no-retina
         // Provide second option for load only images with attr data-at2x (for manual) and attr data-retina-true for automate find retina images
-        retina_mode: 1, // 2 for secondary option
+        retina_mode: 2, // 2 for secondary option
     };
 
     function Retina() {}
