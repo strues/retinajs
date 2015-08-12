@@ -33,7 +33,14 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function (){
+
+        if (typeof(Turbolinks) === 'object'){
+            var event = 'page:change'
+        }
+        else{
+            var event = 'load'
+        }
+        context.addEventListener(event, function (){
             var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
