@@ -33,7 +33,14 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function (){
+
+        if (typeof(Turbolinks) === 'object'){
+            var event = 'page:change'
+        }
+        else{
+            var event = 'load'
+        }
+        context.addEventListener(event, function (){
             var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
             for (i = 0; i < imagesLength; i += 1) {
                 image = images[i];
@@ -50,7 +57,7 @@
     Retina.isRetina = function(){
         var mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';
 
-        if (root.devicePixelRatio > 1) {
+        if (root.devicePixelRatio > 1.1) {
             return true;
         }
 
@@ -154,11 +161,28 @@
             } else {
                 if (config.force_original_dimensions) {
                     if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
-                        that.el.setAttribute('width', that.el.naturalWidth);
-                        that.el.setAttribute('height', that.el.naturalHeight);
+                        var naturalWidth = that.el.naturalWidth;
+                        var currentWidth = parseInt(that.el.getAttribute('width'));
+                        naturalWidth = currentWidth <= naturalWidth ? currentWidth : naturalWidth;
+                        
+                        var naturalHeight = that.el.naturalHeight;
+                        var currentHeight = parseInt(that.el.getAttribute('height'));
+                        naturalHeight = currentHeight <= naturalHeight ? currentHeight : naturalHeight;
+                        
+                        
+                        that.el.setAttribute('width', naturalWidth);
+                        that.el.setAttribute('height', naturalHeight);
                     } else {
-                        that.el.setAttribute('width', that.el.offsetWidth);
-                        that.el.setAttribute('height', that.el.offsetHeight);
+                        var offsetWidth = that.el.offsetWidth;
+                        var currentWidth = parseInt(that.el.getAttribute('width'));
+                        offsetWidth = currentWidth <= offsetWidth ? currentWidth : offsetWidth;
+                                                
+                        var offsetHeight = that.el.offsetHeight;
+                        var currentHeight = parseInt(that.el.getAttribute('height'));
+                        offsetHeight = currentHeight <= offsetHeight ? currentHeight : offsetHeight;
+                        
+                        that.el.setAttribute('width', offsetWidth);
+                        that.el.setAttribute('height', offsetHeight);
                     }
                 }
 
