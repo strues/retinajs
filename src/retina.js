@@ -92,7 +92,7 @@
     RetinaImagePath.confirmed_paths = [];
 
     RetinaImagePath.prototype.is_external = function() {
-        return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) );
+        return !!(this.path.match(/^(https?\:|\/\/)/i) && !this.path.match('//' + document.domain) );
     };
 
     RetinaImagePath.prototype.check_2x_variant = function(callback) {

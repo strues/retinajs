@@ -61,6 +61,12 @@ describe('RetinaImagePath', function() {
       path.is_external().should.equal(true);
     });
 
+    it('should return true when image path references a remote domain with // instead of http(s)', function() {
+      document.domain = "www.apple.com";
+      path = new RetinaImagePath("//google.com/images/some_image.png");
+      path.is_external().should.equal(true);
+    });
+
     it('should return true when image path is a remote domain with www and domain is localhost', function() {
       document.domain = "localhost";
       path = new RetinaImagePath("http://www.google.com/images/some_image.png");
