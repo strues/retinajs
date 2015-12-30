@@ -7668,12 +7668,12 @@ body {
   background-repeat: no-repeat;
   background-position: top center;
   background-attachment: fixed;
-  background-image: url('http://retinajs.s3.amazonaws.com/images/backgrounds/bg.jpg');
+  background-image: url('https://retinajs.s3.amazonaws.com/images/backgrounds/bg.jpg');
   background-size: cover;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   body {
-    background-image: url('http://retinajs.s3.amazonaws.com/images/backgrounds/bg@2x.jpg');
+    background-image: url('https://retinajs.s3.amazonaws.com/images/backgrounds/bg@2x.jpg');
     background-size: 1400px 934px;
   }
 }
@@ -7805,12 +7805,12 @@ footer .logo {
   height: 29px;
   text-indent: -9999em;
   margin: auto;
-  background-image: url('http://retinajs.s3.amazonaws.com/images/logos/imulus.png');
+  background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus.png');
   background-position: center center;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   footer .logo {
-    background-image: url('http://retinajs.s3.amazonaws.com/images/logos/imulus@2x.png');
+    background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus@2x.png');
     background-size: 100px 29px;
   }
 }
