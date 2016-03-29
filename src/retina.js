@@ -33,18 +33,19 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function (){
-            var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
-            for (i = 0; i < imagesLength; i += 1) {
-                image = images[i];
 
-                if (!!!image.getAttributeNode('data-no-retina')) {
-                    if (image.src) {
-                        retinaImages.push(new RetinaImage(image));
-                    }
+        var existing_onload = context.onload || function(){};
+
+        context.onload = function() {
+            var images = document.getElementsByTagName('img'), retinaImages = [], i, image;
+            for (i = 0; i < images.length; i += 1) {
+                image = images[i];
+                if (image.src && !image.getAttributeNode('data-no-retina')) {
+                    retinaImages.push(new RetinaImage(image));
                 }
             }
-        });
+            existing_onload();
+        };
     };
 
     Retina.isRetina = function(){
@@ -61,8 +62,7 @@
         return false;
     };
 
-
-    var regexMatch = /\.[\w\?=]+$/;
+    var regexMatch = /\.\w+$/;
     function suffixReplace (match) {
         return config.retinaImageSuffix + match;
     }
@@ -90,6 +90,7 @@
     root.RetinaImagePath = RetinaImagePath;
 
     RetinaImagePath.confirmed_paths = [];
+    Retina.queuedImages = {};
 
     RetinaImagePath.prototype.is_external = function() {
         return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) );
@@ -97,15 +98,16 @@
 
     RetinaImagePath.prototype.check_2x_variant = function(callback) {
         var http, that = this;
-        if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
+        if (this.is_external()) {
+            return callback(false);
+        } else if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
+        } else if (Retina.queuedImages[this.at_2x_path]) {
+            Retina.queuedImages[this.at_2x_path].push(callback);
         } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) !== -1) {
             return callback(true);
-        } else if (this.is_external()) {
-            return callback(false);
         } else {
-            // prematurely add path to avoid duplicate requests - will remove it if necessary
-            RetinaImagePath.confirmed_paths.push(that.at_2x_path);
+            Retina.queuedImages[that.at_2x_path] = [];
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
             http.onreadystatechange = function() {
@@ -116,14 +118,15 @@
                         type = http.getResponseHeader('Content-Type');
                         if (!config.check_mime_type || type !== null && type.match(/^image/i)) {
                             isConfirmed = true;
+                            RetinaImagePath.confirmed_paths.push(that.at_2x_path);
                         }
                     }
 
-                    if (!isConfirmed) {
-                        RetinaImagePath.confirmed_paths = RetinaImagePath.confirmed_paths.filter(function (path) {
-                        return path !== that.at_2x_path;
-                        });
-                    }
+                    Retina.queuedImages[that.at_2x_path].forEach(function (callback) {
+                        callback(isConfirmed);
+                    });
+                    delete Retina.queuedImages[that.at_2x_path];
+
                     return callback(isConfirmed);
                 }
             };
