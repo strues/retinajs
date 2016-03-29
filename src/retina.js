@@ -33,18 +33,19 @@
         if (context === null) {
             context = root;
         }
-        context.addEventListener('load', function (){
-            var images = document.getElementsByTagName('img'), imagesLength = images.length, retinaImages = [], i, image;
-            for (i = 0; i < imagesLength; i += 1) {
-                image = images[i];
 
-                if (!!!image.getAttributeNode('data-no-retina')) {
-                    if (image.src) {
-                        retinaImages.push(new RetinaImage(image));
-                    }
+        var existing_onload = context.onload || function(){};
+
+        context.onload = function() {
+            var images = document.getElementsByTagName('img'), retinaImages = [], i, image;
+            for (i = 0; i < images.length; i += 1) {
+                image = images[i];
+                if (image.src && !image.getAttributeNode('data-no-retina')) {
+                    retinaImages.push(new RetinaImage(image));
                 }
             }
-        });
+            existing_onload();
+        };
     };
 
     Retina.isRetina = function(){
@@ -61,8 +62,7 @@
         return false;
     };
 
-
-    var regexMatch = /\.[\w\?=]+$/;
+    var regexMatch = /\.\w+$/;
     function suffixReplace (match) {
         return config.retinaImageSuffix + match;
     }
@@ -90,6 +90,7 @@
     root.RetinaImagePath = RetinaImagePath;
 
     RetinaImagePath.confirmed_paths = [];
+    Retina.queuedImages = {};
 
     RetinaImagePath.prototype.is_external = function() {
         return !!(this.path.match(/^https?\:/i) && !this.path.match('//' + document.domain) );
@@ -99,30 +100,34 @@
         var http, that = this;
         if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
-        } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
+        } else if (Retina.queuedImages[this.at_2x_path]) {
+            Retina.queuedImages[this.at_2x_path].push(callback);
+        } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) !== -1) {
             return callback(true);
         } else if (this.is_external()) {
             return callback(false);
         } else {
+            Retina.queuedImages[that.at_2x_path] = [];
             http = new XMLHttpRequest();
             http.open('HEAD', this.at_2x_path);
             http.onreadystatechange = function() {
-                if (http.readyState !== 4) {
-                    return callback(false);
-                }
+                var type, isConfirmed = false;
 
-                if (http.status >= 200 && http.status <= 399) {
-                    if (config.check_mime_type) {
-                        var type = http.getResponseHeader('Content-Type');
-                        if (type === null || !type.match(/^image/i)) {
-                            return callback(false);
+                if (http.readyState === 4) {
+                    if (http.status >= 200 && http.status <= 399) {
+                        type = http.getResponseHeader('Content-Type');
+                        if (!config.check_mime_type || type !== null && type.match(/^image/i)) {
+                            isConfirmed = true;
+                            RetinaImagePath.confirmed_paths.push(that.at_2x_path);
                         }
                     }
 
-                    RetinaImagePath.confirmed_paths.push(that.at_2x_path);
-                    return callback(true);
-                } else {
-                    return callback(false);
+                    Retina.queuedImages[that.at_2x_path].forEach(function (callback) {
+                        callback(isConfirmed);
+                    });
+                    delete Retina.queuedImages[that.at_2x_path];
+
+                    return callback(isConfirmed);
                 }
             };
             http.send();
@@ -153,7 +158,7 @@
                 setTimeout(load, 5);
             } else {
                 if (config.force_original_dimensions) {
-                    if (that.el.offsetWidth == 0 && that.el.offsetHeight == 0) {
+                    if (that.el.offsetWidth === 0 && that.el.offsetHeight === 0) {
                         that.el.setAttribute('width', that.el.naturalWidth);
                         that.el.setAttribute('height', that.el.naturalHeight);
                     } else {
@@ -163,6 +168,7 @@
                 }
 
                 that.el.setAttribute('src', path);
+                that.el.setAttribute('data-no-retina', true);
             }
         }
         load();
