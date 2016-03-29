@@ -98,14 +98,14 @@
 
     RetinaImagePath.prototype.check_2x_variant = function(callback) {
         var http, that = this;
-        if (this.is_external()) {
-            return callback(false);
-        } else if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
+        if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
             return callback(true);
         } else if (Retina.queuedImages[this.at_2x_path]) {
             Retina.queuedImages[this.at_2x_path].push(callback);
         } else if (RetinaImagePath.confirmed_paths.indexOf(this.at_2x_path) !== -1) {
             return callback(true);
+        } else if (this.is_external()) {
+            return callback(false);
         } else {
             Retina.queuedImages[that.at_2x_path] = [];
             http = new XMLHttpRequest();
