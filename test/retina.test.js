@@ -9,7 +9,7 @@ describe('Retina', function() {
   before(function() {
     // stub out the getElementsByTagName method
     global.document = {
-      getElementsByTagName() {
+      getElementsByTagName: function() {
         return [];
       }
     }
