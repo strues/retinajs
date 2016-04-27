@@ -6,14 +6,12 @@ global.document = {};
 var Retina = require('../').Retina;
 
 describe('Retina', function() {
-
-  before(function(){
+  before(function() {
     // stub out the getElementsByTagName method
     global.document = {
-      getElementsByTagName : function(){
+      getElementsByTagName() {
         return [];
       }
     }
   });
-
 });
