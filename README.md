@@ -130,7 +130,7 @@ It would generate something like:
 
 ## How to test
 
-We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install`.
+We use [mocha](http://mochajs.org/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install`.
 
 To run the test suite:
 
