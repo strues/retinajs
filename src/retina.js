@@ -22,11 +22,12 @@
   root.Retina = Retina;
 
   Retina.configure = function(options) {
+    var prop;
     if (options === null) {
       options = {};
     }
 
-    for (var prop in options) {
+    for (prop in options) {
       if (options.hasOwnProperty(prop)) {
         config[prop] = options[prop];
       }
@@ -39,10 +40,10 @@
     }
     context.addEventListener('load', function() {
       // https://github.com/imulus/retinajs/commit/e7930be
-      var images = document.querySelectorAll(config.retinaImgTagSelector),
-        retinaImages = [],
-        i,
-        image;
+      var images = document.querySelectorAll(config.retinaImgTagSelector);
+      var retinaImages = [];
+      var i;
+      var image;
       for (i = 0; i < images.length; i += 1) {
         image = images[i];
 
@@ -56,7 +57,8 @@
   };
 
   Retina.isRetina = function() {
-    var mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';
+    var mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5),' +
+    '(-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';
 
     if (root.devicePixelRatio > 1) {
       return true;
@@ -69,13 +71,12 @@
     return false;
   };
 
-
-  var regexMatch = /\.[\w\?=]+$/;
   function suffixReplace(match) {
     return config.retinaImageSuffix + match;
   }
 
   function RetinaImagePath(path, at_2x_path) {
+    var regexMatch = /\.[\w\?=]+$/;
     this.path = path || '';
     if (typeof at_2x_path !== 'undefined' && at_2x_path !== null) {
       this.at_2x_path = at_2x_path;
@@ -100,12 +101,13 @@
   RetinaImagePath.confirmed_paths = [];
 
   RetinaImagePath.prototype.is_external = function() {
-    return !!(this.path.match(/^(https?\:|\/\/)/i) && !this.path.match('//' + document.domain));
+    return !!(this.path.match(/^(https?:|\/\/)/i) && !this.path.match('//' + document.domain));
   };
 
   RetinaImagePath.prototype.check_2x_variant = function(callback) {
-    var http,
-      that = this;
+    var http;
+    var that = this;
+
     if (!this.perform_check && typeof this.at_2x_path !== 'undefined' && this.at_2x_path !== null) {
       return callback(true);
     } else if (this.at_2x_path in RetinaImagePath.confirmed_paths) {
@@ -181,4 +183,4 @@
   if (Retina.isRetina()) {
     Retina.init(root);
   }
-})();
+}());

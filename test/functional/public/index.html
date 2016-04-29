@@ -24,12 +24,12 @@
   <body>
     <img src="google.png" />
     <img src="google.png" /> <!-- It will find the @2x version of this in the confirmed_paths cache because it is a duplicate -->
-    <img src="google@1x.png" /> <!-- This will not be replaced with a retina version-->
+    <img data-no-retina src="google@1x.png" /> <!-- This will not be replaced with a retina version-->
     <img src="https://www.google.com/logos/2012/doisneau12-hp.jpg" />
 
     <div class="responsive">
       <img src="ipad_hero.jpeg" />
-      <img src="ipad_hero@1x.jpeg" /> <!-- This will not be replaced with a retina version-->
+      <img data-no-retina src="ipad_hero@1x.jpeg" /> <!-- This will not be replaced with a retina version-->
     </div>
 
     <img src="google.png" data-at2x="ipad_hero@2x.jpeg" />
