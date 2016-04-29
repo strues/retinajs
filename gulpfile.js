@@ -36,8 +36,7 @@ function buildTask() {
     .pipe($.banner(head, { pkg: pkg }))
     .pipe(gulp.dest('./dist/'))
     .pipe($.size())
-    .pipe($.uglify({preserveLicenses: true}))
-    .pipe($.banner(head, { pkg: pkg }))
+    .pipe($.uglify({preserveComments: 'license'}))
     .pipe($.rename('retina.min.js'))
     .pipe($.size())
     .pipe(gulp.dest('./dist/'));

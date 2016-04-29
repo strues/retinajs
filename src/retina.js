@@ -6,14 +6,14 @@
 
     // Ensure Content-Type is an image before trying to load @2x image
     // https://github.com/imulus/retinajs/pull/45)
-    check_mime_type: true,
+    checkMimeType: true,
 
     // An option to select some of the img tags to make their image retina.
     // https://github.com/imulus/retinajs/commit/e7930be
     retinaImgTagSelector: 'body img',
     // Resize high-resolution images to original image's pixel dimensions
     // https://github.com/imulus/retinajs/issues/8
-    force_original_dimensions: true
+    forceOriginalDimensions: true
   };
 
   function Retina() {
@@ -123,7 +123,7 @@
         }
 
         if (http.status >= 200 && http.status <= 399) {
-          if (config.check_mime_type) {
+          if (config.checkMimeType) {
             var type = http.getResponseHeader('Content-Type');
             if (type === null || !type.match(/^image/i)) {
               return callback(false);
@@ -163,7 +163,7 @@
       if (!that.el.complete) {
         setTimeout(load, 5);
       } else {
-        if (config.force_original_dimensions) {
+        if (config.forceOriginalDimensions) {
           if (that.el.offsetWidth === 0 && that.el.offsetHeight === 0) {
             that.el.setAttribute('width', that.el.naturalWidth);
             that.el.setAttribute('height', that.el.naturalHeight);
