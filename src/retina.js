@@ -35,7 +35,7 @@
 
   Retina.init = function(context) {
     if (context === null) {
-      context = root;
+      context = window;
     }
     context.addEventListener('load', function() {
       // https://github.com/imulus/retinajs/commit/e7930be
