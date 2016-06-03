@@ -35,7 +35,7 @@
 
   Retina.init = function(context) {
     if (context === null) {
-      context = root;
+      context = window;
     }
     context.addEventListener('load', function() {
       // https://github.com/imulus/retinajs/commit/e7930be
@@ -58,11 +58,11 @@
   Retina.isRetina = function() {
     var mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';
 
-    if (root.devicePixelRatio > 1) {
+    if (window.devicePixelRatio > 1) {
       return true;
     }
 
-    if (root.matchMedia && root.matchMedia(mediaQuery).matches) {
+    if (window.matchMedia && window.matchMedia(mediaQuery).matches) {
       return true;
     }
 
@@ -179,6 +179,6 @@
 
 
   if (Retina.isRetina()) {
-    Retina.init(root);
+    Retina.init(null);
   }
 })();
