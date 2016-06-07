@@ -1,0 +1,9 @@
+{
+    "extends": ["axial"],
+    "rules": {
+      "no-var": 0,
+      "prefer-arrow-callback": 0,
+      "prefer-template": 0,
+      "vars-on-top": 0
+    }
+}

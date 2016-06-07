@@ -176,7 +176,7 @@ describe('RetinaImagePath', function() {
 
       path = new RetinaImagePath("/images/some_image.png");
       path.check_2x_variant(function(hasVariant) {
-        hasVariant.should.equal(true);
+        hasVariant.should.equal(false);
 
         Retina.configure({
           check_mime_type: true
