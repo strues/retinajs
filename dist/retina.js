@@ -68,7 +68,7 @@
    * @return {Element} The same element that was passed in.
    */
   function forceOriginalDimensions(image) {
-    if (!image.getAttribute('data-no-resize')) {
+    if (!image.hasAttribute('data-no-resize')) {
       if (image.offsetWidth === 0 && image.offsetHeight === 0) {
         image.setAttribute('width', image.naturalWidth);
         image.setAttribute('height', image.naturalHeight);
