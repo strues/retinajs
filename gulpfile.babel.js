@@ -1,10 +1,12 @@
 'use strict';
 
-var gulp = require('gulp');
-var pkg = require('./package.json');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var head = '/*!\n' +
+import gulp from 'gulp';
+import pkg from './package.json';
+import load from 'gulp-load-plugins';
+import del from 'del';
+
+const $ = load();
+const head = '/*!\n' +
            ' * Retina.js v<%= pkg.version %>\n' +
            ' *\n' +
            ' * Copyright 2016 Axial, LLC\n' +
@@ -14,7 +16,7 @@ var head = '/*!\n' +
            ' * high-resolution images to devices with retina displays.\n' +
            ' */\n';
 
-var entry = './src/retina.js';
+const entry = './src/retina.js';
 
 gulp.task('clean', cleanTask);
 gulp.task('copy', copyTask);
