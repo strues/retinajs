@@ -122,7 +122,7 @@
      * Don't do anything if the user didn't provide a source or if the
      * cap is less than 2.
      */
-    if (src && cap < 2) {
+    if (src && cap > 1) {
       var newSrc = src.replace(srcReplace, '@' + cap + 'x$1');
       setSourceIfAvailable(image, newSrc);
     }
