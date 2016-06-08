@@ -1,4 +1,7 @@
+// @ifdef BROWSER
 (function() {
+// @endif
+
   /*
    * Determine whether or not `window` is available.
    */
@@ -136,14 +139,24 @@
    *
    * @return {undefined}
    */
-  function activate() {
+  function retina() {
     getImages().forEach(img => swapImage(img));
   }
 
   /*
    * If this environment has `window`, activate the plugin.
    */
+  // @ifdef BROWSER
   if (hasWindow) {
-    activate();
+    window.addEventListener('load', retina);
   }
+  // @endif
+
+
+// @ifdef BROWSER
 }());
+// @endif
+
+// @ifdef NODE
+export default retina;
+// @endif

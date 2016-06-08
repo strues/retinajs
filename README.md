@@ -1,52 +1,57 @@
 # retina.js [![Build Status](https://secure.travis-ci.org/imulus/retinajs.png?branch=master)](http://travis-ci.org/imulus/retinajs)
 
+> Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this readme before updating.
+
 ### JavaScript, LESS and SASS helpers for rendering high-resolution image variants
 
-retina.js makes it easy to serve high-resolution images to devices with retina displays
+retina.js makes it easy to serve high-resolution images to devices with retina displays. Prepare images for as many pixel densities as you want and let retina.js dynamically serve the right image to the user.
 
 [![Build Status](https://secure.travis-ci.org/imulus/retinajs.png?branch=master)](http://travis-ci.org/imulus/retinajs)
 
 ## How it works
 
-When your users load a page, retina.js checks each image on the page to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.
+With the release of version 2.0, retina.js now requires each image to opt in rather than assuming all `img` tags are retina-ready.
 
-The script assumes you use Apple's prescribed high-resolution modifier (@2x) to denote high-resolution image variants on your server. It is also possible to override this by manually specifying the URL for the @2x images using `data-at2x` attributes.
+When your users load a page, retina.js makes a selection of all `img` tags with a `data-rjs` attribute. For each of those images, it checks to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.
 
-For example, if you have an image on your page that looks like this:
+The script assumes you use Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-resolution image variants on your server. It also assumes that if you have prepared a variant for @3x environments, that you have also prepared a variant for @2x environments. With that in mind, you'll specify your highest environment level with the `data-rjs` attribute and let retina.js take it from there.
 
-```html
-<img src="/images/my_image.png" />
-```
-
-The script will check your server to see if an alternative image exists at `/images/my_image@2x.png`
-
-However, if you have:
+For example, let's say you have an image on your page that looks like this:
 
 ```html
-<img src="/images/my_image.png" data-at2x="http://example.com/my_image@2x.png" />
+<img src="/images/my_image.png" data-rjs="3" />
 ```
 
-The script will use `http://example.com/my_image@2x.png` as the high-resolution image. No checks to the server will be performed.
+retina.js will assume that the url you placed in the `src` attribute is a standard, non-retina image. Since you gave the `data-rjs` attribute a value of "3", it will also assume that a variant for @2x environments **AND** a variant for @3x environments exists on the server. If you had said "4" instead of "3", it would have assumed variants existed for @2x, @3x, and @4x – everything up through the value you specified.
+
+In this case, we've set our resolution cap at "3". When the page loads, retina.js will check the actual resolution of the device environment to decide whether it should really serve up an @3x image. If the user If the user happens to be in an @2x environment, retina.js will not try to serve up your @3x image. It will serve up the @2x image instead. It will look for that image at `/images/my_image@2x.png`.
+
+If the environment does have @3x capabilities, retina.js will serve up the @3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has capabilities to display images at higher densities than @3x, retina.js will serve up the image of the highest resolution that you've provided, in this case @3x.
+
 
 ## How to use
 
 ### JavaScript
 
-The JavaScript helper script automatically replaces images on your page with high-resolution variants (if they exist). To use it, download the script and include it at the bottom of your page.
+The JavaScript helper script replaces images on your page with high-resolution variants (if they exist). There are a couple of ways to use it. If you'd like to use retina.js the old-fashioned way, download the _minified script_ and include it at the bottom of your page. This will cause retina.js to automatically kick in and replace images as soon as the page loads.
 
-1. Place the retina.js file on your server
+1. Place the **retina.min.js** file on your server.
 2. Include the script on your page (put it at the bottom of your template, before your closing \</body> tag)
 
 ``` html
-<script type="text/javascript" src="/scripts/retina.js"></script>
+<script type="text/javascript" src="/scripts/retina.min.js"></script>
 ```
 
-You can also exclude images that have no high-res version. Simply add the `data-no-retina` attribute.
+Note that only the minified file is designed to be directly placed into your html.
 
+The other way to use retina.js is to `import` it as part of a larger build process. In this case, retina.js won't run automatically. Instead it'll let you determine when you'd like it to run.
 
-``` html
-<img src="/path/to/image" data-no-retina />
+```JavaScript
+import retina from 'retina';
+
+window.addEventListener('load', retina);
 ```
+
 
 ###LESS & SASS
 
@@ -151,3 +156,11 @@ $ cd test/functional && http-server
 Then navigate your browser to [http://localhost:8080](http://localhost:8080)
 
 After that, open up `test/functional/public/index.html` in your editor, and try commenting out the line that spoofs retina support, and reloading it.
+
+
+# TODO
+
+- Sass, and less mixins
+- Make a decision about rails
+- Unit tests
+- Change readme for css, rails, and unit tests
