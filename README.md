@@ -28,6 +28,14 @@ In this case, we've set our resolution cap at "3". When the page loads, retina.j
 
 If the environment does have 3x capabilities, retina.js will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has capabilities to display images at higher densities than 3x, retina.js will serve up the image of the highest resolution that you've provided, in this case 3x.
 
+*data-at2x*
+
+retina.js retains some legacy support for using the `data-at2x` attribute to manually specify the location of your high resolution variant. However, by manually including the path to a high res variant, retina.js will not be able to dynamically serve images at multiple sizes in response to different environments. Instead, it will work as it always has – if the environment resolution is greater than 1x, it will serve the high res image URL you provided. The one change is that retina.js no longer requires you to use the `data-at2x` attribute for this. Instead, you can simply include a URL string instead of a number in your `data-rjs` attribute, as follows:
+
+```html
+<img src="/images/my_image.png" data-rjs="/images/2x/my_image.png" />
+```
+
 
 ## How to use
 

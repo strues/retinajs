@@ -19,7 +19,7 @@
   const srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
 
   /*
-   * Define our selector for elements to target.
+   * Define our selectors for elements to target.
    */
   const selector = 'img[data-rjs]';
 
@@ -102,13 +102,14 @@
   /**
    * Attempts to do an image url swap on a given image.
    *
-   * @param  {Element} image An image in the DOM.
+   * @param  {Element}       image An image in the DOM.
+   * @param  {String}        src   The original image source attribute.
+   * @param  {String|Number} rjs   The pixel density cap for images provided.
    *
    * @return {undefined}
    */
-  function swapImage(image) {
-    const src = image.getAttribute('src');
-    const cap = chooseCap(image.getAttribute('data-rjs') || 1);
+  function dynamicSwapImage(image, src, rjs = 1) {
+    const cap = chooseCap(rjs);
 
     /*
      * Don't do anything if the user didn't provide a source or if the
@@ -117,6 +118,21 @@
     if (src && cap > 1) {
       const newSrc = src.replace(srcReplace, `@${cap}x$1`);
       setSourceIfAvailable(image, newSrc);
+    }
+  }
+
+  /**
+   * Performs an image url swap on a given image with a provided url.
+   *
+   * @param  {Element} image  An image in the DOM.
+   * @param  {String}  src    The original image source attribute.
+   * @param  {String}  hdsrc  The path for a 2x image.
+   *
+   * @return {undefined}
+   */
+  function manualSwapImage(image, src, hdsrc) {
+    if (environment > 1) {
+      setSourceIfAvailable(image, hdsrc);
     }
   }
 
@@ -140,7 +156,21 @@
    * @return {undefined}
    */
   function retina() {
-    getImages().forEach(img => swapImage(img));
+    getImages().forEach(img => {
+      const src = img.getAttribute('src');
+      const rjs = img.getAttribute('data-rjs');
+      const rjsIsNumber = !isNaN(parseInt(rjs, 10));
+
+      /*
+       * If the user provided a number, dynamically swap out the image.
+       * If the user provided a url, do it manually.
+       */
+      if (rjsIsNumber) {
+        dynamicSwapImage(img, src, rjs);
+      } else {
+        manualSwapImage(img, src, rjs);
+      }
+    });
   }
 
   /*
