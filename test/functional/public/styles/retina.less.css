@@ -58,7 +58,7 @@
     background-size: 300px 149px;
   }
 }
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 3 * 96dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2 * 96dpi) {
   .bg3 {
     background: url(../ipad@2x.png) center center no-repeat;
     background-size: 300px 149px;

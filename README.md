@@ -44,6 +44,8 @@ The JavaScript helper script replaces images on your page with high-resolution v
 
 **Note that only the minified file is designed to be directly placed into your html.**
 
+You can also re-initialize retina.js manually whenever you need to simply by calling `window.retinajs()`.
+
 The other way to use retina.js is to `import` it as part of a larger build process. In this case, retina.js won't run automatically. Instead, it'll let you determine when you'd like it to run.
 
 ```JavaScript
@@ -51,6 +53,8 @@ import retina from 'retina';
 
 window.addEventListener('load', retina);
 ```
+
+In this case, the `retina` function can be called as often as you need in order to re-initialize the image swapping.
 
 
 ###LESS & SASS

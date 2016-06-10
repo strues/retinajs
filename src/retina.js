@@ -149,6 +149,7 @@
   // @ifdef BROWSER
   if (hasWindow) {
     window.addEventListener('load', retina);
+    window.retinajs = retina;
   }
   // @endif
 
