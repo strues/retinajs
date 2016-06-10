@@ -14,7 +14,7 @@ With the release of version 2.0, retina.js now requires each image to opt in rat
 
 When your users load a page, retina.js makes a selection of all `img` tags with a `data-rjs` attribute. For each of those images, it checks to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.
 
-The script assumes you use Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-resolution image variants on your server. It also assumes that if you have prepared a variant for @3x environments, that you have also prepared a variant for @2x environments. With that in mind, you'll specify your highest environment level with the `data-rjs` attribute and let retina.js take it from there.
+The script assumes you use Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-resolution image variants on your server. It also assumes that if you have prepared a variant for 3x environments, that you have also prepared a variant for 2x environments. With that in mind, you'll specify your highest environment level with the `data-rjs` attribute and let retina.js take it from there.
 
 For example, let's say you have an image on your page that looks like this:
 
@@ -22,18 +22,18 @@ For example, let's say you have an image on your page that looks like this:
 <img src="/images/my_image.png" data-rjs="3" />
 ```
 
-retina.js will assume that the url you placed in the `src` attribute is a standard, non-retina image. Since you gave the `data-rjs` attribute a value of "3", it will also assume that a variant for @2x environments **AND** a variant for @3x environments exists on the server. If you had said "4" instead of "3", it would have assumed variants existed for @2x, @3x, and @4x – everything up through the value you specified.
+retina.js will assume that the url you placed in the `src` attribute is a standard, non-retina image. Since you gave the `data-rjs` attribute a value of "3", it will also assume that a variant for 3x environments **AND** a variant for 2x environments exists on the server. If you had said "4" instead of "3", it would have assumed variants existed for 2x, 3x, and 4x – everything up through the value you specified.
 
-In this case, we've set our resolution cap at "3". When the page loads, retina.js will check the actual resolution of the device environment to decide whether it should really serve up an @3x image. If the user If the user happens to be in an @2x environment, retina.js will not try to serve up your @3x image. It will serve up the @2x image instead. It will look for that image at `/images/my_image@2x.png`.
+In this case, we've set our resolution cap at "3". When the page loads, retina.js will check the actual resolution of the device environment to decide whether it should really serve up a 3x image. If the user happens to be in a 2x environment, retina.js will not try to serve up your 3x image. It will serve up the 2x image instead, and it will look for that image at `/images/my_image@2x.png`.
 
-If the environment does have @3x capabilities, retina.js will serve up the @3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has capabilities to display images at higher densities than @3x, retina.js will serve up the image of the highest resolution that you've provided, in this case @3x.
+If the environment does have 3x capabilities, retina.js will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has capabilities to display images at higher densities than 3x, retina.js will serve up the image of the highest resolution that you've provided, in this case 3x.
 
 
 ## How to use
 
 ### JavaScript
 
-The JavaScript helper script replaces images on your page with high-resolution variants (if they exist). There are a couple of ways to use it. If you'd like to use retina.js the old-fashioned way, download the _minified script_ and include it at the bottom of your page. This will cause retina.js to automatically kick in and replace images as soon as the page loads.
+The JavaScript helper script replaces images on your page with high-resolution variants if they exist. There are a couple of ways to use it. If you'd like to use retina.js the old-fashioned way, download the _minified script_ and include it at the bottom of your page. This will cause retina.js to automatically kick in and replace images as soon as the page loads.
 
 1. Place the **retina.min.js** file on your server.
 2. Include the script on your page (put it at the bottom of your template, before your closing \</body> tag)
@@ -42,9 +42,9 @@ The JavaScript helper script replaces images on your page with high-resolution v
 <script type="text/javascript" src="/scripts/retina.min.js"></script>
 ```
 
-Note that only the minified file is designed to be directly placed into your html.
+**Note that only the minified file is designed to be directly placed into your html.**
 
-The other way to use retina.js is to `import` it as part of a larger build process. In this case, retina.js won't run automatically. Instead it'll let you determine when you'd like it to run.
+The other way to use retina.js is to `import` it as part of a larger build process. In this case, retina.js won't run automatically. Instead, it'll let you determine when you'd like it to run.
 
 ```JavaScript
 import retina from 'retina';
@@ -55,36 +55,50 @@ window.addEventListener('load', retina);
 
 ###LESS & SASS
 
-The LESS &amp; SASS CSS mixins are helpers for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a background-size of the original image in order to maintain proper dimensions. To use it, download the mixin, import or include it in your LESS or SASS stylesheet, and apply it to elements of your choice. The SASS versions require you pass the extension separately from the path.
+The LESS &amp; SASS CSS mixins are helpers for applying high-resolution background images in your stylesheets. You provide an image path, a pixel density cap, and a few other attributes, and the mixin creates media queries for all device pixel ratios up through your specified cap. To use it, download the mixin, import or include it in your LESS or SASS stylesheets, and apply it to elements of your choice.
 
 *Syntax:*
 
-``` less
-.at2x(@path, [optional] @width: auto, [optional] @height: auto);
+```less
+.retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
 ```
 
-``` scss
-@include at2x($path, [option] $ext: "jpg", [optional] $width: auto, [optional] $height: auto);
+```scss
+@include retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
 ```
+
+```sass
++retina('./my-image.png', 3, 100px, 100px, center center no-repeat)
+```
+
+*Arguments:*
+
+1. The path to your 1x image.
+2. _Optional_. The highest level resolution that you have created images for. Passing in a 3 will create media queries that utilize 2x images **and** 3x images. Defaults to 2.
+3. _Optional_. The width applied to the `background-size` property when high resolution images are applied. Defaults to `auto`.
+4. _Optional_. The height applied to the `background-size` property when high resolution images are applied. Defaults to `auto`.
+5. _Optional_. Any extra values to be appended to the `background` property in all cases.
 
 *Steps:*
 
-1. LESS - Add the .at2x() mixin from retina.less to your LESS stylesheet (or reference it in an @import statement)
-SASS - Add the @mixin at2x() from retina.scss or retina.sass to your SASS stylesheet (or reference it in an @import)
-2. LESS - In your stylesheet, call the .at2x() mixin anywhere instead of using background-image
-SASS - In your stylesheet, call @include at2x() anywhere instead of using background-image
+1. Importing
+  - LESS - Add the `.retina()` mixin from retina.less to your LESS stylesheet (or reference it in an `@import` statement).
+  - SASS - Add the `@mixin retina()` from retina.scss or retina.sass to your SASS stylesheet (or reference it in an `@import`).
+2. Using
+  - LESS - In your stylesheet, call the `.retina()` mixin anywhere instead of using background-image.
+  - SASS - In your stylesheet, call `@include retina()` anywhere instead of using background-image.
 
-This:
+To give you an example of the output, this...
 
-``` less
+```less
 .logo {
-  .at2x('/images/my_image.png', 200px, 100px);
+  .retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
 }
 ```
 
-``` sass
+```scss
 .logo {
-  @include at2x('/images/my_image', png, 200px, 100px);
+  @include retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
 }
 ```
 
@@ -92,46 +106,39 @@ Will compile to:
 
 ``` css
 .logo {
-  background-image: url('/images/my_image.png');
+  background-image: url('/images/my_image.png') center center no-repeat;
 }
 
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   .logo {
-    background-image: url('/images/my_image@2x.png');
+    background: url('/images/my_image@2x.png') center center no-repeat;
     background-size: 200px 100px;
   }
 }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo {
+    background: url('/images/my_image@2x.png') center center no-repeat;
+    background-size: 200px 100px;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
+  .logo {
+    background: url('/images/my_image@3x.png') center center no-repeat;
+    background-size: 200px 100px;
+  }
+}
+
 ```
 
-### Ruby on Rails 3.x
+### Considerations for Ruby on Rails 3+
 
 ...or any framework that embeds some digest/hash to the asset URLs based on the contents, e.g. `/images/image-{hash1}.jpg`.
 
-The problem with this is that the high-resolution version would have a different hash, and would not conform the usual pattern, i.e. `/images/image@2x-{hash2}.jpg`. So automatic detection would fail because retina.js would check the existence of `/images/image-{hash1}@2x.jpg`.
+The problem with this is that the high-resolution version would have a different hash, and would not conform to the usual pattern, i.e. `/images/image@2x-{hash2}.jpg`. So automatic detection would fail because retina.js would check the existence of `/images/image-{hash1}@2x.jpg`.
 
-There's no way for retina.js to know beforehand what the high-resolution image's hash would be without some sort of help from the server side. So in this case, the suggested method is to supply the high-resolution URLs using the `data-at2x` attributes as previously described in the How It Works section.
-
-In Rails, one way to automate this is using a helper, e.g.:
-
-```ruby
-# in app/helpers/some_helper.rb or app/helpers/application_helper.rb
-def image_tag_with_at2x(name_at_1x, options={})
-  name_at_2x = name_at_1x.gsub(%r{\.\w+$}, '@2x\0')
-  image_tag(name_at_1x, options.merge("data-at2x" => asset_path(name_at_2x)))
-end
-```
-
-And then in your views (templates), instead of using image_tag, you would use image_tag_with_at2x, e.g. for ERB:
-
-```erb
-<%= image_tag_with_at2x "logo.png" %>
-```
-
-It would generate something like:
-
-```html
-<img src="logo-{hash1}.png" data-at2x="logo@2x-{hash2}.png" />
-```
+There's no way for retina.js to know beforehand what the high-resolution image's hash would be without some sort of help from the server side. So in this case, the suggested method is to implement a process like [team-umlaut's asset compile rake file](https://github.com/team-umlaut/umlaut/blob/5edcc609389edf833a79caa6f3ef92982312f0c5/lib/tasks/umlaut_asset_compile.rake) which will generate non-digested asset files as necessary.
 
 ## How to test
 
@@ -160,7 +167,6 @@ After that, open up `test/functional/public/index.html` in your editor, and try 
 
 # TODO
 
-- Sass, and less mixins
-- Make a decision about rails
 - Unit tests
-- Change readme for css, rails, and unit tests
+- Change readme for unit tests
+- Mark the release as version 2.0

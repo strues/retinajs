@@ -2,10 +2,10 @@
 
 // Single quoted
 body {
-  @include at2x('/path/to/image.png', 200px, 100px);
+  @include retina('/path/to/image.png', 2, 200px, 100px);
 }
 
 // Double quoted
 header {
-  @include at2x("/path/to/header.png", 600px, 50px);
+  @include retina("/path/to/header.png", 2, 600px, 50px);
 }
