@@ -248,3 +248,4 @@ When you are finished developing, run `$ gulp dist` to run linters and compile a
 - Unit tests
 - Change readme for unit tests?
 - Mark the release as version 2.0
+- Don't forget bower stuff
