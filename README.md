@@ -51,7 +51,7 @@ retina.js would convert it to something like this:
 
 Of course, the logic behind image swapping is exactly the same when dealing with background images as it is when dealing with `src` attributes. If the user's environment only supports 2x variants, retina.js will load the 2x variant instead of the 3x.
 
-Note that it is up to you in a case like this to correctly apply background sizing and any other necessary background-related styles to the element.
+_Note that it is up to you in a case like this to correctly apply background sizing and any other necessary background-related styles to the element._
 
 #### Manually Specifying a High-Res URL
 
