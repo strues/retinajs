@@ -19,7 +19,7 @@ There are 4 ways to use retina.js:
 
 #### Img Tags
 
-retina.js assumes you are using Apple's prescribed high-resollution modifiers (@2x, @3x, etc) to denote high-res image variants on your server. It also assumes that if you have prepared a variant for a given high-res environment, that you have also prepared variants for each environment below it. For example, if you have prepared 3x variants, retina.js will assume that you have also prepared 2x variants.
+retina.js assumes you are using Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-res image variants on your server. It also assumes that if you have prepared a variant for a given high-res environment, that you have also prepared variants for each environment below it. For example, if you have prepared 3x variants, retina.js will assume that you have also prepared 2x variants.
 
 With this in mind, you'll specify your highest environment level with the `data-rjs` attribute and let retina.js take it from there.
 
@@ -215,7 +215,7 @@ Add the `retina( ... )` mixin from retina.styl to your Stylus stylesheet (or ref
 
 The problem with this is that the high-resolution version would have a different hash, and would not conform to the usual pattern, i.e. `/images/image@2x-{hash2}.jpg`. So automatic detection would fail because retina.js would check the existence of `/images/image-{hash1}@2x.jpg`.
 
-There's no way for retina.js to know beforehand what the high-resolution image's hash would be without some sort of help from the server side. So in this case, there are a couple of options for handling it.
+There's no way for retina.js to know beforehand what the high-resolution image's hash would be without some sort of help from the server side. So in this case, there are a couple of options for handling it:
 
 #### Bypass Digesting
 
