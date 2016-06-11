@@ -47,6 +47,7 @@
 
     // Set a base background for 1x environments.
     background: url("#{$at1x_path}") $extras
+    background-size: $size
 
     // Create an @2x-ish media query.
     @media all and (-webkit-min-device-pixel-ratio: 1.5), all and (-o-min-device-pixel-ratio: 3/2), all and (min--moz-device-pixel-ratio: 1.5), all and (min-device-pixel-ratio: 1.5)
@@ -64,3 +65,4 @@
 
   @else
     background: url("#{$path}") $extras
+    background-size: $size

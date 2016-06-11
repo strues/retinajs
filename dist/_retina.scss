@@ -61,7 +61,8 @@
     /*
      * Set a base background for 1x environments.
      */
-    background : url("#{$at1x_path}") $extras;
+    background: url("#{$at1x_path}") $extras;
+    background-size: $size;
 
     /*
      * Create an @2x-ish media query.
@@ -94,7 +95,8 @@
    * extension, set a background value without doing anything to it.
    */
   } @else {
-    background : url("#{$path}") $extras;
+    background: url("#{$path}") $extras;
+    background-size: $size;
   }
 
 }

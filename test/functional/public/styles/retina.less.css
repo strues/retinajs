@@ -18,6 +18,7 @@
    * Set a base background for 1x environments.
    */
   background: url('../ipad.png') center center no-repeat;
+  background-size: 300px 149px;
   /*
    * Create an @2x-ish media query.
    */
@@ -43,6 +44,7 @@
    * Set a base background for 1x environments.
    */
   background: url('../ipad.png') center center no-repeat;
+  background-size: 300px 149px;
   /*
    * Create an @2x-ish media query.
    */
