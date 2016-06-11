@@ -2,7 +2,7 @@
 
 > Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this readme before updating.
 
-### JavaScript, LESS and SASS helpers for rendering high-resolution image variants
+### JavaScript, Sass, Less, and Stylus helpers for rendering high-resolution image variants
 
 retina.js makes it easy to serve high-resolution images to devices with displays that support them. You can prepare images for as many levels of pixel density as you want and let retina.js dynamically serve the right image to the user.
 
@@ -85,7 +85,7 @@ If the user then loads the page in any kind of high-resolution environment, they
 
 #### Media Queries
 
-retina.js comes with mixins for SCSS, Sass, and Less. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
+retina.js comes with mixins for SCSS, Sass, Less, and Stylus. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
 
 In each language, the retina mixin allows 4 parameters:
 
@@ -116,6 +116,14 @@ Here is an example wherein we are specifying that we have prepared images for bo
 ```less
 #item {
   .retina('/images/my_image.png', 3, cover, center center no-repeat);
+}
+```
+
+**Stylus**
+
+```stylus
+#item {
+  retina('/images/my_image.png', 3, cover, center center no-repeat)
 }
 ```
 
@@ -183,7 +191,7 @@ Notice that the `retina` function can be called as often as you need in order to
 
 ### CSS Preprocessors
 
-The process for including the Less and Sass mixins is relatively straightforward. Here is a breakdown for each:
+The process for including the CSS mixins is relatively straightforward. Here is a breakdown for each:
 
 #### SCSS
 
@@ -196,6 +204,10 @@ Add the `=retina( ... )` mixin from \_retina.sass to your Sass stylesheet (or re
 #### Less
 
 Add the `.retina( ... )` mixin from retina.less to your Less stylesheet (or reference it in an `@import`). In your stylesheet, call the mixin using `.retina( ... )` anywhere instead of using `background` or `background-image`.
+
+#### Stylus
+
+Add the `retina( ... )` mixin from retina.styl to your Stylus stylesheet (or reference it in an `@import`). In your stylesheet, call the mixin using `retina( ... )` anywhere instead of using `background` or `background-image`.
 
 
 ## Considerations for Ruby on Rails 3+
@@ -240,7 +252,7 @@ You can also test out the output from each CSS mixin by uncommenting the correct
 
 When you run `$ gulp dev`, the gulp server sets up watchers for both the JavaScript version and the CSS mixins such that when any of these files in the `src` directory is modified, all the necessary recompiling takes place and the browser is automatically refreshed.
 
-When you are finished developing, run `$ gulp dist` to run linters and compile all the necessary files into the `dist` directory. This directory should end up containing SCSS, Sass, and Less mixin files as well as a `retina.js` file that can be imported into larger applications and a `retina.min.js` file that can be included directly in an html file via a `script` tag.
+When you are finished developing, run `$ gulp dist` to run linters and compile all the necessary files into the `dist` directory. This directory should end up containing SCSS, Sass, Less, and Stylus mixin files as well as a `retina.js` file that can be imported into larger applications and a `retina.min.js` file that can be included directly in an html file via a `script` tag.
 
 
 # TODO

@@ -17,7 +17,7 @@
  * @param  {Value}  $size:   auto auto  The intended width of the rendered image.
  * @param  {Value}  $extras: null       Any other `background` values to be added.
  */
-.retina(@path, @cap: 2, @size: auto auto, @extras: '') {
+.retina(@path, @cap: 2, @size: auto auto, @extras: ~'') {
   @lowretina: ~"(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)";
   @2xpath: ~`@{path}.replace(/\.\w+$/, function(match) { return "@2x" + match; })`;
 

@@ -23,6 +23,7 @@ const entry = './src/retina.js';
 const scssEntry = './src/_retina.scss';
 const sassEntry = './src/_retina.sass';
 const lessEntry = './src/retina.less';
+const stylEntry = './src/retina.styl';
 const server = browsersync.create();
 
 
@@ -65,7 +66,7 @@ function serveTask() {
 }
 
 function cssDistTask() {
-  return gulp.src([sassEntry, scssEntry, lessEntry])
+  return gulp.src([sassEntry, scssEntry, lessEntry, stylEntry])
     .pipe(gulp.dest('./dist/'));
 }
 
@@ -79,6 +80,10 @@ function sassPrepTask() {
 
 function lessPrepTask() {
   return gulp.src(lessEntry).pipe(gulp.dest('./test/functional/public/styles/'));
+}
+
+function stylusPrepTask() {
+  return gulp.src(stylEntry).pipe(gulp.dest('./test/functional/public/styles/'));
 }
 
 function scssCompileTask() {
@@ -102,10 +107,17 @@ function lessCompileTask() {
        .pipe(gulp.dest('./test/functional/public/styles/'));
 }
 
+function stylusCompileTask() {
+  return gulp.src('./test/functional/public/styles/styl-base.styl')
+       .pipe($.stylus())
+       .pipe($.rename('retina.styl.css'))
+       .pipe(gulp.dest('./test/functional/public/styles/'));
+}
+
 function cssBuildTask() {
   return runSequence(
-    ['prep-scss', 'prep-sass', 'prep-less'],
-    ['compile-scss', 'compile-sass', 'compile-less']
+    ['prep-scss', 'prep-sass', 'prep-less', 'prep-stylus'],
+    ['compile-scss', 'compile-sass', 'compile-less', 'compile-stylus']
   );
 }
 
@@ -118,9 +130,11 @@ gulp.task('lint', lintTask);
 gulp.task('prep-scss', scssPrepTask);
 gulp.task('prep-sass', sassPrepTask);
 gulp.task('prep-less', lessPrepTask);
+gulp.task('prep-stylus', stylusPrepTask);
 gulp.task('compile-scss', scssCompileTask);
 gulp.task('compile-sass', sassCompileTask);
 gulp.task('compile-less', lessCompileTask);
+gulp.task('compile-stylus', stylusCompileTask);
 gulp.task('build-css', cssBuildTask);
 
 
