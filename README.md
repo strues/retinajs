@@ -156,6 +156,9 @@ Regardless of the dialect, the output is effectively the same:
 }
 ```
 
+## Compatibility
+
+retina.js is compatible with all modern browsers and will not throw errors in any old browsers all the way back through IE6.
 
 ## Installing & Launching
 
