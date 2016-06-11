@@ -161,7 +161,7 @@ There are 2 ways to use the JavaScript version of retina.js:
 
 #### Old-School
 
-To use retina.js the old-school way, download **retina.min.js** and put it on your server. Then, include the script in your html file at the bottom of your template, before your closing \</body> tag. _Note that only the minified version of retina.js is designed to be used in this fashion._
+To use retina.js the old-school way, download **retina.min.js** and put it on your server. Then, include the script in your html file at the bottom of your template, before your closing \</body> tag. _Note that **only the minified version** of retina.js is designed to be used in this fashion._
 
 ``` html
 <script type="text/javascript" src="/scripts/retina.min.js"></script>
