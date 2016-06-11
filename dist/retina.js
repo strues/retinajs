@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", {
 var hasWindow = typeof window !== 'undefined';
 
 /*
- * Get the device pixel ration per our environment.
+ * Get the device pixel ratio per our environment.
  * Default to 1.
  */
 var environment = hasWindow ? window.devicePixelRatio || 1 : 1;

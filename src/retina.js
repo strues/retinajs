@@ -8,7 +8,7 @@
   const hasWindow = typeof window !== 'undefined';
 
   /*
-   * Get the device pixel ration per our environment.
+   * Get the device pixel ratio per our environment.
    * Default to 1.
    */
   const environment = hasWindow ? (window.devicePixelRatio || 1) : 1;
