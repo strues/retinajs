@@ -72,24 +72,23 @@ The LESS &amp; SASS CSS mixins are helpers for applying high-resolution backgrou
 *Syntax:*
 
 ```less
-.retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
+.retina('./my-image.png', 3, 100px 100px, center center no-repeat);
 ```
 
 ```scss
-@include retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
+@include retina('./my-image.png', 3, 100px 100px, center center no-repeat);
 ```
 
 ```sass
-+retina('./my-image.png', 3, 100px, 100px, center center no-repeat)
++retina('./my-image.png', 3, 100px 100px, center center no-repeat)
 ```
 
 *Arguments:*
 
 1. The path to your 1x image.
 2. _Optional_. The highest level resolution that you have created images for. Passing in a 3 will create media queries that utilize 2x images **and** 3x images. Defaults to 2.
-3. _Optional_. The width applied to the `background-size` property when high resolution images are applied. Defaults to `auto`.
-4. _Optional_. The height applied to the `background-size` property when high resolution images are applied. Defaults to `auto`.
-5. _Optional_. Any extra values to be appended to the `background` property in all cases.
+3. _Optional_. The value applied to the `background-size` property when high resolution images are applied. Defaults to `auto auto`.
+4. _Optional_. Any extra values to be appended to the `background` property in all cases.
 
 *Steps:*
 
@@ -104,13 +103,13 @@ To give you an example of the output, this...
 
 ```less
 .logo {
-  .retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
+  .retina('./my-image.png', 3, 100px 100px, center center no-repeat);
 }
 ```
 
 ```scss
 .logo {
-  @include retina('./my-image.png', 3, 100px, 100px, center center no-repeat);
+  @include retina('./my-image.png', 3, 100px 100px, center center no-repeat);
 }
 ```
 
@@ -182,3 +181,9 @@ After that, open up `test/functional/public/index.html` in your editor, and try 
 - Unit tests
 - Change readme for unit tests
 - Mark the release as version 2.0
+
+```
+<img src="/img/myimg.png" data-rjs="3" />
+<img src="/img/myimg.png" data-rjs="/img/2x/myimg.png" />
+<div style="background: url(/img/myimg.png)" data-rjs="3"></div>
+```

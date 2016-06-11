@@ -17,21 +17,21 @@
  * Examples:
  *
  *   @include retina(/images/mypic.jpg, 2);
- *   @include retina(/images/mypic.jpg, 3, 100px, 100px, left top no-repeat transparent);
+ *   @include retina(/images/mypic.jpg, 3, 100px 100px, left top no-repeat transparent);
  *
- * @param  {String} $path          The path to the file name minus extension.
- * @param  {Number} $cap:    2     The highest pixel density level images exist for.
- * @param  {[type]} $w:      auto  The intended width of the rendered image.
- * @param  {[type]} $h:      auto  The intended height of the rendered image.
- * @param  {[type]} $extras: ''    Any other `background` values to be added.
+ * @param  {Value}  $path               The path to the file name minus extension.
+ * @param  {Number} $cap:    2          The highest pixel density level images exist for.
+ * @param  {Value}  $size:   auto auto  The intended width of the rendered image.
+ * @param  {Value}  $extras: null       Any other `background` values to be added.
  */
-@mixin retina($path, $cap: 2, $w: auto, $h: auto, $extras: null) {
+@mixin retina($path, $cap: 2, $size: auto auto, $extras: null) {
 
   /*
    * Set a counter and get the length of the image path.
    */
-  $position:-1;
-  $length: str-length($path);
+  $position: -1;
+  $strpath: '#{$path}';
+  $length: str-length($strpath);
 
   /*
    * Loop ver the image path and figure out the
@@ -39,7 +39,7 @@
    */
   @for $i from $length through $length - 10{
       @if $position == -1 {
-          $char : str-slice($path, $i, $i);
+          $char : str-slice($strpath, $i, $i);
           @if str-index($char, ".") == 1 {
               $position: $i;
           }
@@ -53,8 +53,8 @@
    * values for different environments.
    */
   @if $position != -1 {
-    $ext: str-slice($path, $position + 1, $length);
-    $base: str-slice($path, 1, $position - 1);
+    $ext: str-slice($strpath, $position + 1, $length);
+    $base: str-slice($strpath, 1, $position - 1);
     $at1x_path: "#{$base}.#{$ext}";
     $at2x_path: "#{$base}@2x.#{$ext}";
 
@@ -71,7 +71,7 @@
            all and (min--moz-device-pixel-ratio: 1.5),
            all and (min-device-pixel-ratio: 1.5) {
              background      : url("#{$at2x_path}") $extras;
-             background-size : $w $h;
+             background-size : $size;
     }
 
     /*
@@ -84,7 +84,7 @@
         @media (-webkit-min-device-pixel-ratio: $env),
                (min-resolution: $env * 96dpi) {
                  background      : url("#{$base}#{$suffix}.#{$ext}") $extras;
-                 background-size : $w $h;
+                 background-size : $size;
         }
       }
     }

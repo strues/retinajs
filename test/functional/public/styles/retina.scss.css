@@ -3,13 +3,12 @@
  * Examples:
  *
  *   @include retina(/images/mypic.jpg, 2);
- *   @include retina(/images/mypic.jpg, 3, 100px, 100px, left top no-repeat transparent);
+ *   @include retina(/images/mypic.jpg, 3, 100px 100px, left top no-repeat transparent);
  *
- * @param  {String} $path          The path to the file name minus extension.
- * @param  {Number} $cap:    2     The highest pixel density level images exist for.
- * @param  {[type]} $w:      auto  The intended width of the rendered image.
- * @param  {[type]} $h:      auto  The intended height of the rendered image.
- * @param  {[type]} $extras: ''    Any other `background` values to be added.
+ * @param  {Value}  $path               The path to the file name minus extension.
+ * @param  {Number} $cap:    2          The highest pixel density level images exist for.
+ * @param  {Value}  $size:   auto auto  The intended width of the rendered image.
+ * @param  {Value}  $extras: null       Any other `background` values to be added.
  */
 .bg {
   background: url("../ipad.png") center center no-repeat; }

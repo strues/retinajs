@@ -94,6 +94,8 @@ function forceOriginalDimensions(image) {
  * @return {undefined}
  */
 function setSourceIfAvailable(image, retinaURL) {
+  var imgType = image.nodeName.toLowerCase();
+
   /*
    * Create a new image element and give it a load listener. When the
    * load listener fires, it means the URL is correct and we will then
@@ -101,11 +103,21 @@ function setSourceIfAvailable(image, retinaURL) {
    */
   var testImage = document.createElement('img');
   testImage.addEventListener('load', function () {
-    forceOriginalDimensions(image).setAttribute('src', retinaURL);
+    /*
+     * If we're dealing with an image tag, force it's dimensions
+     * and set the source attribute. If not, go after the background-image
+     * inline style.
+     */
+    if (imgType === 'img') {
+      forceOriginalDimensions(image).setAttribute('src', retinaURL);
+    } else {
+      image.style.backgroundImage = 'url(' + retinaURL + ')';
+    }
   });
 
   /*
-   * Attach the retina URL to our proxy image to make sure it can load.
+   * Attach the retina URL to our proxy image to load in the new
+   * image resource.
    */
   testImage.setAttribute('src', retinaURL);
 }
