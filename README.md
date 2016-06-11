@@ -122,9 +122,8 @@ Here is an example wherein we are specifying that we have prepared images for bo
 **Stylus**
 
 ```stylus
-#item {
+#item
   retina('/images/my_image.png', 3, cover, center center no-repeat)
-}
 ```
 
 Regardless of the dialect, the output is effectively the same:
