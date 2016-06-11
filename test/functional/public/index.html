@@ -139,11 +139,11 @@
         <div class="bg3"></div>
       </div>
 
-      <h2>External URLs</h2>
+      <h2>Rarer Cases</h2>
 
       <!-- This image does not opt in. It will always be shown at 1x -->
       <div class="img-wrapper">
-        <h3>Naming Convention</h3>
+        <h3>External URL w/ Naming Convention</h3>
         <p>
           This image is pulled in externally. Retina.js should still work
           on external files. Thanks to
@@ -158,7 +158,7 @@
 
       <!-- This image does not opt in. It will always be shown at 1x -->
       <div class="img-wrapper">
-        <h3>Non-Conventional</h3>
+        <h3>External URL w/o Naming Convention</h3>
         <p>
           retina.js continues to provide basic support for manually indicating
           a direct URL for a "retina" image. Note that this technique does not
@@ -169,6 +169,17 @@
           data-rjs="http://www.google.com/logos/2012/wilhelm_busch-2012-hp.jpg"
           style="max-width: 100%"
         />
+      </div>
+
+      <!-- This image should be shown at 2x all retina environments,
+           but shown at 1x in non-retina environments. -->
+      <div class="img-wrapper">
+        <h3>Inline Background Image</h3>
+        <p>
+          This image should be shown at 2x all retina environments,
+          but shown at 1x in non-retina environments.
+        </p>
+        <div data-rjs="2" style="background: url(google-logo.png) center center no-repeat; background-size: 300px 99px; width: 300px; height: 99px; margin: 0 auto;"></div>
       </div>
 
     </div>

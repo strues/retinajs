@@ -28,11 +28,12 @@ var environment = hasWindow ? window.devicePixelRatio || 1 : 1;
  * Define a pattern for capturing src url suffixes.
  */
 var srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
+var inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
 
 /*
  * Define our selectors for elements to target.
  */
-var selector = 'img[data-rjs]';
+var selector = '[data-rjs]';
 
 /**
  * Chooses the actual image size to fetch, (for example 2 or 3) that
@@ -137,8 +138,7 @@ function dynamicSwapImage(image, src) {
   var cap = chooseCap(rjs);
 
   /*
-   * Don't do anything if the user didn't provide a source or if the
-   * cap is less than 2.
+   * Don't do anything if the cap is less than 2 or there is no src.
    */
   if (src && cap > 1) {
     var newSrc = src.replace(srcReplace, '@' + cap + 'x$1');
@@ -172,6 +172,17 @@ function getImages() {
 }
 
 /**
+ * Converts a string like "url(hello.png)" into "hello.png".
+ *
+ * @param  {Element} img An HTML element with a background image.
+ *
+ * @return {String}
+ */
+function cleanBgImg(img) {
+  return img.style.backgroundImage.replace(inlineReplace, '$2');
+}
+
+/**
  * Gets all participating images and dynamically swaps out each one for its
  * retina equivalent taking into account the environment capabilities and
  * the densities for which the user has provided images.
@@ -180,7 +191,8 @@ function getImages() {
  */
 function retina() {
   getImages().forEach(function (img) {
-    var src = img.getAttribute('src');
+    var isImg = img.nodeName.toLowerCase() === 'img';
+    var src = isImg ? img.getAttribute('src') : cleanBgImg(img);
     var rjs = img.getAttribute('data-rjs');
     var rjsIsNumber = !isNaN(parseInt(rjs, 10));
 

@@ -17,11 +17,12 @@
    * Define a pattern for capturing src url suffixes.
    */
   const srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
+  const inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
 
   /*
    * Define our selectors for elements to target.
    */
-  const selector = 'img[data-rjs]';
+  const selector = '[data-rjs]';
 
   /**
    * Chooses the actual image size to fetch, (for example 2 or 3) that
@@ -124,8 +125,7 @@
     const cap = chooseCap(rjs);
 
     /*
-     * Don't do anything if the user didn't provide a source or if the
-     * cap is less than 2.
+     * Don't do anything if the cap is less than 2 or there is no src.
      */
     if (src && cap > 1) {
       const newSrc = src.replace(srcReplace, `@${cap}x$1`);
@@ -161,6 +161,17 @@
   }
 
   /**
+   * Converts a string like "url(hello.png)" into "hello.png".
+   *
+   * @param  {Element} img An HTML element with a background image.
+   *
+   * @return {String}
+   */
+  function cleanBgImg(img) {
+    return img.style.backgroundImage.replace(inlineReplace, '$2');
+  }
+
+  /**
    * Gets all participating images and dynamically swaps out each one for its
    * retina equivalent taking into account the environment capabilities and
    * the densities for which the user has provided images.
@@ -169,7 +180,8 @@
    */
   function retina() {
     getImages().forEach(img => {
-      const src = img.getAttribute('src');
+      const isImg = img.nodeName.toLowerCase() === 'img';
+      const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
       const rjs = img.getAttribute('data-rjs');
       const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
