@@ -1,8 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 /*!
  * Retina.js v1.5.0
  *
@@ -12,7 +7,11 @@ Object.defineProperty(exports, "__esModule", {
  * Retina.js is an open source script that makes it easy to serve
  * high-resolution images to devices with retina displays.
  */
+'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * Determine whether or not `window` is available.
  */
@@ -211,5 +210,9 @@ function retina() {
 /*
  * If this environment has `window`, activate the plugin.
  */
+if (hasWindow) {
+  window.addEventListener('load', retina);
+  window.retinajs = retina;
+}
 
 exports.default = retina;
