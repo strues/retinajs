@@ -1,7 +1,3 @@
-// @ifdef BROWSER
-(function() {
-// @endif
-
   /*
    * Determine whether or not `window` is available.
    */
@@ -200,18 +196,20 @@
   /*
    * If this environment has `window`, activate the plugin.
    */
-  // @ifdef BROWSER
   if (hasWindow) {
     window.addEventListener('load', retina);
     window.retinajs = retina;
   }
-  // @endif
 
-
-// @ifdef BROWSER
-}());
-// @endif
-
-// @ifdef NODE
-export default retina;
-// @endif
+  export {
+    hasWindow,
+    environment,
+    chooseCap,
+    forceOriginalDimensions,
+    setSourceIfAvailable,
+    dynamicSwapImage,
+    manualSwapImage,
+    getImages,
+    cleanBgImg,
+    retina as default
+  };
