@@ -31,21 +31,15 @@ function cleanTask() {
   return del(['dist']);
 }
 
-function npmBuildTask() {
+function buildJsTask() {
   return gulp.src(entry)
-    .pipe($.preprocess({ context: { NODE: true } }))
-    .pipe($.banner(head, { pkg: pkg }))
+    // .pipe($.preprocess({ context: { NODE: true } }))
     .pipe($.babel())
-    .pipe(gulp.dest('./dist/'));
-}
-
-function browserBuildTask() {
-  return gulp.src(entry)
-    .pipe($.preprocess({ context: { BROWSER: true } }))
     .pipe($.banner(head, { pkg: pkg }))
-    .pipe($.babel())
-    .pipe($.size())
-    .pipe($.uglify({preserveComments: 'license'}))
+    .pipe(gulp.dest('./dist/'))
+    .pipe($.banner('if (typeof exports === "undefined") { exports = {}; }'))
+    .pipe(gulp.dest('./test/functional/public/'))
+    .pipe($.uglify({ preserveComments: 'license' }))
     .pipe($.rename('retina.min.js'))
     .pipe($.size())
     .pipe(gulp.dest('./dist/'))
@@ -122,8 +116,7 @@ function cssBuildTask() {
 }
 
 gulp.task('clean', cleanTask);
-gulp.task('build-browser', browserBuildTask);
-gulp.task('build-node', npmBuildTask);
+gulp.task('build-js', buildJsTask);
 gulp.task('dist-css', cssDistTask);
 gulp.task('serve', serveTask);
 gulp.task('lint', lintTask);
@@ -141,7 +134,7 @@ gulp.task('build-css', cssBuildTask);
 // The dist task will clean and lint files, it will
 // then build for the browser and build for node.
 gulp.task('dist', ['clean', 'lint'], (cb) => {
-  runSequence('dist-css', 'build-browser', 'build-node', cb);
+  runSequence('dist-css', 'build-js', cb);
 });
 
 // The dev task will build the code, then start the server.
@@ -149,9 +142,9 @@ gulp.task('dist', ['clean', 'lint'], (cb) => {
 // public dir. If it sees changes it will run build again
 // and then refresh the server.
 gulp.task('dev', ['clean', 'lint'], () => {
-  runSequence(['build-browser', 'build-css'], 'serve', () => {
-    gulp.watch(['./test/functional/public/*', './src/**/*'], () => {
-      runSequence('lint', ['build-browser', 'build-css'], () => server.reload());
+  runSequence(['build-js', 'build-css'], 'serve', () => {
+    gulp.watch(['./test/functional/public/index.html', './src/**/*'], () => {
+      runSequence('lint', ['build-js', 'build-css'], () => server.reload());
     });
     gulp.watch('./test/functional/public/styles/*', () => {
       runSequence('build-css', () => server.reload());

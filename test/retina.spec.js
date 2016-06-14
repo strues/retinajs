@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { environment, hasWindow } from '../src/retina';
+import { environment, hasWindow, forceOriginalDimensions } from '../src/retina';
 const { describe, it } = global;
 
 describe('RetinaJS Environment', () => {

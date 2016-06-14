@@ -201,15 +201,4 @@
     window.retinajs = retina;
   }
 
-  export {
-    hasWindow,
-    environment,
-    chooseCap,
-    forceOriginalDimensions,
-    setSourceIfAvailable,
-    dynamicSwapImage,
-    manualSwapImage,
-    getImages,
-    cleanBgImg,
-    retina as default
-  };
+export default retina;
