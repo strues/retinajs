@@ -3,6 +3,7 @@
 import gulp from 'gulp';
 import pkg from './package.json';
 import load from 'gulp-load-plugins';
+import inject from 'gulp-inject-string';
 import del from 'del';
 import runSequence from 'run-sequence';
 import browsersync from 'browser-sync';
@@ -33,12 +34,17 @@ function cleanTask() {
 
 function buildJsTask() {
   return gulp.src(entry)
-    // .pipe($.preprocess({ context: { NODE: true } }))
+    // Distribute unminified file
     .pipe($.babel())
     .pipe($.banner(head, { pkg: pkg }))
     .pipe(gulp.dest('./dist/'))
-    .pipe($.banner('if (typeof exports === "undefined") { exports = {}; }'))
-    .pipe(gulp.dest('./test/functional/public/'))
+
+    // Prepare the code for minification and browser distribution
+    .pipe(inject.prepend('if (typeof exports === "undefined") { exports = {}; }'))
+    .pipe(inject.prepend('(function(){'))
+    .pipe(inject.append('}())'))
+
+    // Minify it, distribute it, drop it in the test dir
     .pipe($.uglify({ preserveComments: 'license' }))
     .pipe($.rename('retina.min.js'))
     .pipe($.size())
