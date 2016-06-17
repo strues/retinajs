@@ -7836,5 +7836,42 @@ section.intro p {
 .top-banner p {
   margin: 0;
 }
+.shrink {
+  font-size: 78%;
+}
+
+ol {
+  counter-reset: my-counter;
+}
+ol li {
+  list-style: none;
+  line-height: 1.6;
+  padding-left: 30px;
+}
+ol li:before {
+  content: counter(my-counter, decimal-leading-zero);
+	counter-increment: my-counter;
+  display: inline-block;
+  margin-left: -30px;
+  margin-right: 10px;
+  color: #ffffff;
+}
+p, ol li {
+  letter-spacing: 0.2px;
+}
+p i {
+  color: #dddddd;
+  font-style: italic;
+}
+pre {
+  display: block;
+  color: #fff;
+  background: #000;
+  border-color: #333;
+  border-color: rgba(255, 255, 255, 0.2);
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
 
 /* the end */

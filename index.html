@@ -12,16 +12,16 @@
 </head>
 <body>
   <header>
-    <div class="top-banner">
+    <!-- <div class="top-banner">
       <div class="container">
         <h3>2.0 is coming soon!</h3>
         <p>
           Infinite pixel densities &ndash; inline background images &ndash; support for Stylus
         </p>
       </div>
-    </div>
+    </div> -->
     <div class="container">
-      <a href="/" class="logo">retina.js</a>
+      <a href="/" class="logo">retina.js &nbsp; <span class="shrink">2.0</span></a>
       <nav>
         <a href="#how-it-works" class="scroller">how it works</a>
         <b>/</b>
@@ -41,10 +41,10 @@
 
       <p>
         retina.js is an open source script that makes it easy to serve <br />
-        high-resolution images to devices with retina displays
+        high-resolution images to devices that support them
       </p>
       <p>
-        <a href="https://github.com/imulus/retinajs/releases/download/1.3.0/retina-1.3.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i>&nbsp; Download zip</a>
+        <a href="https://github.com/imulus/retinajs/releases/download/2.0.0/retina-2.0.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i>&nbsp; Download zip</a>
         <a href="#how-it-works" class="scroller btn btn-large btn-primary">How it works &nbsp;<i class="icon-chevron-down"></i></a>
       </p>
     </section>
@@ -54,80 +54,223 @@
     <div class="container dark">
       <section id="how-it-works">
         <h2>How it works</h2>
-        <p>When your users load a page, retina.js checks each image on the page to see if there is a high-resolution version of that image on your server. If a high-resolution variant exists, the script will swap in that image in-place.</p>
+        <p>There are now <i>4 ways</i> to use retina.js:</p>
 
-        <p>The script assumes you use <a href="http://developer.apple.com/library/ios/#documentation/2DDrawing/Conceptual/DrawingPrintingiOS/SupportingHiResScreensInViews/SupportingHiResScreensInViews.html#//apple_ref/doc/uid/TP40010156-CH15-SW1">Apple's prescribed high-resolution modifier (@2x)</a> to denote high-resolution image variants on your server.</p>
+        <ol class="styled">
+          <li>Automatically swapping out "src" paths on "img" tags.</li>
+          <li>Automatically swapping out background image URLs in inline styles.</li>
+          <li>Manually specifying the location of a high-res image variant.</li>
+          <li>Automatically creating media queries for CSS background images.</li>
+        </ol>
 
-        <p>For example, if you have an image on your page that looks like this:<br />
-        <code>&lt;img src=&quot;/images/my_image.png&quot; /&gt;</code>
+        <p>In the most common case, you might have an image on your page that looks like this:<br />
+        <code>&lt;img src=&quot;/images/my_image.png&quot; data-rjs=&quot;3&quot; /&gt;</code>
         </p>
 
-        <p>The script will check your server to see if an alternative image exists at this path:<br />
-        <code>&quot;/images/my_image@2x.png&quot;</code>
+        <p>
+          By using the "data-rjs" attribute, you're telling retina.js that this image would like
+          to opt in. Any images that don't use this attribute will be left alone.
+        </p>
+
+        <p>
+          By giving the "data-rjs" attribute a value of "3", you're telling retina.js that you have
+          created high-res image variants for <i>all environments up through</i> 3 times traditional pixel density (meaning
+          both 2x images and 3x images).
+        </p>
+
+        <p>
+          When a page loads, the script will check the user's environment to see what its display capabilities are. If its
+          resolution is greater than all of your variants, your highest resolution variant will be served. If not,
+          the script will serve up your matching variant. It does this by swapping out the value in your "src"
+          attribute for something like...<br />
+          <code>&quot;/images/my_image@3x.png&quot;</code>
+        </p>
+
+        <p>
+          Notice that the script assumes you use
+          <a href="http://developer.apple.com/library/ios/#documentation/2DDrawing/Conceptual/DrawingPrintingiOS/SupportingHiResScreensInViews/SupportingHiResScreensInViews.html#//apple_ref/doc/uid/TP40010156-CH15-SW1">
+            Apple's prescribed high-resolution modifiers
+          </a> (@2x, @3x, etc) to denote high-resolution image variants on your server.
+        </p>
+
+        <p>
+          If you don't use Apple's prescribed modifiers, you can use the "data-rjs" attribute to tell retina.js exactly
+          where your high-res image lives.<br />
+          <code>&lt;img src=&quot;/images/my_image.png&quot; data-rjs=&quot;/images/2x/my_image.png&quot; /&gt;</code>
+        </p>
+
+        <p>
+          In this case, the script won't try to dynamically serve up variants based on the user's environment. It will
+          simply serve the high-res variant you pass in whenever the environment is higher than traditional resoluion.
+        </p>
+
+        <p>
+          You can also use retina.js with background images set through inline styling. For example: <br />
+          <code>&lt;div style=&quot;background: url(my_image.png);&quot; data-rjs=&quot;3&quot; /&gt;</code>
+        </p>
+
+        <p>
+          Which will be converted to: <br />
+          <code>&lt;div style=&quot;background: url(my_image@3x.png);&quot; data-rjs=&quot;3&quot; /&gt;</code>
+        </p>
+
+        <p>
+          This will work for any HTML element besides the "img" tag. If it's an "img", retina.js will try to swap
+          out the "src" attribute. If it's anything else, the script will go after inline background images.
+          Everything else works exactly the same.
+        </p>
+
+        <h3>
+          retina.js also comes with SCSS, Sass, Less, and Stylus helpers!
+        </h3>
+        <p>
+          We'll get to these in a moment.
         </p>
       </section>
+
+
 
       <section id="how-to-use">
         <h2>How to use</h2>
 
-        <h3>JavaScript</h3>
+        <h3>JavaScript (the modern way)</h3>
 
-        <p>The JavaScript helper script automatically replaces images on your page with high-resolution variants (if they exist). To use it, <a href="#download" class="scroller">download the script</a> and include it at the bottom of your page.</p>
+        <p>
+          retina.js now works with pretty much any JavaScript build process you can imagine. The source code is written ES6
+          and is available via
+          <a href="https://www.npmjs.com/package/retinajs">NPM</a> and Bower as a package called "retinajs".
+          Feel free to <code>require</code> or <code>import</code> it at your leisure.
+        </p>
+
+        <p>
+          When using retina.js this way, the script assumes you may not want it to run automatically. So in order to call it,
+          you'll need to do something like the following:
+<pre><code>import retina from 'retinajs';
+
+window.on('load', retina);
+</code></pre>
+        </p>
+
+        <h3>JavaScript (the old-fashioned way)</h3>
+
+        <p>
+          The JavaScript helper script automatically replaces images on your page with high-resolution variants (if they exist).
+          It also creates a global function called <code>retinajs</code> so that you can re-initialize the script whenever you want.
+          To use it, <a href="#download" class="scroller">download the minified script</a> and include it at the bottom of your page.
+        </p>
 
         <ol>
-          <li>Place the <code>retina.js</code> file on your server</li>
+          <li>
+            Place the <code>retina.min.js</code> file on your server
+          </li>
           <li>
             Include the script on your page
             <br /><br />
-            <code>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/retina.js&quot;&gt;&lt;/script&gt;</code>
+            <code>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/retina.min.js&quot;&gt;&lt;/script&gt;</code>
             <br /><br />
             (put it at the bottom of your template, before your closing <code>&lt;/body&gt;</code> tag)
           </li>
-          <li>That's it!</li>
+          <li>
+            That's it!
+          </li>
         </ol>
 
 
+        <h3>SCSS, Sass, LESS, and Stylus</h3>
 
+        <p>
+          The CSS preprocessor mixins are helpers for applying high-resolution
+          background images in your stylesheet. For each dialect, you have the
+          same 4 arguments:
+        </p>
 
-        <h3>LESS</h3>
+        <ol>
+          <li><code>path</code> - The path to your standard resolution image.</li>
+          <li><code>cap</code> - The highest resolution level for which you have prepared images. Defaults to 2.</li>
+          <li><code>size</code> - A value to be applied to the background-size property. Defaults to auto auto.</li>
+          <li><code>extras</code> - Any other values to be added to the background property. Defaults to nothing.</li>
+        </ol>
 
-        <p>The LESS CSS mixin is a helper for applying high-resolution background images in your stylesheet. You provide it with an image path and the dimensions of the original-resolution image. The mixin creates a media query specifically for Retina displays, changes the background image for the selector elements to use the high-resolution (@2x) variant and applies a <code>background-size</code> of the original image in order to maintain proper dimensions. To use it, <a href="#download"  class="scroller">download the mixin</a>, import or include it in your LESS stylesheet, and apply it to elements of your choice.</p>
+        <p>
+          The mixin creates media queries specifically for high-resolution displays by changing
+          the background image for the selector elements to use high-resolution (@2x, @3x, etc)
+          variants and applying a <code>background-size</code> of the original image in
+          order to maintain proper dimensions. To use it,
+          <a href="#download"  class="scroller">download your favorite mixin</a>, then
+          import or include it in your SCSS/Less/etc stylesheet, and apply it to elements of your choice.
+        </p>
 
-        <h4>Steps:</h4>
+        <h4>Example in SCSS:</h4>
         <p>
           <strong>Syntax:</strong><br />
-          <code>.at2x(@path, [optional] @width: auto, [optional] @height: auto);</code>
+          <code>@include retina('/images/my_image.png', 3, 100px 50px, center center no-repeat);</code>
         </p>
 
         <h4>Steps:</h4>
 
         <ol>
-          <li>Add the <code>.at2x()</code> mixin from <code>retina.less</code> to your LESS stylesheet</li>
           <li>
-            In your stylesheet, call the <code>.at2x()</code> mixin anywhere instead of using <code>background-image</code>
-
+            Add the <code>retina</code> mixin to your stylesheet.
+          </li>
+          <li>
+            In your stylesheet, call the <code>retina</code> mixin anywhere instead of
+            using <code>background-image</code>
             <br /><br />
 
-<code class="big">#logo {
-  .at2x('/images/my_image.png', 200px, 100px);
-}</code>
+<strong>SCSS:</strong><br />
+<pre><code>#logo {
+  @include retina('my_image.png', 3, 100px 50px, center center no-repeat);
+}</code></pre><br />
 
-            <br /><br />
+<strong>Sass:</strong><br />
+<pre><code>#logo
+  +retina('my_image.png', 3, 100px 50px, center center no-repeat)
+</code></pre><br />
+
+<strong>Less:</strong><br />
+<pre><code>#logo {
+  .retina('my_image.png', 3, 100px 50px, center center no-repeat);
+}</code></pre><br />
+
+<strong>Stylus:</strong><br />
+<pre><code>#logo
+  retina('my_image.png', 3, 100px 50px, center center no-repeat)
+</code></pre>
+
+            <br />
 
             Will compile to:
 
             <br /><br />
 
-<code class="big">#logo {
-  background-image: url('/images/my_image.png');
+<pre><code>#logo {
+  background: url("my_image.png") center center no-repeat;
+  background-size: 100px 50px;
 }
 
-@media all and (-webkit-min-device-pixel-ratio: 1.5) {
-  #logo {
-    background-image: url('/images/my_image@2x.png');
-    background-size: 200px 100px;
+@media all and (-webkit-min-device-pixel-ratio: 1.5),
+       all and (-o-min-device-pixel-ratio: 3 / 2),
+       all and (min--moz-device-pixel-ratio: 1.5),
+       all and (min-device-pixel-ratio: 1.5) {
+  #item {
+    background: url("my_image@2x.png") center center no-repeat;
+    background-size: 100px 50px;
   }
-}</code>
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #item {
+    background: url("my_image@2x.png") center center no-repeat;
+    background-size: 100px 50px;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
+  #item {
+    background: url("my_image@3x.png") center center no-repeat;
+    background-size: 100px 50px;
+  }
+}</code></pre>
 
           </li>
         </ol>
@@ -138,7 +281,7 @@
       <section id="download">
         <h2>Download</h2>
         <p>
-          <a href="https://github.com/imulus/retinajs/releases/download/1.3.0/retina-1.3.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i> Download zip</a>
+          <a href="https://github.com/imulus/retinajs/releases/download/2.0.0/retina-2.0.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i> Download zip</a>
           <a href="https://github.com/imulus/retinajs" class="btn btn-large btn-primary"><i class="icon-download"></i> Download source</a>
         </p>
       </section>
