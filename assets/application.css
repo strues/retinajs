@@ -7805,13 +7805,11 @@ footer .logo {
   height: 29px;
   text-indent: -9999em;
   margin: auto;
-  background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus.png');
   background-image: url('images/logos/axial.png');
   background-position: center center;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   footer .logo {
-    background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus@2x.png');
     background-image: url('images/logos/axial@2x.png');
     background-size: 128px 29px;
   }
@@ -7839,4 +7837,4 @@ section.intro p {
   margin: 0;
 }
 
-/* End */
+/* the end */
