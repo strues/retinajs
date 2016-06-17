@@ -14,7 +14,7 @@ There are 4 ways to use retina.js:
 
 1. Automatically swapping out `src` paths on `img` tags.
 2. Automatically swapping out background image URLs in inline styles.
-3. Manually specifying the location of a high-res image variant (for `src` attributes and inline styles).
+3. Manually specifying the location of a high-res image variant (works for `src` attributes and inline styles).
 4. Automatically creating media queries for CSS background images.
 
 #### Img Tags
@@ -31,7 +31,7 @@ Let's say you have an image on your page that looks like this:
 
 In this case, we've set our resolution cap at "3", denoting that we've prepared 3x and 2x image variants. When the page loads, retina.js will check the actual resolution of the device environment to decide whether it should really serve up a 3x image. If the user happens to be in a 2x environment, retina.js will serve up the 2x image instead, assuming it will find the image at `/images/my_image@2x.png`.
 
-If the environment does have 3x capabilities, retina.js will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has capabilities to display images at higher densities than 3x, retina.js will serve up the image of the highest resolution that you've provided, in this case 3x.
+If the environment does have 3x capabilities, retina.js will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has the ability to display images at higher densities than 3x, retina.js will serve up the image of the highest resolution that you've provided, in this case 3x.
 
 #### Inline Styles
 
@@ -49,13 +49,13 @@ retina.js would convert it to something like this:
 <div style="background: url(/images/my_image@3x.png)" data-rjs="3"></div>
 ```
 
-Of course, the logic behind image swapping is exactly the same when dealing with background images as it is when dealing with `src` attributes. If the user's environment only supports 2x variants, retina.js will load the 2x variant instead of the 3x.
+The logic behind image swapping is exactly the same when dealing with background images as it is when dealing with `src` attributes. If the user's environment only supports 2x variants, retina.js will load the 2x variant instead of the 3x.
 
-_Note that it is up to you in a case like this to correctly apply background sizing and any other necessary background-related styles to the element._
+_Note that it is up to you in a case like this to correctly apply background sizing and any other necessary background-related styles to the element. retina.js will not affect these._
 
 #### Manually Specifying a High-Res URL
 
-In previous versions, this technique was executed using the `data-at2x` attribute. Now, if you pass a URL to the `data-rjs` attribute, retina.js will use the image at the path you specify for all high-resolution environments instead of trying to dynamically serve a suffixed image path based on the environment's capabilities. This will work for both `src` attributes on `img` tags and inline background images on all other tags.
+In previous versions, you could tell the script where to find your high-res file by using the `data-at2x` attribute. Now, if you pass a URL to the `data-rjs` attribute, retina.js will use the image at the path you specify for all high-resolution environments instead of trying to dynamically serve an auto-suffixed image path based on the environment's capabilities. This will work for both `src` attributes on `img` tags and inline background images on all other tags.
 
 For example, you might write something like this:
 
@@ -63,6 +63,8 @@ For example, you might write something like this:
 <img
   src="/images/my_image.png"
   data-rjs="/images/2x/my-image.png" />
+
+<!-- or -->
 
 <div
   style="background: url(/images/my_image.png)"
@@ -76,6 +78,8 @@ If the user then loads the page in any kind of high-resolution environment, they
 <img
   src="/images/2x/my-image.png"
   data-rjs="/images/2x/my-image.png" />
+
+<!-- or -->
 
 <div
   style="background: url(/images/2x/my-image.png)"
@@ -133,6 +137,7 @@ Regardless of the dialect, the output is effectively the same:
   background: url("/images/my_image.png") center center no-repeat;
   background-size: cover;
 }
+
 @media all and (-webkit-min-device-pixel-ratio: 1.5),
        all and (-o-min-device-pixel-ratio: 3 / 2),
        all and (min--moz-device-pixel-ratio: 1.5),
@@ -142,12 +147,14 @@ Regardless of the dialect, the output is effectively the same:
     background-size: cover;
   }
 }
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #item {
     background: url("/images/my_image@2x.png") center center no-repeat;
     background-size: cover;
   }
 }
+
 @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
   #item {
     background: url("/images/my_image@3x.png") center center no-repeat;
@@ -158,7 +165,7 @@ Regardless of the dialect, the output is effectively the same:
 
 ## Compatibility
 
-retina.js is compatible with all modern browsers and will not throw errors in any old browsers all the way back through IE6.
+retina.js is compatible with all modern browsers and will not throw errors in old browsers all the way back through IE6.
 
 ## Installing & Launching
 
@@ -227,27 +234,6 @@ One potential method is to bypass digesting altogether by implementing a process
 #### Use Manual Paths
 
 Although it's not quite as fancy as dynamically serving up files based on the resolution of the user's environment, this may be a good time to pass a URL string to the `data-rjs` attribute so that you can manually tell retina.js exactly where to look for a high-resolution variant of your image.
-
-
-## How To Test
-
-We use [mocha](http://visionmedia.github.com/mocha/) for unit testing with [should](https://github.com/visionmedia/should.js) assertions. Install mocha and should by running `npm install`.
-
-To run the test suite:
-
-``` bash
-$ npm test
-```
-
-To start the gulp server, and launch the retina.js browser testing environment, make sure you have installed all dependencies via `$ npm install` and then run:
-
-```bash
-$ gulp dev
-```
-
-Navigate your browser to [http://localhost:8080](http://localhost:8080) to see retina.js in action. From here, you can open up `test/functional/public/index.html` in your editor, and try commenting out the line that spoofs retina support, and reloading it.
-
-You can also test out the output from each CSS mixin by uncommenting the correct `link` tag in the html.
 
 
 ## How To Contribute
