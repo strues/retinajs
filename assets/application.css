@@ -7801,17 +7801,19 @@ footer {
 }
 footer .logo {
   display: block;
-  width: 100px;
+  width: 128px;
   height: 29px;
   text-indent: -9999em;
   margin: auto;
   background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus.png');
+  background-image: url('images/logos/axial.png');
   background-position: center center;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   footer .logo {
     background-image: url('https://retinajs.s3.amazonaws.com/images/logos/imulus@2x.png');
-    background-size: 100px 29px;
+    background-image: url('images/logos/axial@2x.png');
+    background-size: 128px 29px;
   }
 }
 section.intro {
@@ -7821,3 +7823,20 @@ section.intro p {
   font-size: 16px;
   line-height: 27px;
 }
+.top-banner {
+  background: #503598;
+  background: rgba(80, 53, 152, .8);
+  padding: 5px 0;
+  font-style: italic;
+}
+.top-banner h3, .top-banner p {
+  display: inline-block;
+}
+.top-banner h3 {
+  margin: 0 20px 0 0;
+}
+.top-banner p {
+  margin: 0;
+}
+
+/* End */
