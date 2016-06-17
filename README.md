@@ -255,11 +255,3 @@ You can also test out the output from each CSS mixin by uncommenting the correct
 When you run `$ gulp dev`, the gulp server sets up watchers for both the JavaScript version and the CSS mixins such that when any of these files in the `src` directory is modified, all the necessary recompiling takes place and the browser is automatically refreshed.
 
 When you are finished developing, run `$ gulp dist` to run linters and compile all the necessary files into the `dist` directory. This directory should end up containing SCSS, Sass, Less, and Stylus mixin files as well as a `retina.js` file that can be imported into larger applications and a `retina.min.js` file that can be included directly in an html file via a `script` tag.
-
-
-# TODO
-
-- Unit tests
-- Change readme for unit tests?
-- Mark the release as version 2.0
-- Don't forget bower stuff

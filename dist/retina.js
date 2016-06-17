@@ -1,5 +1,5 @@
 /*!
- * Retina.js v1.5.0
+ * Retina.js v2.0.0
  *
  * Copyright 2016 Axial, LLC
  * Released under the MIT license
