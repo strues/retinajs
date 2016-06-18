@@ -7873,5 +7873,12 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
 }
+:not(pre) > code[class*="language-"] {
+  padding: 4px 8px !important;
+}
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+  background: #161711 !important;
+  background: rgba(25, 25, 25, .75) !important;
+}
 
 /* the end */

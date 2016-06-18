@@ -9,6 +9,7 @@
 
   <link href='https://fonts.googleapis.com/css?family=PT+Sans:700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="assets/application.css" />
+  <link rel="stylesheet" href="assets/prism.css" />
 </head>
 <body>
   <header>
@@ -64,7 +65,7 @@
         </ol>
 
         <p>In the most common case, you might have an image on your page that looks like this:<br />
-        <code>&lt;img src=&quot;/images/my_image.png&quot; data-rjs=&quot;3&quot; /&gt;</code>
+        <code class="language-html">&lt;img src=&quot;/images/my_image.png&quot; data-rjs=&quot;3&quot; /&gt;</code>
         </p>
 
         <p>
@@ -83,7 +84,7 @@
           resolution is greater than all of your variants, your highest resolution variant will be served. If not,
           the script will serve up your matching variant. It does this by swapping out the value in your "src"
           attribute for something like...<br />
-          <code>&quot;/images/my_image@3x.png&quot;</code>
+          <code class="language-javascript">"/images/my_image@3x.png"</code>
         </p>
 
         <p>
@@ -96,7 +97,7 @@
         <p>
           If you don't use Apple's prescribed modifiers, you can use the "data-rjs" attribute to tell retina.js exactly
           where your high-res image lives.<br />
-          <code>&lt;img src=&quot;/images/my_image.png&quot; data-rjs=&quot;/images/2x/my_image.png&quot; /&gt;</code>
+          <code class="language-html">&lt;img src="/images/my_image.png" data-rjs="/images/2x/my_image.png" /&gt;</code>
         </p>
 
         <p>
@@ -106,12 +107,12 @@
 
         <p>
           You can also use retina.js with background images set through inline styling. For example: <br />
-          <code>&lt;div style=&quot;background: url(my_image.png);&quot; data-rjs=&quot;3&quot; /&gt;</code>
+          <code class="language-html">&lt;div style="background: url(my_image.png);" data-rjs="3" /&gt;</code>
         </p>
 
         <p>
           Which will be converted to: <br />
-          <code>&lt;div style=&quot;background: url(my_image@3x.png);&quot; data-rjs=&quot;3&quot; /&gt;</code>
+          <code class="language-html">&lt;div style="background: url(my_image@3x.png);" data-rjs="3" /&gt;</code>
         </p>
 
         <p>
@@ -145,7 +146,7 @@
         <p>
           When using retina.js this way, the script assumes you may not want it to run automatically. So in order to call it,
           you'll need to do something like the following:
-<pre><code>import retina from 'retinajs';
+<pre><code class="language-javascript">import retina from 'retinajs';
 
 window.on('load', retina);
 </code></pre>
@@ -166,7 +167,7 @@ window.on('load', retina);
           <li>
             Include the script on your page
             <br /><br />
-            <code>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/retina.min.js&quot;&gt;&lt;/script&gt;</code>
+            <code class="language-html">&lt;script type="text/javascript" src="/scripts/retina.min.js"&gt;&lt;/script&gt;</code>
             <br /><br />
             (put it at the bottom of your template, before your closing <code>&lt;/body&gt;</code> tag)
           </li>
@@ -203,7 +204,7 @@ window.on('load', retina);
         <h4>Example in SCSS:</h4>
         <p>
           <strong>Syntax:</strong><br />
-          <code>@include retina('/images/my_image.png', 3, 100px 50px, center center no-repeat);</code>
+          <code class="language-css">@include retina('/images/my_image.png', 3, 100px 50px, center center no-repeat);</code>
         </p>
 
         <h4>Steps:</h4>
@@ -218,22 +219,22 @@ window.on('load', retina);
             <br /><br />
 
 <strong>SCSS:</strong><br />
-<pre><code>#logo {
+<pre><code class="language-css">#logo {
   @include retina('my_image.png', 3, 100px 50px, center center no-repeat);
 }</code></pre><br />
 
 <strong>Sass:</strong><br />
-<pre><code>#logo
+<pre><code class="language-css">#logo
   +retina('my_image.png', 3, 100px 50px, center center no-repeat)
 </code></pre><br />
 
 <strong>Less:</strong><br />
-<pre><code>#logo {
+<pre><code class="language-css">#logo {
   .retina('my_image.png', 3, 100px 50px, center center no-repeat);
 }</code></pre><br />
 
 <strong>Stylus:</strong><br />
-<pre><code>#logo
+<pre><code class="language-css">#logo
   retina('my_image.png', 3, 100px 50px, center center no-repeat)
 </code></pre>
 
@@ -243,7 +244,7 @@ window.on('load', retina);
 
             <br /><br />
 
-<pre><code>#logo {
+<pre><code class="language-css">#logo {
   background: url("my_image.png") center center no-repeat;
   background-size: 100px 50px;
 }
@@ -312,6 +313,7 @@ window.on('load', retina);
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="assets/application.js"></script>
   <script src="assets/retina.js"></script>
+  <script src="assets/prism.js"></script>
 
   <script type="text/javascript">
    var _gaq = _gaq || [];
