@@ -1,4 +1,4 @@
-# retina.js [![Build Status](https://secure.travis-ci.org/imulus/retinajs.png?branch=master)](http://travis-ci.org/imulus/retinajs)
+# retina.js
 
 > Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this README before updating.
 
@@ -6,7 +6,6 @@
 
 retina.js makes it easy to serve high-resolution images to devices with displays that support them. You can prepare images for as many levels of pixel density as you want and let retina.js dynamically serve the right image to the user.
 
-[![Build Status](https://secure.travis-ci.org/imulus/retinajs.png?branch=master)](http://travis-ci.org/imulus/retinajs)
 
 ## How it works
 
