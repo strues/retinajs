@@ -1,6 +1,6 @@
 # retina.js [![Build Status](https://secure.travis-ci.org/imulus/retinajs.png?branch=master)](http://travis-ci.org/imulus/retinajs)
 
-> Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this readme before updating.
+> Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this README before updating.
 
 ### JavaScript, Sass, Less, and Stylus helpers for rendering high-resolution image variants
 
