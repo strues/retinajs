@@ -1,0 +1,13 @@
+@import '_retina.scss';
+
+.bg {
+  background: url('../ipad.png') center center no-repeat;
+}
+
+.bg2 {
+  @include retina('../ipad.png', 2, 300px 149px, center center no-repeat);
+}
+
+.bg3 {
+  @include retina('../ipad.png', 3, 300px 149px, center center no-repeat);
+}

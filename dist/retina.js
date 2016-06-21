@@ -1,24 +1,38 @@
+/*!
+ * Retina.js v2.0.0
+ *
+ * Copyright 2016 Axial, LLC
+ * Released under the MIT license
+ *
+ * Retina.js is an open source script that makes it easy to serve
+ * high-resolution images to devices with retina displays.
+ */
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*
  * Determine whether or not `window` is available.
  */
-const hasWindow = typeof window !== 'undefined';
+var hasWindow = typeof window !== 'undefined';
 
 /*
  * Get the device pixel ratio per our environment.
  * Default to 1.
  */
-const environment = hasWindow ? (window.devicePixelRatio || 1) : 1;
+var environment = hasWindow ? window.devicePixelRatio || 1 : 1;
 
 /*
  * Define a pattern for capturing src url suffixes.
  */
-const srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
-const inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
+var srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
+var inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
 
 /*
  * Define our selectors for elements to target.
  */
-const selector = '[data-rjs]';
+var selector = '[data-rjs]';
 
 /**
  * Chooses the actual image size to fetch, (for example 2 or 3) that
@@ -30,7 +44,7 @@ const selector = '[data-rjs]';
  * @return {Number} The number we'll be using to create a suffix.
  */
 function chooseCap(cap) {
-  const numericCap = parseInt(cap, 10);
+  var numericCap = parseInt(cap, 10);
 
   /*
    * If the environment's device pixel ratio is less than what the user
@@ -39,13 +53,13 @@ function chooseCap(cap) {
   if (environment < numericCap) {
     return environment;
 
-  /*
-   * If the device pixel ratio is greater than or equal to what the
-   * user provided, we'll use what the user provided.
-   */
+    /*
+     * If the device pixel ratio is greater than or equal to what the
+     * user provided, we'll use what the user provided.
+     */
   } else {
-    return numericCap;
-  }
+      return numericCap;
+    }
 }
 
 /**
@@ -80,15 +94,15 @@ function forceOriginalDimensions(image) {
  * @return {undefined}
  */
 function setSourceIfAvailable(image, retinaURL) {
-  const imgType = image.nodeName.toLowerCase();
+  var imgType = image.nodeName.toLowerCase();
 
   /*
    * Create a new image element and give it a load listener. When the
    * load listener fires, it means the URL is correct and we will then
    * attach it to the user's image.
    */
-  const testImage = document.createElement('img');
-  testImage.addEventListener('load', () => {
+  var testImage = document.createElement('img');
+  testImage.addEventListener('load', function () {
     /*
      * If we're dealing with an image tag, force it's dimensions
      * and set the source attribute. If not, go after the background-image
@@ -97,7 +111,7 @@ function setSourceIfAvailable(image, retinaURL) {
     if (imgType === 'img') {
       forceOriginalDimensions(image).setAttribute('src', retinaURL);
     } else {
-      image.style.backgroundImage = `url(${retinaURL})`;
+      image.style.backgroundImage = 'url(' + retinaURL + ')';
     }
   });
 
@@ -117,14 +131,16 @@ function setSourceIfAvailable(image, retinaURL) {
  *
  * @return {undefined}
  */
-function dynamicSwapImage(image, src, rjs = 1) {
-  const cap = chooseCap(rjs);
+function dynamicSwapImage(image, src) {
+  var rjs = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+
+  var cap = chooseCap(rjs);
 
   /*
    * Don't do anything if the cap is less than 2 or there is no src.
    */
   if (src && cap > 1) {
-    const newSrc = src.replace(srcReplace, `@${cap}x$1`);
+    var newSrc = src.replace(srcReplace, '@' + cap + 'x$1');
     setSourceIfAvailable(image, newSrc);
   }
 }
@@ -151,9 +167,7 @@ function manualSwapImage(image, src, hdsrc) {
  * @return {Array} Contains all elements matching our selector.
  */
 function getImages() {
-  return typeof document !== 'undefined' ? Array.prototype.slice.call(
-    document.querySelectorAll(selector)
-  ) : [];
+  return typeof document !== 'undefined' ? Array.prototype.slice.call(document.querySelectorAll(selector)) : [];
 }
 
 /**
@@ -175,11 +189,11 @@ function cleanBgImg(img) {
  * @return {undefined}
  */
 function retina() {
-  getImages().forEach(img => {
-    const isImg = img.nodeName.toLowerCase() === 'img';
-    const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
-    const rjs = img.getAttribute('data-rjs');
-    const rjsIsNumber = !isNaN(parseInt(rjs, 10));
+  getImages().forEach(function (img) {
+    var isImg = img.nodeName.toLowerCase() === 'img';
+    var src = isImg ? img.getAttribute('src') : cleanBgImg(img);
+    var rjs = img.getAttribute('data-rjs');
+    var rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
     /*
      * If the user provided a number, dynamically swap out the image.
@@ -201,4 +215,4 @@ if (hasWindow) {
   window.retinajs = retina;
 }
 
-export default retina;
+exports.default = retina;
