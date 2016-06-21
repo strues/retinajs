@@ -8,6 +8,13 @@
     "type": "git",
     "url": "git+https://github.com/imulus/retinajs.git"
   },
+  "keywords": [
+    "retina",
+    "images",
+    "@2x",
+    "@3x",
+    "retina.js"
+  ],
   "options": {
     "mocha": "--require test/mocha-runner --require test/DOM test/**/*.spec.js"
   },
