@@ -1,6 +1,6 @@
 {
   "name": "retina.js",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "license": "MIT",
   "homepage": "https://github.com/imulus/retinajs",
   "bugs": "https://github.com/imulus/retinajs/issues",
@@ -8,20 +8,45 @@
     "type": "git",
     "url": "git+https://github.com/imulus/retinajs.git"
   },
+  "options": {
+    "mocha": "--require test/mocha-runner --require test/DOM test/**/*.spec.js"
+  },
   "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-compress": "~0.7.0",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.4.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.13.0",
+    "chai": "^3.5.0",
+    "del": "^2.2.0",
+    "eslint": "^2.9.0",
+    "eslint-config-axial": "^1.0.7",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-banner": "^0.1.3",
+    "gulp-eslint": "^2.0.0",
+    "gulp-inject-string": "^1.1.0",
+    "gulp-less": "^3.1.0",
+    "gulp-load-plugins": "^1.2.2",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-size": "^2.1.0",
+    "gulp-stylus": "^2.4.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "gulp-zip": "^3.2.0",
+    "jsdom": "^9.2.1",
     "less": "^2.6.1",
     "mocha": "^2.4.5",
     "node-sass": "^3.6.0",
-    "should": "^8.3.1"
+    "run-sequence": "^1.2.1",
+    "should": "^8.3.1",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   },
-  "main": "./src/retina",
+  "main": "./dist/retina",
   "scripts": {
-    "test": "mocha"
+    "test-watch": "npm run test -- --watch --watch-extensions js",
+    "test": "mocha $npm_package_options_mocha"
   }
 }

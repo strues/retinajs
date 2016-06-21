@@ -1,0 +1,56 @@
+// retina.styl
+// A helper mixin for applying high-resolution background images (http://www.retinajs.com)
+
+// Created by John Newman
+// github.com/jgnewman
+// http://axial.agency
+
+
+/**
+ * Allows you to use retina images at various pixel densities.
+ * Examples:
+ *
+ *   retina(/images/mypic.jpg, 2)
+ *   retina(/images/mypic.jpg, 3, 100px 100px, left top no-repeat transparent)
+ *
+ * @param  {Value}  $path               The path to the file name minus extension.
+ * @param  {Number} $cap:    2          The highest pixel density level images exist for.
+ * @param  {Value}  $size:   auto auto  The intended width of the rendered image.
+ * @param  {Value}  $extras: null       Any other `background` values to be added.
+ */
+retina($path, $cap = 2, $size = auto auto, $extras = null)
+  $dirname = dirname($path)
+  $filename = basename($path)
+  $at2xpath = pathjoin($dirname, replace('\.', '@2x.', $filename))
+
+  /*
+   * Set a base background for 1x environments.
+   */
+  background: url($path) $extras
+  background-size: $size
+
+  /*
+   * Create an @2x-ish media query.
+   */
+  @media all and (-webkit-min-device-pixel-ratio : 1.5), all and (-o-min-device-pixel-ratio: 3/2), all and (min--moz-device-pixel-ratio: 1.5), all and (min-device-pixel-ratio: 1.5)
+    background: url($at2xpath) $extras
+    background-size: $size
+
+  /*
+   * Create media queries for all environments that the user has
+   * provided images for.
+   */
+  if $cap >= 2
+    for $env in (2..$cap)
+      $newpath = pathjoin($dirname, replace('\.', '@' + $env + 'x.', $filename))
+      @media (-webkit-min-device-pixel-ratio: $env), (min-resolution: $env * 96dpi)
+        background: url($newpath) $extras
+        background-size: $size
+
+  /*
+   * If anything went wrong trying to separate the file from its
+   * extension, set a background value without doing anything to it.
+   */
+  else
+    background: url($path) $extras
+    background-size: $size
