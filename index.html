@@ -45,7 +45,7 @@
         high-resolution images to devices that support them
       </p>
       <p>
-        <a href="https://github.com/imulus/retinajs/releases/download/v2.0.0/retinajs-2.0.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i>&nbsp; Download zip</a>
+        <a href="https://github.com/imulus/retinajs/releases/download/v2.1.0/retinajs-2.1.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i>&nbsp; Download zip</a>
         <a href="#how-it-works" class="scroller btn btn-large btn-primary">How it works &nbsp;<i class="icon-chevron-down"></i></a>
       </p>
     </section>
@@ -176,6 +176,35 @@ window.on('load', retina);
           </li>
         </ol>
 
+        <h3>Manually calling the function</h3>
+
+        <p>
+          If you drop the script into your html file, you'll automatically get a
+          function called <code>retinajs</code> attached to the global scope.
+          If you're importing the script as part of a build process, you get the
+          same function but you can name it whatever you want. So let's call it
+          <code>retinajs</code> for now.
+        </p>
+
+        <p>
+          If you call <code>retinajs()</code> without any arguments, it'll attempt
+          to process all the elements on the page that it hasn't already processed
+          before. But you also have the option of passing it a collection, in
+          which case it'll only try to process the elements in the collection,
+          again, only if it hasn't processed those images before.
+        </p>
+
+<pre><code class="language-javascript">retinajs();
+// Attempts to process all participating elements that
+// haven't been processed before.
+
+retinajs( [img, img, img] );
+retinajs( $('img') );
+retinajs( document.querySelectorAll('img') );
+// Attempts to process only the elements in the collection.
+// Each one still needs to be marked with `data-rjs` and
+// will still be ignored if it has already been processed.
+</code></pre>
 
         <h3>SCSS, Sass, LESS, and Stylus</h3>
 
@@ -282,7 +311,7 @@ window.on('load', retina);
       <section id="download">
         <h2>Download</h2>
         <p>
-          <a href="https://github.com/imulus/retinajs/releases/download/v2.0.0/retinajs-2.0.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i> Download zip</a>
+          <a href="https://github.com/imulus/retinajs/releases/download/v2.1.0/retinajs-2.1.0.zip" class="btn btn-large btn-primary"><i class="icon-download"></i> Download zip</a>
           <a href="https://github.com/imulus/retinajs" class="btn btn-large btn-primary"><i class="icon-download"></i> Download source</a>
         </p>
       </section>
