@@ -177,13 +177,29 @@ There are 2 ways to use the JavaScript version of retina.js:
 
 #### Old-School
 
-To use retina.js the old-school way, download **retina.min.js** and put it on your server. Then, include the script in your html file at the bottom of your template, before your closing \</body> tag. _Note that **only the minified version** of retina.js is designed to be used in this fashion._
+To use retina.js the old-school way, download **retina.min.js** and put it on your server. Then, include the script in your html file at the bottom of your template, before your closing \</body> tag.
 
 ``` html
 <script type="text/javascript" src="/scripts/retina.min.js"></script>
 ```
 
 Using this technique, retina.js will run automatically on page load. It will also create a globally available function called `retinajs`. Whenever you'd like to manually re-initialize the script, simply call `window.retinajs()`.
+
+If you don't pass any arguments to the `retinajs` function, it will only attempt to process images that have not previously been processed by the script. Optionally, you can pass a collection of HTML elements to the script, in which case it will only attempt to process elements in that collection, specifically the ones that have not been processed before. Your collection may take the form of an Array, NodeList, or jQuery selection.
+
+```javascript
+retinajs();
+// Finds all images not previously processed and processes them.
+
+retinajs( [img, img, img] );
+// Only attempts to process the images in the collection.
+
+retinajs( $('img') );
+// Same.
+
+retinajs( document.querySelectorAll('img') );
+// Same.
+```
 
 #### New-School
 
@@ -196,6 +212,22 @@ window.addEventListener('load', retina);
 ```
 
 Notice that the `retina` function can be called as often as you need in order to re-initialize the image swapping.
+
+If you don't pass any arguments to the `retina` function, it will only attempt to process images that have not previously been processed by the script. Optionally, you can pass a collection of HTML elements to the script, in which case it will only attempt to process elements in that collection, specifically the ones that have not been processed before. Your collection may take the form of an Array, NodeList, or jQuery selection.
+
+```javascript
+retina();
+// Finds all images not previously processed and processes them.
+
+retina( [img, img, img] );
+// Only attempts to process the images in the collection.
+
+retina( $('img') );
+// Same.
+
+retina( document.querySelectorAll('img') );
+// Same.
+```
 
 ### CSS Preprocessors
 

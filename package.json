@@ -1,6 +1,6 @@
 {
-  "name": "retina.js",
-  "version": "2.0.0",
+  "name": "retinajs",
+  "version": "2.1.0",
   "license": "MIT",
   "homepage": "https://github.com/imulus/retinajs",
   "bugs": "https://github.com/imulus/retinajs/issues",
@@ -8,6 +8,13 @@
     "type": "git",
     "url": "git+https://github.com/imulus/retinajs.git"
   },
+  "keywords": [
+    "retina",
+    "images",
+    "@2x",
+    "@3x",
+    "retina.js"
+  ],
   "options": {
     "mocha": "--require test/mocha-runner --require test/DOM test/**/*.spec.js"
   },
