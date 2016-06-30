@@ -20,6 +20,22 @@ const inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
  */
 const selector = '[data-rjs]';
 
+/*
+ * Define the attribute we'll use to mark an image as having been processed.
+ */
+const processedAttr = 'data-rjs-processed';
+
+/**
+ * Shortcut for turning some iterable object into an array.
+ *
+ * @param  {Iterable} object Any iterable object.
+ *
+ * @return {Array}
+ */
+function arrayify(object) {
+  return Array.prototype.slice.call(object);
+}
+
 /**
  * Chooses the actual image size to fetch, (for example 2 or 3) that
  * will be used to create a suffix like "@2x" or "@3x".
@@ -106,6 +122,11 @@ function setSourceIfAvailable(image, retinaURL) {
    * image resource.
    */
   testImage.setAttribute('src', retinaURL);
+
+  /*
+   * Mark our image as processed so that it won't be processed again.
+   */
+  image.setAttribute(processedAttr, true);
 }
 
 /**
@@ -148,12 +169,19 @@ function manualSwapImage(image, src, hdsrc) {
  * Collects all images matching our selector, and converts our
  * NodeList into an Array so that Array methods will be available to it.
  *
- * @return {Array} Contains all elements matching our selector.
+ * @param {Iterable} images  Optional. An Array, jQuery selection, or NodeList
+ *                           of elements to affect with retina.js.
+ *
+ * @return {Iterable} Contains all elements matching our selector.
  */
-function getImages() {
-  return typeof document !== 'undefined' ? Array.prototype.slice.call(
-    document.querySelectorAll(selector)
-  ) : [];
+function getImages(images) {
+  if (!images) {
+    return typeof document !== 'undefined' ? arrayify(
+      document.querySelectorAll(selector)
+    ) : [];
+  } else {
+    return typeof images.forEach === 'function' ? images : arrayify(images);
+  }
 }
 
 /**
@@ -172,23 +200,30 @@ function cleanBgImg(img) {
  * retina equivalent taking into account the environment capabilities and
  * the densities for which the user has provided images.
  *
+ * @param {Iterable} images  Optional. An Array, jQuery selection, or NodeList
+ *                           of elements to affect with retina.js. If not
+ *                           provided, retina.js will grab all images on the
+ *                           page.
+ *
  * @return {undefined}
  */
-function retina() {
-  getImages().forEach(img => {
-    const isImg = img.nodeName.toLowerCase() === 'img';
-    const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
-    const rjs = img.getAttribute('data-rjs');
-    const rjsIsNumber = !isNaN(parseInt(rjs, 10));
+function retina(images) {
+  getImages(images).forEach(img => {
+    if (!img.getAttribute(processedAttr)) {
+      const isImg = img.nodeName.toLowerCase() === 'img';
+      const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
+      const rjs = img.getAttribute('data-rjs');
+      const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
-    /*
-     * If the user provided a number, dynamically swap out the image.
-     * If the user provided a url, do it manually.
-     */
-    if (rjsIsNumber) {
-      dynamicSwapImage(img, src, rjs);
-    } else {
-      manualSwapImage(img, src, rjs);
+      /*
+       * If the user provided a number, dynamically swap out the image.
+       * If the user provided a url, do it manually.
+       */
+      if (rjsIsNumber) {
+        dynamicSwapImage(img, src, rjs);
+      } else {
+        manualSwapImage(img, src, rjs);
+      }
     }
   });
 }
