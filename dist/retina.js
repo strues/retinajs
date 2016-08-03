@@ -74,8 +74,8 @@ function chooseCap(cap) {
      * user provided, we'll use what the user provided.
      */
   } else {
-      return numericCap;
-    }
+    return numericCap;
+  }
 }
 
 /**
@@ -246,7 +246,9 @@ function retina(images) {
  * If this environment has `window`, activate the plugin.
  */
 if (hasWindow) {
-  window.addEventListener('load', retina);
+  window.addEventListener('load', function () {
+    retina();
+  });
   window.retinajs = retina;
 }
 
