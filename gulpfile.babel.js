@@ -40,9 +40,9 @@ function buildJsTask() {
     .pipe(gulp.dest('./dist/'))
 
     // Prepare the code for minification and browser distribution
-    .pipe(inject.prepend('if (typeof exports === "undefined") { exports = {}; }'))
-    .pipe(inject.prepend('(function(){'))
-    .pipe(inject.append('}())'))
+    // .pipe(inject.prepend('if (typeof exports === "undefined") { exports = {}; }'))
+    // .pipe(inject.prepend('(function(){'))
+    // .pipe(inject.append('}())'))
 
     // Minify it, distribute it, drop it in the test dir
     .pipe($.uglify({ preserveComments: 'license' }))
