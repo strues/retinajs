@@ -232,7 +232,7 @@ function retina(images) {
  * If this environment has `window`, activate the plugin.
  */
 if (hasWindow) {
-  window.addEventListener('load', retina);
+  window.addEventListener('load', function(){ retina() });
   window.retinajs = retina;
 }
 
