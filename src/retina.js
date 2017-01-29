@@ -216,7 +216,7 @@ function retina(images) {
       const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
       // do not try to load /null image!
-      if( n === null){
+      if( rjs === null){
         return;
       }
       
