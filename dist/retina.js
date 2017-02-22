@@ -111,7 +111,21 @@ function forceOriginalDimensions(image) {
  */
 function setSourceIfAvailable(image, retinaURL) {
   var imgType = image.nodeName.toLowerCase();
-
+  var unallowedExt = ['.svg', '.ico', '.gif'];
+  /*
+   * Checks if retinaURL contains an unallowed Extension
+   * If an unallowed Extension is found, break this process.
+   */
+  if (!retinaURL) {
+    return false;
+  }
+  for (i = 0; i < unallowedExt.length; ++i) {
+    if (typeof retinaURL !== 'undefined' || retinaURL != null) {
+      if (retinaURL.indexOf(unallowedExt[i]) !== -1) {
+        return false;
+      }
+    }
+  }
   /*
    * Create a new image element and give it a load listener. When the
    * load listener fires, it means the URL is correct and we will then
