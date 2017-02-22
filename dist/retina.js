@@ -74,8 +74,8 @@ function chooseCap(cap) {
      * user provided, we'll use what the user provided.
      */
   } else {
-      return numericCap;
-    }
+    return numericCap;
+  }
 }
 
 /**
@@ -153,7 +153,7 @@ function setSourceIfAvailable(image, retinaURL) {
  * @return {undefined}
  */
 function dynamicSwapImage(image, src) {
-  var rjs = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+  var rjs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
   var cap = chooseCap(rjs);
 
@@ -218,15 +218,15 @@ function cleanBgImg(img) {
  *                           of elements to affect with retina.js. If not
  *                           provided, retina.js will grab all images on the
  *                           page.
- *
+ * @param {Integer} rjsParam Optional. An Integer, Sets a global pixel density cap (No need for rjs-attribute)
  * @return {undefined}
  */
-function retina(images) {
+function retina(images, rjsParam) {
   getImages(images).forEach(function (img) {
     if (!img.getAttribute(processedAttr)) {
       var isImg = img.nodeName.toLowerCase() === 'img';
       var src = isImg ? img.getAttribute('src') : cleanBgImg(img);
-      var rjs = img.getAttribute('data-rjs');
+      var rjs = typeof rjsParam !== 'undefined' ? rjsParam : img.getAttribute('data-rjs');
       var rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
       /*

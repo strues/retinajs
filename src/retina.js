@@ -204,15 +204,15 @@ function cleanBgImg(img) {
  *                           of elements to affect with retina.js. If not
  *                           provided, retina.js will grab all images on the
  *                           page.
- *
+ * @param {Integer} rjsParam Optional. An Integer, Sets a global pixel density cap (No need for rjs-attribute)
  * @return {undefined}
  */
-function retina(images) {
+function retina(images, rjsParam) {
   getImages(images).forEach(img => {
     if (!img.getAttribute(processedAttr)) {
       const isImg = img.nodeName.toLowerCase() === 'img';
       const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
-      const rjs = img.getAttribute('data-rjs');
+      const rjs = (typeof rjsParam !== 'undefined') ? rjsParam : img.getAttribute('data-rjs');
       const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
       /*
