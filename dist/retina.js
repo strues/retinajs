@@ -109,7 +109,7 @@ function forceOriginalDimensions(image) {
  *
  * @return {undefined}
  */
-function setSourceIfAvailable(image, retinaURL) {
+function setSourceIfAvailable(image, retinaURL, callback) {
   var imgType = image.nodeName.toLowerCase();
   var unallowedExt = ['.svg', '.ico', '.gif'];
   /*
@@ -119,8 +119,8 @@ function setSourceIfAvailable(image, retinaURL) {
   if (!retinaURL) {
     return false;
   }
-  for (i = 0; i < unallowedExt.length; ++i) {
-    if (typeof retinaURL !== 'undefined' || retinaURL != null) {
+  for (var i = 0; i < unallowedExt.length; ++i) {
+    if (typeof retinaURL !== 'undefined' || retinaURL !== null) {
       if (retinaURL.indexOf(unallowedExt[i]) !== -1) {
         return false;
       }
@@ -142,6 +142,12 @@ function setSourceIfAvailable(image, retinaURL) {
       forceOriginalDimensions(image).setAttribute('src', retinaURL);
     } else {
       image.style.backgroundImage = 'url(' + retinaURL + ')';
+    }
+    /*
+    * Calls the callback if callback is typeof function
+    */
+    if (typeof callback === 'function') {
+      callback();
     }
   });
 
@@ -168,6 +174,7 @@ function setSourceIfAvailable(image, retinaURL) {
  */
 function dynamicSwapImage(image, src) {
   var rjs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var callback = arguments[3];
 
   var cap = chooseCap(rjs);
 
@@ -176,7 +183,7 @@ function dynamicSwapImage(image, src) {
    */
   if (src && cap > 1) {
     var newSrc = src.replace(srcReplace, '@' + cap + 'x$1');
-    setSourceIfAvailable(image, newSrc);
+    setSourceIfAvailable(image, newSrc, callback);
   }
 }
 
@@ -189,9 +196,9 @@ function dynamicSwapImage(image, src) {
  *
  * @return {undefined}
  */
-function manualSwapImage(image, src, hdsrc) {
+function manualSwapImage(image, src, hdsrc, callback) {
   if (environment > 1) {
-    setSourceIfAvailable(image, hdsrc);
+    setSourceIfAvailable(image, hdsrc, callback);
   }
 }
 
@@ -235,12 +242,13 @@ function cleanBgImg(img) {
  * @param {Integer} rjsParam Optional. An Integer, Sets a global pixel density cap (No need for rjs-attribute)
  * @return {undefined}
  */
-function retina(images, rjsParam) {
+function retina(images, rjsParam, callback) {
   getImages(images).forEach(function (img) {
     if (!img.getAttribute(processedAttr)) {
       var isImg = img.nodeName.toLowerCase() === 'img';
       var src = isImg ? img.getAttribute('src') : cleanBgImg(img);
       var rjs = typeof rjsParam !== 'undefined' ? rjsParam : img.getAttribute('data-rjs');
+      var _callback = _callback || null;
       var rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
       /*
@@ -248,9 +256,9 @@ function retina(images, rjsParam) {
        * If the user provided a url, do it manually.
        */
       if (rjsIsNumber) {
-        dynamicSwapImage(img, src, rjs);
+        dynamicSwapImage(img, src, rjs, _callback);
       } else {
-        manualSwapImage(img, src, rjs);
+        manualSwapImage(img, src, rjs, _callback);
       }
     }
   });
