@@ -61,7 +61,7 @@
     /*
      * Set a base background for 1x environments.
      */
-    background: url("#{$at1x_path}") $extras;
+    background: image-url("#{$at1x_path}") $extras;
     background-size: $size;
 
     /*
@@ -71,7 +71,7 @@
            all and (-o-min-device-pixel-ratio: 3/2),
            all and (min--moz-device-pixel-ratio: 1.5),
            all and (min-device-pixel-ratio: 1.5) {
-             background      : url("#{$at2x_path}") $extras;
+             background      : image-url("#{$at2x_path}") $extras;
              background-size : $size;
     }
 
@@ -84,7 +84,7 @@
         $suffix: "@#{$env}x";
         @media (-webkit-min-device-pixel-ratio: $env),
                (min-resolution: $env * 96dpi) {
-                 background      : url("#{$base}#{$suffix}.#{$ext}") $extras;
+                 background      : image-url("#{$base}#{$suffix}.#{$ext}") $extras;
                  background-size : $size;
         }
       }
@@ -95,7 +95,7 @@
    * extension, set a background value without doing anything to it.
    */
   } @else {
-    background: url("#{$path}") $extras;
+    background: image-url("#{$path}") $extras;
     background-size: $size;
   }
 
