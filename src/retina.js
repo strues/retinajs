@@ -111,9 +111,9 @@ function setSourceIfAvailable(image, retinaURL) {
      * inline style.
      */
     if (imgType === 'img') {
-      forceOriginalDimensions(image).setAttribute('src', retinaURL);
+      forceOriginalDimensions(image).setAttribute('src', image-url(retinaURL));
     } else {
-      image.style.backgroundImage = `url(${retinaURL})`;
+      image.style.backgroundImage = `image-url(${retinaURL})`;
     }
   });
 
