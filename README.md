@@ -88,7 +88,7 @@ If the user then loads the page in any kind of high-resolution environment, they
 
 #### Media Queries
 
-retina.js comes with mixins for SCSS, Sass, Less, and Stylus. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
+retina.js comes with mixins for SCSS, Sass, Less, and Stylus. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments as you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
 
 In each language, the retina mixin allows 4 parameters:
 
