@@ -215,6 +215,11 @@ function retina(images) {
       const rjs = img.getAttribute('data-rjs');
       const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
+      // do not try to load /null image!
+      if( rjs === null){
+        return;
+      }
+      
       /*
        * If the user provided a number, dynamically swap out the image.
        * If the user provided a url, do it manually.
