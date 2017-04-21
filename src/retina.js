@@ -7,7 +7,7 @@ const hasWindow = typeof window !== 'undefined';
  * Get the device pixel ratio per our environment.
  * Default to 1.
  */
-const environment = hasWindow ? (window.devicePixelRatio || 1) : 1;
+const environment = Math.round(hasWindow ? window.devicePixelRatio || 1 : 1);
 
 /*
  * Define a pattern for capturing src url suffixes.
