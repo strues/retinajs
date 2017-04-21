@@ -6,7 +6,6 @@
 
 retina.js makes it easy to serve high-resolution images to devices with displays that support them. You can prepare images for as many levels of pixel density as you want and let retina.js dynamically serve the right image to the user.
 
-
 ## How it works
 
 There are 4 ways to use retina.js:
