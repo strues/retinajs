@@ -1,5 +1,5 @@
 /*!
- * Retina.js v2.1.0
+ * Retina.js v2.1.1
  *
  * Copyright 2016 Axial, LLC
  * Released under the MIT license
@@ -153,7 +153,7 @@ function setSourceIfAvailable(image, retinaURL) {
  * @return {undefined}
  */
 function dynamicSwapImage(image, src) {
-  var rjs = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+  var rjs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
   var cap = chooseCap(rjs);
 
@@ -228,6 +228,11 @@ function retina(images) {
       var src = isImg ? img.getAttribute('src') : cleanBgImg(img);
       var rjs = img.getAttribute('data-rjs');
       var rjsIsNumber = !isNaN(parseInt(rjs, 10));
+
+      // do not try to load /null image!
+      if (rjs === null) {
+        return;
+      }
 
       /*
        * If the user provided a number, dynamically swap out the image.

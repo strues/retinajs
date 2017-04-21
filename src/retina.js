@@ -216,10 +216,10 @@ function retina(images) {
       const rjsIsNumber = !isNaN(parseInt(rjs, 10));
 
       // do not try to load /null image!
-      if( rjs === null){
+      if (rjs === null) {
         return;
       }
-      
+
       /*
        * If the user provided a number, dynamically swap out the image.
        * If the user provided a url, do it manually.
@@ -237,7 +237,7 @@ function retina(images) {
  * If this environment has `window`, activate the plugin.
  */
 if (hasWindow) {
-  window.addEventListener('load', function () {
+  window.addEventListener('load', function() {
     retina();
   });
   window.retinajs = retina;
