@@ -1,11 +1,5 @@
 # retina.js
 
-## BIG NEWS (June 4, 2017)
-
-Hi everyone. As some of you may know, retina.js was originally the product of a company called Imulus. Imulus closed a while back and, at this point, I just don't have the time to maintain it anymore. However, it's a pretty cool little script and a lot of people use it so I don't want to see it discontinued. I think the _right_ thing to do is to give it back to the FOSS community. So if you're interested in taking it over, get in touch with me either through Github or Twitter (@jnewmanux) and I'll transfer ownership to the person/org that I think will give it the most love.
-
-Thanks!
-
 > Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this README before updating.
 
 ### JavaScript, Sass, Less, and Stylus helpers for rendering high-resolution image variants
