@@ -1,4 +1,3 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["babel-plugin-transform-es2015-modules-umd"]
+  "presets": ["env"],
 }

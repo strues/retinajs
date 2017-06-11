@@ -5,3 +5,6 @@ tmp
 test/functional/retina.*
 test/functional/public/retina.*
 node_modules
+es/
+flow-typed
+dev

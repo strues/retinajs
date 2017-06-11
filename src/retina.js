@@ -1,3 +1,15 @@
+/* @flow */
+
+/**
+ * --------------------------------------------------------------------------
+ * Retina.js
+ * Licensed under MIT (https://github.com/strues/retinajs/blob/master/LICENSE)
+ *
+ * Retina.js is an open source script that makes it easy to serve high-resolution
+ * images to devices with retina displays.
+ * --------------------------------------------------------------------------
+ */
+
 /*
  * Determine whether or not `window` is available.
  */
@@ -13,7 +25,7 @@ const environment = Math.round(hasWindow ? window.devicePixelRatio || 1 : 1);
  * Define a pattern for capturing src url suffixes.
  */
 const srcReplace = /(\.[A-z]{3,4}\/?(\?.*)?)$/;
-const inlineReplace = /url\(('|")?([^\)'"]+)('|")?\)/i;
+const inlineReplace = /url\(('|")?([^)'"]+)('|")?\)/i;
 
 /*
  * Define our selectors for elements to target.
@@ -55,7 +67,7 @@ function chooseCap(cap) {
   if (environment < numericCap) {
     return environment;
 
-  /*
+    /*
    * If the device pixel ratio is greater than or equal to what the
    * user provided, we'll use what the user provided.
    */
@@ -176,9 +188,7 @@ function manualSwapImage(image, src, hdsrc) {
  */
 function getImages(images) {
   if (!images) {
-    return typeof document !== 'undefined' ? arrayify(
-      document.querySelectorAll(selector)
-    ) : [];
+    return typeof document !== 'undefined' ? arrayify(document.querySelectorAll(selector)) : [];
   } else {
     return typeof images.forEach === 'function' ? images : arrayify(images);
   }
@@ -237,7 +247,7 @@ function retina(images) {
  * If this environment has `window`, activate the plugin.
  */
 if (hasWindow) {
-  window.addEventListener('load', function() {
+  window.addEventListener('load', () => {
     retina();
   });
   window.retinajs = retina;
