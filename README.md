@@ -1,14 +1,15 @@
 # retina.js
 
-> Retina.js has been updated to version 2.0! With this update, the API has changed a bit. Make sure to go over this README before updating.
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
 
 ### JavaScript, Sass, Less, and Stylus helpers for rendering high-resolution image variants
 
-retina.js makes it easy to serve high-resolution images to devices with displays that support them. You can prepare images for as many levels of pixel density as you want and let retina.js dynamically serve the right image to the user.
+`retina.js` makes it easy to serve high-resolution images to devices with displays that support them. You can prepare images for as many levels of pixel density as you want and let `retina.js` dynamically serve the right image to the user.
 
 ## How it works
 
-There are 4 ways to use retina.js:
+There are 4 ways to use `retina.js`:
 
 1. Automatically swapping out `src` paths on `img` tags.
 2. Automatically swapping out background image URLs in inline styles.
@@ -17,9 +18,9 @@ There are 4 ways to use retina.js:
 
 #### Img Tags
 
-retina.js assumes you are using Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-res image variants on your server. It also assumes that if you have prepared a variant for a given high-res environment, that you have also prepared variants for each environment below it. For example, if you have prepared 3x variants, retina.js will assume that you have also prepared 2x variants.
+`retina.js` assumes you are using Apple's prescribed high-resolution modifiers (@2x, @3x, etc) to denote high-res image variants on your server. It also assumes that if you have prepared a variant for a given high-res environment, that you have also prepared variants for each environment below it. For example, if you have prepared 3x variants, `retina.js` will assume that you have also prepared 2x variants.
 
-With this in mind, you'll specify your highest environment level with the `data-rjs` attribute and let retina.js take it from there.
+With this in mind, you'll specify your highest environment level with the `data-rjs` attribute and let `retina.js` take it from there.
 
 Let's say you have an image on your page that looks like this:
 
@@ -27,13 +28,13 @@ Let's say you have an image on your page that looks like this:
 <img src="/images/my_image.png" data-rjs="3" />
 ```
 
-In this case, we've set our resolution cap at "3", denoting that we've prepared 3x and 2x image variants. When the page loads, retina.js will check the actual resolution of the device environment to decide whether it should really serve up a 3x image. If the user happens to be in a 2x environment, retina.js will serve up the 2x image instead, assuming it will find the image at `/images/my_image@2x.png`.
+In this case, we've set our resolution cap at "3", denoting that we've prepared 3x and 2x image variants. When the page loads, `retina.js` will check the actual resolution of the device environment to decide whether it should really serve up a 3x image. If the user happens to be in a 2x environment, `retina.js` will serve up the 2x image instead, assuming it will find the image at `/images/my_image@2x.png`.
 
-If the environment does have 3x capabilities, retina.js will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has the ability to display images at higher densities than 3x, retina.js will serve up the image of the highest resolution that you've provided, in this case 3x.
+If the environment does have 3x capabilities, `retina.js` will serve up the 3x image. It will expect that url to be `/images/my_image@3x.png`. If the environment has the ability to display images at higher densities than 3x, `retina.js` will serve up the image of the highest resolution that you've provided, in this case 3x.
 
 #### Inline Styles
 
-Previous versions of retina.js were unable to target background images set via inline styles. Now, if you apply a `data-rjs` attribute to any kind of element other than an `img`, the script will target inline background images instead of `src` attributes.
+Previous versions of `retina.js` were unable to target background images set via inline styles. Now, if you apply a `data-rjs` attribute to any kind of element other than an `img`, the script will target inline background images instead of `src` attributes.
 
 So if you created an element like this:
 
@@ -41,19 +42,19 @@ So if you created an element like this:
 <div style="background: url(/images/my_image.png)" data-rjs="3"></div>
 ```
 
-retina.js would convert it to something like this:
+`retina.js` would convert it to something like this:
 
 ```html
 <div style="background: url(/images/my_image@3x.png)" data-rjs="3"></div>
 ```
 
-The logic behind image swapping is exactly the same when dealing with background images as it is when dealing with `src` attributes. If the user's environment only supports 2x variants, retina.js will load the 2x variant instead of the 3x.
+The logic behind image swapping is exactly the same when dealing with background images as it is when dealing with `src` attributes. If the user's environment only supports 2x variants, `retina.js` will load the 2x variant instead of the 3x.
 
 _Note that it is up to you in a case like this to correctly apply background sizing and any other necessary background-related styles to the element. retina.js will not affect these._
 
 #### Manually Specifying a High-Res URL
 
-In previous versions, you could tell the script where to find your high-res file by using the `data-at2x` attribute. Now, if you pass a URL to the `data-rjs` attribute, retina.js will use the image at the path you specify for all high-resolution environments instead of trying to dynamically serve an auto-suffixed image path based on the environment's capabilities. This will work for both `src` attributes on `img` tags and inline background images on all other tags.
+In previous versions, you could tell the script where to find your high-res file by using the `data-at2x` attribute. Now, if you pass a URL to the `data-rjs` attribute, `retina.js` will use the image at the path you specify for all high-resolution environments instead of trying to dynamically serve an auto-suffixed image path based on the environment's capabilities. This will work for both `src` attributes on `img` tags and inline background images on all other tags.
 
 For example, you might write something like this:
 
@@ -87,7 +88,7 @@ If the user then loads the page in any kind of high-resolution environment, they
 
 #### Media Queries
 
-retina.js comes with mixins for SCSS, Sass, Less, and Stylus. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments as you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
+`retina.js` comes with mixins for SCSS, Sass, Less, and Stylus. These mixins work similarly to the JavaScript version in that they will dynamically serve images for as many high-res environments as you've prepared image variants for. Previously, these mixins were named "at2x" but because they now serve images for multiple environments, they have been renamed "retina".
 
 In each language, the retina mixin allows 4 parameters:
 
@@ -163,13 +164,13 @@ Regardless of the dialect, the output is effectively the same:
 
 ## Compatibility
 
-retina.js is compatible with all modern browsers and will not throw errors in old browsers all the way back through IE6.
+`retina.js` is compatible with all modern browsers and __should__ not throw errors in old browsers all the way back through IE6.
 
 ## Installing & Launching
 
 ### JavaScript
 
-There are 2 ways to use the JavaScript version of retina.js:
+There are 2 ways to use the JavaScript version of `retina.js`:
 
 1. The old-school way (manually dropping the script into an html file).
 2. The new-school way (importing it into a larger JavaScript build process).
@@ -182,7 +183,7 @@ To use retina.js the old-school way, download **retina.min.js** and put it on yo
 <script type="text/javascript" src="/scripts/retina.min.js"></script>
 ```
 
-Using this technique, retina.js will run automatically on page load. It will also create a globally available function called `retinajs`. Whenever you'd like to manually re-initialize the script, simply call `window.retinajs()`.
+Using this technique, `retina.js` will run automatically on page load. It will also create a globally available function called `retinajs`. Whenever you'd like to manually re-initialize the script, simply call `window.retinajs()`.
 
 If you don't pass any arguments to the `retinajs` function, it will only attempt to process images that have not previously been processed by the script. Optionally, you can pass a collection of HTML elements to the script, in which case it will only attempt to process elements in that collection, specifically the ones that have not been processed before. Your collection may take the form of an Array, NodeList, or jQuery selection.
 
@@ -264,10 +265,3 @@ One potential method is to bypass digesting altogether by implementing a process
 #### Use Manual Paths
 
 Although it's not quite as fancy as dynamically serving up files based on the resolution of the user's environment, this may be a good time to pass a URL string to the `data-rjs` attribute so that you can manually tell retina.js exactly where to look for a high-resolution variant of your image.
-
-
-## How To Contribute
-
-When you run `$ gulp dev`, the gulp server sets up watchers for both the JavaScript version and the CSS mixins such that when any of these files in the `src` directory is modified, all the necessary recompiling takes place and the browser is automatically refreshed.
-
-When you are finished developing, run `$ gulp dist` to run linters and compile all the necessary files into the `dist` directory. This directory should end up containing SCSS, Sass, Less, and Stylus mixin files as well as a `retina.js` file that can be imported into larger applications and a `retina.min.js` file that can be included directly in an html file via a `script` tag.
