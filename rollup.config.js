@@ -15,6 +15,7 @@ const opts = {
         'env',
         {
           loose: true,
+          comments: true,
           modules: false,
           targets: {
             browserslist: ['> 1%', 'last 2 versions'],
