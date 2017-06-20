@@ -14,8 +14,9 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "__tests__",
+    "flow_typed",
+    "dev"
   ],
   "moduleType": [
     "amd",

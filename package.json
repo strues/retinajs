@@ -18,25 +18,30 @@
   "main": "dist/retina.js",
   "module": "es/retina.js",
   "jsnext:main": "es/retina.js",
+  "files": [
+    "dist",
+    "es",
+    "LICENSE"
+  ],
   "devDependencies": {
     "babel-jest": "^20.0.3",
     "babel-preset-env": "^1.5.2",
     "cross-env": "^5.0.1",
-    "eslint": "^3.19.0",
-    "eslint-config-boldr": "^0.9.9",
-    "flow-bin": "^0.47.0",
+    "eslint": "^4.0.0",
+    "eslint-config-boldr": "^0.10.3",
+    "flow-bin": "^0.48.0",
     "jest": "^20.0.4",
     "less": "^2.7.2",
     "node-sass": "^4.5.3",
     "prettier": "^1.4.4",
     "rimraf": "^2.6.1",
-    "rollup": "^0.42.0",
+    "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-babili": "^3.1.0",
-    "rollup-plugin-cleanup": "^1.0.0",
+    "rollup-plugin-cleanup": "^1.0.1",
     "rollup-plugin-multi-dest": "^1.0.2",
     "rollup-watch": "^4.0.0",
-    "sinon": "^2.3.4"
+    "sinon": "^2.3.5"
   },
   "scripts": {
     "dev": "rollup -c -w -m inline",
