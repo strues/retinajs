@@ -1,9 +1,9 @@
 [ignore]
 
-<PROJECT_ROOT>/sandbox/.*
+<PROJECT_ROOT>/dev/.*
 <PROJECT_ROOT>/es/.*
 <PROJECT_ROOT>/dist/.*
-<PROJECT_ROOT>/test/.*
+.*/__tests__/.*
 .*/.idea/.*
 .*/.vscode/.*
 .*/coverage/.*
@@ -27,4 +27,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
 suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
 
 [version]
-=>43
+0.47.0
