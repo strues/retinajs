@@ -1,8 +1,8 @@
 [ignore]
-
-<PROJECT_ROOT>/dev/.*
-<PROJECT_ROOT>/es/.*
-<PROJECT_ROOT>/dist/.*
+.*/node_modules/.*
+.*/dev/.*
+.*/es/.*
+.*/dist/.*
 .*/__tests__/.*
 .*/.idea/.*
 .*/.vscode/.*

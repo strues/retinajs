@@ -13,13 +13,13 @@
 /*
  * Determine whether or not `window` is available.
  */
-const hasWindow = typeof window !== 'undefined';
+const hasWindow: boolean = typeof window !== 'undefined';
 
 /*
  * Get the device pixel ratio per our environment.
  * Default to 1.
  */
-const environment = Math.round(hasWindow ? window.devicePixelRatio || 1 : 1);
+const environment: number = Math.round(hasWindow ? window.devicePixelRatio || 1 : 1);
 
 /*
  * Define a pattern for capturing src url suffixes.
@@ -30,12 +30,12 @@ const inlineReplace = /url\(('|")?([^)'"]+)('|")?\)/i;
 /*
  * Define our selectors for elements to target.
  */
-const selector = '[data-rjs]';
+const selector: string = '[data-rjs]';
 
 /*
  * Define the attribute we'll use to mark an image as having been processed.
  */
-const processedAttr = 'data-rjs-processed';
+const processedAttr: string = 'data-rjs-processed';
 
 /**
  * Shortcut for turning some iterable object into an array.
@@ -57,8 +57,8 @@ function arrayify(object) {
  *
  * @return {Number} The number we'll be using to create a suffix.
  */
-function chooseCap(cap) {
-  const numericCap = parseInt(cap, 10);
+function chooseCap(cap: number | string) {
+  const numericCap: number = parseInt(cap, 10);
 
   /*
    * If the environment's device pixel ratio is less than what the user
@@ -84,7 +84,7 @@ function chooseCap(cap) {
  *
  * @return {Element} The same element that was passed in.
  */
-function forceOriginalDimensions(image) {
+function forceOriginalDimensions(image: HTMLImageElement) {
   if (!image.hasAttribute('data-no-resize')) {
     if (image.offsetWidth === 0 && image.offsetHeight === 0) {
       image.setAttribute('width', image.naturalWidth);
@@ -157,7 +157,7 @@ function dynamicSwapImage(image, src, rjs = 1) {
    * Don't do anything if the cap is less than 2 or there is no src.
    */
   if (src && cap > 1) {
-    const newSrc = src.replace(srcReplace, `@${cap}x$1`);
+    const newSrc: string = src.replace(srcReplace, `@${cap}x$1`);
     setSourceIfAvailable(image, newSrc);
   }
 }
@@ -171,7 +171,7 @@ function dynamicSwapImage(image, src, rjs = 1) {
  *
  * @return {undefined}
  */
-function manualSwapImage(image, src, hdsrc) {
+function manualSwapImage(image: HTMLImageElement, src: string, hdsrc: string): void {
   if (environment > 1) {
     setSourceIfAvailable(image, hdsrc);
   }
@@ -201,7 +201,7 @@ function getImages(images) {
  *
  * @return {String}
  */
-function cleanBgImg(img) {
+function cleanBgImg(img: HTMLImageElement): string {
   return img.style.backgroundImage.replace(inlineReplace, '$2');
 }
 
@@ -217,13 +217,13 @@ function cleanBgImg(img) {
  *
  * @return {undefined}
  */
-function retina(images) {
+function retina(images: Array<HTMLImageElement>) {
   getImages(images).forEach(img => {
     if (!img.getAttribute(processedAttr)) {
-      const isImg = img.nodeName.toLowerCase() === 'img';
+      const isImg: boolean = img.nodeName.toLowerCase() === 'img';
       const src = isImg ? img.getAttribute('src') : cleanBgImg(img);
       const rjs = img.getAttribute('data-rjs');
-      const rjsIsNumber = !isNaN(parseInt(rjs, 10));
+      const rjsIsNumber: boolean = !isNaN(parseInt(rjs, 10));
 
       // do not try to load /null image!
       if (rjs === null) {

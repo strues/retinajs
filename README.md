@@ -1,6 +1,6 @@
 # retina.js
 
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![npm version](https://badge.fury.io/js/retinajs.png)](https://badge.fury.io/js/retinajs) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)  [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/strues/retinajs/master/LICENSE)
 
 
 ### JavaScript, Sass, Less, and Stylus helpers for rendering high-resolution image variants
