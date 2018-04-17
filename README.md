@@ -206,7 +206,7 @@ retinajs( document.querySelectorAll('img') );
 To use retina.js the new-school way, you'll want to `require` it (or `import` it if you're using ES6) into your Gulp/Webpack/Grunt/CommonJS/etc application. In this case, the script won't run automatically. Instead, it'll let you determine when you'd like it to run.
 
 ```JavaScript
-import retina from 'retina';
+import retina from 'retinajs';
 
 window.addEventListener('load', retina);
 ```
