@@ -15,6 +15,7 @@ There are 4 ways to use `retina.js`:
 2. Automatically swapping out background image URLs in inline styles.
 3. Manually specifying the location of a high-res image variant (works for `src` attributes and inline styles).
 4. Automatically creating media queries for CSS background images.
+5. only load image once for elememnts that have attribute: `data-rjs-src` and `src` is empty
 
 #### Img Tags
 
@@ -25,7 +26,7 @@ With this in mind, you'll specify your highest environment level with the `data-
 Let's say you have an image on your page that looks like this:
 
 ```html
-<img src="/images/my_image.png" data-rjs="3" />
+<img src="/images/my_image.png" data-rjs="3" />~~~~~~~~
 ```
 
 In this case, we've set our resolution cap at "3", denoting that we've prepared 3x and 2x image variants. When the page loads, `retina.js` will check the actual resolution of the device environment to decide whether it should really serve up a 3x image. If the user happens to be in a 2x environment, `retina.js` will serve up the 2x image instead, assuming it will find the image at `/images/my_image@2x.png`.
