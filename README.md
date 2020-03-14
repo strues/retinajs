@@ -9,13 +9,13 @@
 
 ## How it works
 
-There are 4 ways to use `retina.js`:
+There are 5 ways to use `retina.js`:
 
 1. Automatically swapping out `src` paths on `img` tags.
 2. Automatically swapping out background image URLs in inline styles.
 3. Manually specifying the location of a high-res image variant (works for `src` attributes and inline styles).
 4. Automatically creating media queries for CSS background images.
-5. only load image once for elememnts that have attribute: `data-rjs-src` and `src` is empty
+5. [new feature - 20200315 added]only load image once for elememnts that have attribute: `data-rjs-src` and `src` is empty
 
 #### Img Tags
 
