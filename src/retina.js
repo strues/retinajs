@@ -159,6 +159,14 @@ function dynamicSwapImage(image, src, rjs = 1) {
   if (src && cap > 1) {
     const newSrc: string = src.replace(srcReplace, `@${cap}x$1`);
     setSourceIfAvailable(image, newSrc);
+  } else if (!src) {
+    const realSrc = image.getAttribute('data-rjs-src');
+    if (cap > 1) {
+      const newSrc: string = realSrc.replace(srcReplace, `@${cap}x$1`);
+      setSourceIfAvailable(image, newSrc);
+    } else {
+      setSourceIfAvailable(image, realSrc);
+    }
   }
 }
 
