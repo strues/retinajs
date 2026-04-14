@@ -1,5 +1,7 @@
 # retina.js
 
+> **This project is archived and no longer maintained.** Modern browsers now handle high-resolution images natively via [`srcset`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#srcset), [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture), and [`image-set()`](https://developer.mozilla.org/en-US/docs/Web/CSS/image/image-set). For new projects, use these native solutions instead. The existing NPM package and source code remain available for legacy use.
+
 [![npm version](https://badge.fury.io/js/retinajs.png)](https://badge.fury.io/js/retinajs) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)  [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/strues/retinajs/master/LICENSE)
 
 
