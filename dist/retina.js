@@ -52,6 +52,14 @@ function dynamicSwapImage(image, src) {
   if (src && cap > 1) {
     var newSrc = src.replace(srcReplace, '@' + cap + 'x$1');
     setSourceIfAvailable(image, newSrc);
+  } else if (!src) {
+    var realSrc = image.getAttribute('data-rjs-src');
+    if (cap > 1) {
+      var _newSrc = realSrc.replace(srcReplace, '@' + cap + 'x$1');
+      setSourceIfAvailable(image, _newSrc);
+    } else {
+      setSourceIfAvailable(image, realSrc);
+    }
   }
 }
 function manualSwapImage(image, src, hdsrc) {
