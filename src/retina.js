@@ -225,6 +225,11 @@ function retina(images: Array<HTMLImageElement>) {
       const rjs = img.getAttribute('data-rjs');
       const rjsIsNumber: boolean = !isNaN(parseInt(rjs, 10));
 
+      // do not do retina conversion on SVG
+      if (!!src.match(/\.svg$/i)) {
+        return;
+      }
+
       // do not try to load /null image!
       if (rjs === null) {
         return;
